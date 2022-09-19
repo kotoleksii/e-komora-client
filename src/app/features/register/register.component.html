@@ -1,0 +1,42 @@
+<div class="register-wrapper" *ngIf="!isSuccessful">
+  <mat-card>
+    <mat-card-content>
+      <form name="form"
+            (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+        <h2>Register</h2>
+        <mat-form-field>
+          <input matInput placeholder="UserName" [(ngModel)]="form.username" name="username" required
+                 minlength="3" maxlength="20" #username="ngModel">
+          <mat-error *ngIf="username.errors && f.submitted">
+            <mat-error *ngIf="username.errors.required">Username is required!</mat-error>
+            <mat-error *ngIf="username.errors.minlength">Username must be at least 3 characters</mat-error>
+            <mat-error *ngIf="username.errors.maxlength">Username must be at most 20 characters</mat-error>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput type="email" placeholder="Email" [(ngModel)]="form.email" name="email" required
+                 email #email="ngModel">
+          <mat-error *ngIf="email.errors && f.submitted">
+            <mat-error *ngIf="email.errors.required">Email is required</mat-error>
+            <mat-error *ngIf="email.errors.email">Email must be a valid email address</mat-error>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput type="password" placeholder="Password" [(ngModel)]="form.password" name="password" required
+                 minlength="6"
+                 #password="ngModel">
+
+          <mat-error *ngIf="password.errors && f.submitted">
+            <div *ngIf="password.errors.required">
+              Password is required
+            </div>
+            <div *ngIf="password.errors.minlength">
+              Password must be at least 6 characters
+            </div>
+          </mat-error>
+        </mat-form-field>
+        <button mat-raised-button color="primary">Submit</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -1,0 +1,38 @@
+<div class="header-wrapper">
+  <mat-toolbar>
+  <span>
+    <a mat-icon-button [matMenuTriggerFor]="menu"><i class="fa-solid fa-bars"></i></a>
+    <mat-menu #menu="matMenu" [overlapTrigger]="false" routerLinkActive="active">
+      <a class="menu-item" mat-menu-item routerLink="/home">
+        <i class="fa-solid fa-house"></i>  Головна</a>
+      <a class="menu-item" mat-menu-item *ngIf="isLoggedIn" routerLink="/dashboard/user">
+        <i class="fa-solid fa-box-open"></i>  Мій Інвентар</a>
+      <a class="menu-item" mat-menu-item *ngIf="showModeratorBoard" routerLink="/dashboard/mod"><i
+        class="fa-solid fa-user-tie"></i>  Moderator Board</a>
+      <a class="menu-item" mat-menu-item *ngIf="showAdminBoard" routerLink="/dashboard/admin">
+        <i class="fa-solid fa-user-gear"></i>  Admin Board</a>
+      <div class="show-element-mobile" *ngIf="isLoggedIn">
+        <a class="menu-item" mat-menu-item routerLink="/profile">
+          <i class="fa-solid fa-user"></i>  {{ username }}</a>
+       </div>
+      <a class="menu-item" mat-menu-item *ngIf="isLoggedIn" href (click)="logout()">
+        <i class="fa-solid fa-arrow-right-from-bracket"></i>  Вийти</a>
+      <div class="show-element-mobile" *ngIf="!isLoggedIn">
+        <a class="menu-item" mat-menu-item routerLink="/register">
+          <i class="fa-solid fa-id-card"></i>  Реєстрація</a>
+        <a class="menu-item" mat-menu-item routerLink="/login">
+          <i class="fa-solid fa-lock-open"></i>  Увійти</a>
+      </div>
+    </mat-menu>
+  </span>
+    <a routerLink="home"><span>Є-Комора</span></a>
+    <span class="header-spacer"></span>
+    <div class="hide-element-mobile" *ngIf="!isLoggedIn">
+      <a mat-button routerLink="/register">Реєстрація</a>
+      <a mat-button routerLink="/login">Увійти</a>
+    </div>
+    <div class="hide-element-mobile" *ngIf="isLoggedIn">
+      <a mat-button class="auth-link hide-element-mobile" routerLink="/profile">{{ username }}</a>
+    </div>
+  </mat-toolbar>
+</div>

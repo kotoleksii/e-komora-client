@@ -1,0 +1,35 @@
+@import '../../../assets/styles/mixins';
+
+.header-wrapper {
+
+  .header-spacer {
+    flex: 1 1 auto;
+  }
+
+  mat-menu::before {
+    vertical-align: middle;
+  }
+
+  .auth-link {
+    margin-right: 15px;
+  }
+
+  .hide-element-mobile {
+    @include media-property(H, visibility, hidden, visible);
+    @include media-property(H, display, none, inline-block);
+  }
+
+
+}
+
+.show-element-mobile {
+  @include media-property(H, visibility, visible, hidden);
+  @include media-property(H, display, inline-block, none);
+}
+
+a {
+  text-decoration: none;
+  color: #ffffff;
+  /*color: inherit;*/
+  padding: 0 8px;
+}
