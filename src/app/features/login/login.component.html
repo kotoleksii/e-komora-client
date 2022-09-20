@@ -1,13 +1,13 @@
 <div class="login-wrapper" *ngIf="!isLoggedIn">
-  <mat-card>
+  <mat-card class="login-card">
     <mat-card-content>
       <form name="form"
             (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
         <h2>LogIn</h2>
         <mat-form-field>
-          <input matInput placeholder="UserName" [(ngModel)]="form.username" name="username" required
-                 #username="ngModel">
-          <mat-error *ngIf="username.errors && f.submitted">Username is required!</mat-error>
+          <input matInput placeholder="Email" [(ngModel)]="form.email" name="email" required
+                 #email="ngModel">
+          <mat-error *ngIf="email.errors && f.submitted">Username is required!</mat-error>
         </mat-form-field>
         <mat-form-field>
           <input matInput type="password" placeholder="Password" [(ngModel)]="form.password" name="password" required

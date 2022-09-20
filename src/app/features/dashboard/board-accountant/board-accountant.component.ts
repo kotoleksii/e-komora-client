@@ -3,11 +3,11 @@ import {UserService} from '../../../shared/_services/user.service';
 import {SubSink} from 'subsink';
 
 @Component({
-  selector: 'app-board-admin',
-  templateUrl: './board-admin.component.html',
-  styleUrls: ['./board-admin.component.scss']
+  selector: 'app-board-accountant',
+  templateUrl: './board-accountant.component.html',
+  styleUrls: ['./board-accountant.component.scss']
 })
-export class BoardAdminComponent implements OnInit, OnDestroy {
+export class BoardAccountantComponent implements OnInit, OnDestroy {
   content?: string;
   private subs: SubSink = new SubSink();
 
@@ -16,7 +16,7 @@ export class BoardAdminComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subs.add(
-      this.userService.getAdminBoard().subscribe(
+      this.userService.getAccountantBoard().subscribe(
         data => {
           this.content = data;
           console.log(this.content);

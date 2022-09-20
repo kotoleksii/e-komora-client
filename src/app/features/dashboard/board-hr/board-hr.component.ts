@@ -3,11 +3,11 @@ import {UserService} from '../../../shared/_services/user.service';
 import {SubSink} from 'subsink';
 
 @Component({
-  selector: 'app-board-moderator',
-  templateUrl: './board-moderator.component.html',
-  styleUrls: ['./board-moderator.component.scss']
+  selector: 'app-board-hr',
+  templateUrl: './board-hr.component.html',
+  styleUrls: ['./board-hr.component.scss']
 })
-export class BoardModeratorComponent implements OnInit, OnDestroy {
+export class BoardHrComponent implements OnInit, OnDestroy {
   content?: string;
   private subs: SubSink = new SubSink();
 
@@ -16,7 +16,7 @@ export class BoardModeratorComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subs.add(
-      this.userService.getModeratorBoard().subscribe(
+      this.userService.getHRBoard().subscribe(
         data => {
           this.content = data;
         },

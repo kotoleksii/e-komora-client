@@ -15,15 +15,15 @@ export class UserService {
     return this.http.get(API_URL + 'all', {responseType: 'text'});
   }
 
-  getUserBoard(): Observable<any> {
-    return this.http.get(API_URL + 'dashboard/user', {responseType: 'text'});
+  getEmployeeBoard(): Observable<any> {
+    return this.http.get(API_URL + 'dashboard/employee', {responseType: 'text'});
   }
 
-  getModeratorBoard(): Observable<any> {
-    return this.http.get(API_URL + 'dashboard/mod', {responseType: 'text'});
+  getHRBoard(): Observable<any> {
+    return this.http.get(API_URL + 'dashboard/hr', {responseType: 'text'});
   }
 
-  getAdminBoard(): Observable<any> {
-    return this.http.get(API_URL + 'dashboard/admin', {responseType: 'text'});
+  getAccountantBoard(): Observable<any> {
+    return this.http.get(API_URL + 'dashboard/accountant', {responseType: 'text'});
   }
 }

@@ -16,7 +16,7 @@ export class BoardUserComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subs.add(
-      this.userService.getUserBoard().subscribe(
+      this.userService.getEmployeeBoard().subscribe(
         data => {
           this.content = data;
         },

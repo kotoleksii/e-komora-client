@@ -11,19 +11,19 @@ const routes: Routes = [
     children:
       [
         {
-          path: 'admin',
-          loadChildren: () => import('./board-admin/board-admin.module')
-            .then((m) => m.BoardAdminModule),
+          path: 'accountant',
+          loadChildren: () => import('./board-accountant/board-accountant.module')
+            .then((m) => m.BoardAccountantModule),
           canActivate: [AuthGuard]
         },
         {
-          path: 'mod',
-          loadChildren: () => import('./board-moderator/board-moderator.module')
-            .then((m) => m.BoardModeratorModule),
+          path: 'hr',
+          loadChildren: () => import('./board-hr/board-hr.module')
+            .then((m) => m.BoardHrModule),
           canActivate: [AuthGuard]
         },
         {
-          path: 'user',
+          path: 'employee',
           loadChildren: () => import('./board-user/board-user.module')
             .then((m) => m.BoardUserModule),
           canActivate: [AuthGuard]

@@ -18,8 +18,10 @@
     @include media-property(H, visibility, hidden, visible);
     @include media-property(H, display, none, inline-block);
   }
+}
 
-
+span.menu-item-text {
+  margin-left: 15px;
 }
 
 .show-element-mobile {
@@ -31,5 +33,5 @@ a {
   text-decoration: none;
   color: #ffffff;
   /*color: inherit;*/
-  padding: 0 8px;
+  //padding: 0 8px;
 }

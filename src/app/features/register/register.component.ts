@@ -12,7 +12,9 @@ import {Router} from '@angular/router';
 export class RegisterComponent implements OnInit, OnDestroy {
   private subs: SubSink = new SubSink();
   form: any = {
-    username: null,
+    // username: null,
+    firstName: null,
+    lastName: null,
     email: null,
     password: null
   };
@@ -29,10 +31,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(): void {
-    const {username, email, password} = this.form;
+    const {firstName, lastName, email, password} = this.form;
 
     this.subs.add(
-      this.authService.register(username, email, password).subscribe(
+      this.authService.register(firstName, lastName, email, password).subscribe(
         data => {
           console.log(data);
           this.isSuccessful = true;
@@ -46,7 +48,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
           this.errorMessage = err.error.message;
           this.isSignUpFailed = true;
           if (err.status === 400) {
-            this.notifierService.notify('error', 'Такі Ім`я або Email вже існують!');
+            this.notifierService.notify('error', 'Такі Ім`я або Email вже зайняті!');
             return;
           }
           this.notifierService.notify('error', 'Signup failed!');

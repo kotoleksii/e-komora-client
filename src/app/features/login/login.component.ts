@@ -13,12 +13,13 @@ import {SubSink} from 'subsink';
 export class LoginComponent implements OnInit, OnDestroy {
   private subs: SubSink = new SubSink();
   form: any = {
-    username: null,
+    email: null,
     password: null
   };
   isLoggedIn = false;
   isLoginFailed = false;
   errorMessage = '';
+  nickname = '';
   roles: string[] = [];
 
   constructor(private authService: AuthService,
@@ -31,16 +32,17 @@ export class LoginComponent implements OnInit, OnDestroy {
     if (this.tokenStorage.getToken()) {
       this.isLoggedIn = true;
       this.roles = this.tokenStorage.getUser().roles;
-      this.notifierService.notify('success', `Ви зайшли як ${this.roles[0].substr(5)}`);
+      this.nickname = this.tokenStorage.getUser().firstName;
+      this.notifierService.notify('success', `👋 Вітаємо Вас знову, ${this.nickname}!`);
       this.reloadByRole(this.roles[0]);
     }
   }
 
   onSubmit(): void {
-    const {username, password} = this.form;
+    const {email, password} = this.form;
 
     this.subs.add(
-      this.authService.login(username, password).subscribe(
+      this.authService.login(email, password).subscribe(
         data => {
           this.tokenStorage.saveToken(data.accessToken);
           this.tokenStorage.saveUser(data);
@@ -48,33 +50,32 @@ export class LoginComponent implements OnInit, OnDestroy {
           this.isLoginFailed = false;
           this.isLoggedIn = true;
           this.roles = this.tokenStorage.getUser().roles;
-          this.notifierService.notify('success', `Ви зайшли як ${this.roles[0].substr(5)}`);
+          this.nickname = this.tokenStorage.getUser().firstName;
+          this.notifierService.notify('success', `👋 Привіт, ${this.nickname}!`);
           this.reloadByRole(this.roles[0]);
         },
         err => {
           this.isLoginFailed = true;
           this.errorMessage = err.error?.message;
           this.notifierService.notify('error', 'Login failed!');
-          // this.form.username = '';
-          // this.form.password = '';
         }
       ));
   }
 
   reloadByRole(role: string): void {
     switch (role) {
-      case 'ROLE_USER':
-        this.router.navigate(['dashboard', 'user']).then(() => {
+      case 'ROLE_EMPLOYEE':
+        this.router.navigate(['dashboard', 'employee']).then(() => {
           this.reloadPage();
         });
         break;
-      case 'ROLE_MODERATOR':
-        this.router.navigate(['dashboard', 'mod']).then(() => {
+      case 'ROLE_HR':
+        this.router.navigate(['dashboard', 'hr']).then(() => {
           this.reloadPage();
         });
         break;
-      case 'ROLE_ADMIN':
-        this.router.navigate(['dashboard', 'admin']).then(() => {
+      case 'ROLE_ACCOUNTANT':
+        this.router.navigate(['dashboard', 'accountant']).then(() => {
           this.reloadPage();
         });
         break;

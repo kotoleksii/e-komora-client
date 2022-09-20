@@ -9,8 +9,9 @@ import {TokenStorageService} from '../../shared/_services/token-storage.service'
 export class HeaderComponent implements OnInit {
   private roles: string[] = [];
   isLoggedIn = false;
-  showAdminBoard = false;
-  showModeratorBoard = false;
+  showAccountantBoard = false;
+  showHRBoard = false;
+  showEmployeeBoard = false;
   username?: string;
 
   constructor(private tokenStorageService: TokenStorageService) {
@@ -23,10 +24,11 @@ export class HeaderComponent implements OnInit {
       const user = this.tokenStorageService.getUser();
       this.roles = user.roles;
 
-      this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
-      this.showModeratorBoard = this.roles.includes('ROLE_MODERATOR');
+      this.showAccountantBoard = this.roles.includes('ROLE_ACCOUNTANT');
+      this.showHRBoard = this.roles.includes('ROLE_HR');
+      this.showEmployeeBoard = this.roles.includes('ROLE_EMPLOYEE');
 
-      this.username = user.username;
+      this.username = `${user.firstName} ${user.lastName.slice(0, 1)}.`;
     }
   }
 

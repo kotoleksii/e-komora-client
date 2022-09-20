@@ -1,16 +1,25 @@
 <div class="register-wrapper" *ngIf="!isSuccessful">
-  <mat-card>
+  <mat-card class="register-card">
     <mat-card-content>
       <form name="form"
             (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
         <h2>Register</h2>
         <mat-form-field>
-          <input matInput placeholder="UserName" [(ngModel)]="form.username" name="username" required
-                 minlength="3" maxlength="20" #username="ngModel">
-          <mat-error *ngIf="username.errors && f.submitted">
-            <mat-error *ngIf="username.errors.required">Username is required!</mat-error>
-            <mat-error *ngIf="username.errors.minlength">Username must be at least 3 characters</mat-error>
-            <mat-error *ngIf="username.errors.maxlength">Username must be at most 20 characters</mat-error>
+          <input matInput placeholder="First Name" [(ngModel)]="form.firstName" name="firstName" required
+                 minlength="3" maxlength="20" #firstName="ngModel">
+          <mat-error *ngIf="firstName.errors && f.submitted">
+            <mat-error *ngIf="firstName.errors.required">First Name is required!</mat-error>
+            <mat-error *ngIf="firstName.errors.minlength">First Name must be at least 3 characters</mat-error>
+            <mat-error *ngIf="firstName.errors.maxlength">First Name must be at most 20 characters</mat-error>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Last Name" [(ngModel)]="form.lastName" name="lastName" required
+                 minlength="3" maxlength="20" #lastName="ngModel">
+          <mat-error *ngIf="lastName.errors && f.submitted">
+            <mat-error *ngIf="lastName.errors.required">Last Name is required!</mat-error>
+            <mat-error *ngIf="lastName.errors.minlength">Last Name must be at least 3 characters</mat-error>
+            <mat-error *ngIf="lastName.errors.maxlength">Last Name must be at most 20 characters</mat-error>
           </mat-error>
         </mat-form-field>
         <mat-form-field>
