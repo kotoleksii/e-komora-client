@@ -3,14 +3,14 @@
     <mat-card-content>
       <form name="form"
             (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
-        <h2>LogIn</h2>
+        <h2>Вхід</h2>
         <mat-form-field>
           <input matInput placeholder="Email" [(ngModel)]="form.email" name="email" required
                  #email="ngModel">
           <mat-error *ngIf="email.errors && f.submitted">Username is required!</mat-error>
         </mat-form-field>
         <mat-form-field>
-          <input matInput type="password" placeholder="Password" [(ngModel)]="form.password" name="password" required
+          <input matInput type="password" placeholder="Пароль" [(ngModel)]="form.password" name="password" required
                  minlength="6"
                  #password="ngModel">
           <mat-error *ngIf="password.errors && f.submitted">
@@ -18,7 +18,7 @@
             <mat-error *ngIf="password.errors.minlength">Password must be at least 6 characters</mat-error>
           </mat-error>
         </mat-form-field>
-        <button mat-raised-button color="primary">Submit</button>
+        <button mat-raised-button color="primary">Далі</button>
       </form>
     </mat-card-content>
   </mat-card>

@@ -3,8 +3,8 @@ import {AuthService} from '../../shared/_services/auth.service';
 import {NotifierService} from 'angular-notifier';
 import {SubSink} from 'subsink';
 import {Router} from '@angular/router';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {CustomValidators} from '../../shared/classes/CustomValidators';
+import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
+import {AuthValidators} from '../../shared/classes/AuthValidators';
 
 
 @Component({
@@ -17,22 +17,37 @@ export class RegisterComponent implements OnInit, OnDestroy {
   private subs: SubSink = new SubSink();
   isSuccessful = false;
   isSignUpFailed = false;
+  submitted = false;
+  hide = true;
   errorMessage = '';
   registerForm = new FormGroup(
     {
-      firstName: new FormControl('', [Validators.required]),
-      lastName: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.required, Validators.email]),
+      firstName: new FormControl('', [
+        Validators.required,
+        Validators.minLength(2),
+        Validators.maxLength(30),
+        AuthValidators.onlyChar()
+      ]),
+      lastName: new FormControl('', [
+        Validators.required,
+        Validators.minLength(2),
+        Validators.maxLength(30),
+        AuthValidators.onlyChar()
+      ]),
+      email: new FormControl('', [
+        Validators.required,
+        AuthValidators.emailRegex()
+      ]),
       password: new FormControl('', [
         Validators.required,
-        Validators.minLength(8)
+        Validators.minLength(8),
+        AuthValidators.password()
       ]),
       confirmPassword: new FormControl('', [Validators.required])
     },
-    CustomValidators.mustMatch('password', 'confirmPassword')
+    AuthValidators.mustMatch('password', 'confirmPassword')
   );
 
-  submitted = false;
 
   constructor(private authService: AuthService,
               private notifierService: NotifierService,
@@ -42,7 +57,38 @@ export class RegisterComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
   }
 
-  // convenience getter for easy access to form fields
+  getErrorMessage(control: AbstractControl): string {
+    if (control.hasError('required')) {
+      return '*Поле обов`язкове!';
+    }
+    if (control.hasError('onlyChar')) {
+      return '*Поле має містити лише літери';
+    }
+    if (control.hasError('minlength')) {
+      return '*Поле має бути не менше 2 символів';
+    }
+    if (control.hasError('maxlength')) {
+      return '*Поле має бути не більше 30 символів';
+    }
+    if (control.hasError('emailRegex')) {
+      return '*Email має бути валідним';
+    }
+    if (control.hasError('mustMatch')) {
+      return '*Паролі не співпадають';
+    }
+    return '';
+  }
+
+  public checkControlUppercase(control: AbstractControl): boolean {
+    return !(!control.value.split('').find((char: any) => !/[a-z]/.test(char) && /[A-Z]/.test(char)) &&
+      control.touched);
+  }
+
+  public checkControlLowercase(control: AbstractControl): boolean {
+    return !(!control.value.split('').find((char: any) => /[a-z]/.test(char) && !/[A-Z]/.test(char)) &&
+      control.touched);
+  }
+
   get f(): any {
     return this.registerForm.controls;
   }
@@ -60,7 +106,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
         this.registerForm.value.firstName,
         this.registerForm.value.lastName,
         this.registerForm.value.email,
-        this.registerForm.value.password).subscribe(
+        this.registerForm.value.password
+      ).subscribe(
         data => {
           console.log(data);
           this.isSuccessful = true;

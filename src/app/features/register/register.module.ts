@@ -11,16 +11,16 @@ import {MatButtonModule} from '@angular/material/button';
 
 @NgModule({
   declarations: [RegisterComponent],
-    imports: [
-        CommonModule,
-        RegisterRoutingModule,
-        FormsModule,
-        MatCardModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatButtonModule,
-        ReactiveFormsModule
-    ]
+  imports: [
+    CommonModule,
+    RegisterRoutingModule,
+    FormsModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    ReactiveFormsModule,
+  ]
 })
 export class RegisterModule {
 }
