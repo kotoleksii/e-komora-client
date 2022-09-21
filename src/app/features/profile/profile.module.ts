@@ -14,7 +14,7 @@ import {RouterModule} from "@angular/router";
     ProfileRoutingModule,
     MatCardModule,
     MatButtonModule,
-    RouterModule,
+    RouterModule
   ]
 })
 

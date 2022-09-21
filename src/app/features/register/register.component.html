@@ -1,47 +1,48 @@
 <div class="register-wrapper" *ngIf="!isSuccessful">
   <mat-card class="register-card">
     <mat-card-content>
-      <form name="form"
-            (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
         <h2>Register</h2>
         <mat-form-field>
-          <input matInput placeholder="First Name" [(ngModel)]="form.firstName" name="firstName" required
-                 minlength="3" maxlength="20" #firstName="ngModel">
-          <mat-error *ngIf="firstName.errors && f.submitted">
-            <mat-error *ngIf="firstName.errors.required">First Name is required!</mat-error>
-            <mat-error *ngIf="firstName.errors.minlength">First Name must be at least 3 characters</mat-error>
-            <mat-error *ngIf="firstName.errors.maxlength">First Name must be at most 20 characters</mat-error>
+          <input matInput placeholder="First Name" formControlName="firstName"
+                 [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }">
+          <mat-error *ngIf="submitted && f.firstName.errors">
+            <mat-error *ngIf="f.firstName.errors.required">First Name is required!</mat-error>
+            <!--            <mat-error *ngIf="firstName.errors.minlength">First Name must be at least 3 characters</mat-error>-->
+            <!--            <mat-error *ngIf="firstName.errors.maxlength">First Name must be at most 20 characters</mat-error>-->
           </mat-error>
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="Last Name" [(ngModel)]="form.lastName" name="lastName" required
-                 minlength="3" maxlength="20" #lastName="ngModel">
-          <mat-error *ngIf="lastName.errors && f.submitted">
-            <mat-error *ngIf="lastName.errors.required">Last Name is required!</mat-error>
-            <mat-error *ngIf="lastName.errors.minlength">Last Name must be at least 3 characters</mat-error>
-            <mat-error *ngIf="lastName.errors.maxlength">Last Name must be at most 20 characters</mat-error>
+          <input matInput placeholder="Last Name" formControlName="lastName"
+                 [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }">
+          <mat-error *ngIf="submitted && f.lastName.errors">
+            <mat-error *ngIf="f.lastName.errors.required">Last Name is required!</mat-error>
+            <!--            <mat-error *ngIf="f.lastName.errors.minlength">Last Name must be at least 3 characters</mat-error>-->
+            <!--            <mat-error *ngIf="f.lastName.errors.maxlength">Last Name must be at most 20 characters</mat-error>-->
           </mat-error>
         </mat-form-field>
         <mat-form-field>
-          <input matInput type="email" placeholder="Email" [(ngModel)]="form.email" name="email" required
-                 email #email="ngModel">
-          <mat-error *ngIf="email.errors && f.submitted">
-            <mat-error *ngIf="email.errors.required">Email is required</mat-error>
-            <mat-error *ngIf="email.errors.email">Email must be a valid email address</mat-error>
+          <input matInput type="email" placeholder="Email" formControlName="email"
+                 [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+          <mat-error *ngIf="submitted && f.email.errors">
+            <mat-error *ngIf="f.email.errors.required">Email is required</mat-error>
+            <mat-error *ngIf="f.email.errors.email">Email must be a valid email address</mat-error>
           </mat-error>
         </mat-form-field>
         <mat-form-field>
-          <input matInput type="password" placeholder="Password" [(ngModel)]="form.password" name="password" required
-                 minlength="6"
-                 #password="ngModel">
-
-          <mat-error *ngIf="password.errors && f.submitted">
-            <div *ngIf="password.errors.required">
-              Password is required
-            </div>
-            <div *ngIf="password.errors.minlength">
-              Password must be at least 6 characters
-            </div>
+          <input matInput type="password" placeholder="Password" formControlName="password"
+                 [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+          <mat-error *ngIf="submitted && f.password.errors">
+            <mat-error *ngIf="f.password.errors.required">Password is required</mat-error>
+            <mat-error *ngIf="f.password.errors.minlength">Password must be at least 6 characters</mat-error>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput type="password" placeholder="Confirm Password" formControlName="confirmPassword"
+                 [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }">
+          <mat-error *ngIf="submitted && f.confirmPassword.errors">
+            <mat-error *ngIf="f.confirmPassword.errors.required">Password is required</mat-error>
+            <mat-error *ngIf="f.confirmPassword.errors.mustMatch">Password and confirm not match</mat-error>
           </mat-error>
         </mat-form-field>
         <button mat-raised-button color="primary">Submit</button>
