@@ -6,58 +6,47 @@
         <mat-form-field>
           <input matInput placeholder="Ім`я" formControlName="firstName"
                  [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" required>
-          <mat-error *ngIf="submitted && f.lastName.errors">
-            <mat-error *ngIf="f.firstName.invalid">{{getErrorMessage(f.firstName)}}</mat-error>
-          </mat-error>
+          <mat-error *ngIf="f.firstName.invalid">{{errorMsg(f.firstName, 'Ім`я')}}</mat-error>
         </mat-form-field>
         <mat-form-field>
           <input matInput placeholder="Прізвище" formControlName="lastName"
                  [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }" required>
-          <mat-error *ngIf="submitted && f.lastName.errors">
-            <mat-error *ngIf="f.lastName.invalid">{{getErrorMessage(f.lastName)}}</mat-error>
-          </mat-error>
+          <mat-error *ngIf="f.lastName.invalid">{{errorMsg(f.lastName, 'Прізвище')}}</mat-error>
         </mat-form-field>
         <mat-form-field>
           <input matInput type="email" placeholder="Email" formControlName="email"
                  [ngClass]="{ 'is-invalid': submitted && f.email.errors }" required>
-          <mat-error *ngIf="submitted && f.email.errors">
-            <mat-error *ngIf="f.email.invalid">{{getErrorMessage(f.email)}}</mat-error>
-          </mat-error>
+          <mat-error *ngIf="f.email.invalid">{{errorMsg(f.email, 'Email')}}</mat-error>
         </mat-form-field>
         <mat-form-field>
           <input matInput [type]="hide ? 'password' : 'text'" placeholder="Пароль" formControlName="password"
                  [ngClass]="{ 'is-invalid': submitted && f.password.errors }" required>
           <i matSuffix (click)="hide = !hide" class="{{hide ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'}}"></i>
-<!--          TODO: fix bug-->
-          <!--          <mat-error *ngIf="submitted && f.password.errors">-->
-          <!--            <mat-error *ngIf="f.password.errors.required; else minLengthElem;">*Пароль обов`язковий!</mat-error>-->
-          <!--            <ng-template #minLengthElem>-->
-          <!--              <mat-error *ngIf="f.password.errors.minlength; else checkControlUppercaseElem">-->
-          <!--                *Пароль має бути не менше 8 символів-->
-          <!--              </mat-error>-->
-          <!--            </ng-template>-->
-          <!--            <ng-template #checkControlUppercaseElem>-->
-          <!--              <mat-error *ngIf="!checkControlUppercase(f.password); else checkControlLowercaseElem">-->
-          <!--                *Пароль має містити хоча б одну велику літеру-->
-          <!--              </mat-error>-->
-          <!--            </ng-template>-->
-          <!--            <ng-template #checkControlLowercaseElem>-->
-          <!--              <mat-error *ngIf="!checkControlLowercase(f.password)">-->
-          <!--                *Пароль має містити хоча б одну маленьку літеру-->
-          <!--              </mat-error>-->
-          <!--            </ng-template>-->
-          <!--          </mat-error>-->
+          <mat-error *ngIf="f.password.errors?.required; else minLengthElem">*Пароль обов`язковий!</mat-error>
+          <ng-template #minLengthElem>
+            <mat-error *ngIf="f.password.errors?.minlength; else checkControlUppercaseElem">
+              *Пароль має бути не менше 8 символів
+            </mat-error>
+          </ng-template>
+          <ng-template #checkControlUppercaseElem>
+            <mat-error *ngIf="!checkControlUppercase(f.password); else checkControlLowercaseElem">
+              *Пароль має містити хоча б одну велику літеру
+            </mat-error>
+          </ng-template>
+          <ng-template #checkControlLowercaseElem>
+            <mat-error *ngIf="!checkControlLowercase(f.password)">
+              *Пароль має містити хоча б одну маленьку літеру
+            </mat-error>
+          </ng-template>
         </mat-form-field>
         <mat-form-field>
           <input matInput [type]="hide ? 'password' : 'text'" placeholder="Повтор Паролю"
                  formControlName="confirmPassword"
                  [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }" required>
-          <mat-error *ngIf="submitted && f.confirmPassword.errors">
-            <mat-error *ngIf="f.confirmPassword.errors.required">*Повтор паролю обов`язково!</mat-error>
-            <mat-error *ngIf="f.confirmPassword.errors.mustMatch">*Паролі не співпадають</mat-error>
-          </mat-error>
+          <mat-error *ngIf="f.confirmPassword.errors?.required">*Повтор паролю обов`язково!</mat-error>
+          <mat-error *ngIf="f.confirmPassword.errors?.mustMatch">*Паролі не співпадають</mat-error>
         </mat-form-field>
-        <button mat-raised-button color="primary">Далі</button>
+        <button mat-raised-button color="primary" [disabled]='!registerForm.valid'>Далі</button>
       </form>
     </mat-card-content>
   </mat-card>

@@ -1,0 +1,28 @@
+.board-hr-wrapper {
+  mat-card {
+    margin: 20px;
+    border-radius: 20px;
+  }
+
+  mat-toolbar {
+    border-radius: 10px;
+    padding: 12px 0;
+    background: #424242;
+  }
+
+  .title-spacer {
+    flex: 1 1 auto;
+  }
+
+  .search-form-fileld {
+    margin-right: 20px;
+  }
+
+  .hr-table-container {
+    overflow: auto;
+
+    table {
+      width: 100%;
+    }
+  }
+}

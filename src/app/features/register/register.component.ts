@@ -15,6 +15,7 @@ import {AuthValidators} from '../../shared/classes/AuthValidators';
 
 export class RegisterComponent implements OnInit, OnDestroy {
   private subs: SubSink = new SubSink();
+  errorMsg = AuthValidators.getErrorMessage;
   isSuccessful = false;
   isSignUpFailed = false;
   submitted = false;
@@ -38,6 +39,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
         Validators.required,
         AuthValidators.emailRegex()
       ]),
+      post: new FormControl(''),
       password: new FormControl('', [
         Validators.required,
         Validators.minLength(8),
@@ -55,28 +57,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-  }
-
-  getErrorMessage(control: AbstractControl): string {
-    if (control.hasError('required')) {
-      return '*Поле обов`язкове!';
-    }
-    if (control.hasError('onlyChar')) {
-      return '*Поле має містити лише літери';
-    }
-    if (control.hasError('minlength')) {
-      return '*Поле має бути не менше 2 символів';
-    }
-    if (control.hasError('maxlength')) {
-      return '*Поле має бути не більше 30 символів';
-    }
-    if (control.hasError('emailRegex')) {
-      return '*Email має бути валідним';
-    }
-    if (control.hasError('mustMatch')) {
-      return '*Паролі не співпадають';
-    }
-    return '';
   }
 
   public checkControlUppercase(control: AbstractControl): boolean {
@@ -106,6 +86,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
         this.registerForm.value.firstName,
         this.registerForm.value.lastName,
         this.registerForm.value.email,
+        this.registerForm.value.post,
         this.registerForm.value.password
       ).subscribe(
         data => {

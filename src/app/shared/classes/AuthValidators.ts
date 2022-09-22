@@ -9,6 +9,28 @@ export class AuthValidators {
   constructor() {
   }
 
+  public static getErrorMessage(control: AbstractControl, field: string): string {
+    if (control.hasError('required')) {
+      return `*Поле ${field} обов\`язкове!`;
+    }
+    if (control.hasError('onlyChar')) {
+      return '*Поле має містити лише літери';
+    }
+    if (control.hasError('minlength')) {
+      return '*Поле має містити більше символів';
+    }
+    if (control.hasError('maxlength')) {
+      return '*Поле містить забагато символів';
+    }
+    if (control.hasError('emailRegex')) {
+      return '*Email має бути валідним';
+    }
+    if (control.hasError('mustMatch')) {
+      return '*Паролі не співпадають';
+    }
+    return '';
+  }
+
   public static emailRegex(): ValidatorFn {
     return (control: AbstractControl): { [key: string]: boolean } | null => {
       if (control.value == '') {

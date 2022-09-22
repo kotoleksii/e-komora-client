@@ -1,0 +1,65 @@
+<div class="user-action-form-wrapper">
+  <form [formGroup]="userForm" novalidate (ngSubmit)="saveUser()">
+    <mat-card class="mat-elevation-z6">
+      <mat-toolbar>
+        <mat-toolbar-row>
+          <span class="view-card-title">Нова картка</span>
+          <span class="title-spacer"></span>
+          <mat-card-actions>
+            <button mat-mini-fab color="accent" style="margin-right:10px; background-color:darkgray" type="submit"
+                    [disabled]='!userForm.valid'>
+              <i class="fa-solid fa-floppy-disk"></i>
+            </button>
+            <a mat-mini-fab color="warn" style="margin-right:10px; " [routerLink]="[ '', 'dashboard', 'hr' ]">
+              <i class="fa-solid fa-xmark"></i>
+            </a>
+          </mat-card-actions>
+        </mat-toolbar-row>
+      </mat-toolbar>
+
+      <mat-card-content style="margin: 5 0 5 10px;">
+        <div class="form-card">
+          <mat-grid-list cols="10" rowHeight="80px">
+            <mat-grid-tile [colspan]="fieldColspan">
+              <mat-form-field class="form-field" appearance="outline">
+                <mat-label>Ім`я</mat-label>
+                <input matInput id="firstNameId" type="text" placeholder="Ім`я"
+                       formControlName="firstName"/>
+                <mat-error *ngIf="f.firstName.invalid">{{errorMsg(f.firstName, 'Ім`я')}}</mat-error>
+              </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile [colspan]="fieldColspan">
+              <mat-form-field class="form-field" appearance="outline">
+                <mat-label>Прізвище</mat-label>
+                <input matInput id="lastNameId" type="text" placeholder="Прізвище"
+                       formControlName="lastName"/>
+                <mat-error *ngIf="f.lastName.invalid">{{errorMsg(f.lastName, 'Прізвище')}}</mat-error>
+              </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile [colspan]="fieldColspan">
+              <mat-form-field class="form-field" appearance="outline">
+                <mat-label>Email</mat-label>
+                <input matInput id="email" type="email" placeholder="Email " formControlName="email"/>
+                <mat-error *ngIf="f.email.invalid">{{errorMsg(f.email, 'Email')}}</mat-error>
+              </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile [colspan]="fieldColspan">
+              <mat-form-field class="form-field" appearance="outline">
+                <mat-label>Посада</mat-label>
+                <input matInput id="post" type="text" placeholder="Посада" formControlName="post"/>
+                <mat-error *ngIf="f.post.invalid">{{errorMsg(f.post, 'Посада')}}</mat-error>
+              </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile [colspan]="fieldColspan">
+              <mat-form-field class="form-field" appearance="outline">
+                <mat-label>Пароль</mat-label>
+                <input matInput id="password" type="text" placeholder="Пароль" formControlName="password"/>
+                <mat-error *ngIf="f.password.invalid">{{errorMsg(f.password, 'Пароль')}}</mat-error>
+              </mat-form-field>
+            </mat-grid-tile>
+          </mat-grid-list>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </form>
+</div>

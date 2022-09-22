@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   isLoggedIn = false;
   isLoginFailed = false;
   errorMessage = '';
-  nickname = '';
+  username = '';
   roles: string[] = [];
 
   constructor(private authService: AuthService,
@@ -32,8 +32,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     if (this.tokenStorage.getToken()) {
       this.isLoggedIn = true;
       this.roles = this.tokenStorage.getUser().roles;
-      this.nickname = this.tokenStorage.getUser().firstName;
-      this.notifierService.notify('success', `👋 Вітаємо Вас знову, ${this.nickname}!`);
+      this.username = this.tokenStorage.getUser().firstName;
+      this.notifierService.notify('success', `👋 Вітаємо Вас знову, ${this.username}!`);
       this.reloadByRole(this.roles[0]);
     }
   }
@@ -50,14 +50,15 @@ export class LoginComponent implements OnInit, OnDestroy {
           this.isLoginFailed = false;
           this.isLoggedIn = true;
           this.roles = this.tokenStorage.getUser().roles;
-          this.nickname = this.tokenStorage.getUser().firstName;
-          this.notifierService.notify('success', `👋 Привіт, ${this.nickname}!`);
+          this.username = this.tokenStorage.getUser().firstName;
+          this.notifierService.notify('success', `👋 Привіт, ${this.username}!`);
           this.reloadByRole(this.roles[0]);
         },
         err => {
           this.isLoginFailed = true;
           this.errorMessage = err.error?.message;
           this.notifierService.notify('error', 'Login failed!');
+          // this.reloadByRole(this.roles[0]);
         }
       ));
   }
