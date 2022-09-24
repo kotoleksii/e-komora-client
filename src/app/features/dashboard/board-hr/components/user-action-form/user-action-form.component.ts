@@ -1,10 +1,12 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {UserService} from '../../../../../shared/_services/user.service';
 import {FormBuilder, FormControl, Validators} from '@angular/forms';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {AuthValidators} from '../../../../../shared/classes/AuthValidators';
 import {SubSink} from 'subsink';
 import {AuthService} from '../../../../../shared/_services/auth.service';
+import {first} from 'rxjs/operators';
+import {NotifierService} from 'angular-notifier';
 
 @Component({
   selector: 'app-user-action-form',
@@ -16,18 +18,26 @@ export class UserActionFormComponent implements OnInit, OnDestroy {
   errorMsg = AuthValidators.getErrorMessage;
   userForm: any;
   user: any;
-  errorMessage = '';
+  username = '';
   imageWidth = 100;
-  fieldColspan = 3;
   imageMargin = 2;
+  isAddMode = true;
+  pageTitle = '';
+  userId = 0;
 
   constructor(private userService: UserService,
               private authService: AuthService,
+              private notifierService: NotifierService,
               private fb: FormBuilder,
+              private route: ActivatedRoute,
               private router: Router) {
   }
 
   ngOnInit(): void {
+    this.userId = this.route.snapshot.params.id;
+    this.isAddMode = !this.userId;
+    this.pageTitle = 'Нова картка';
+
     this.userForm = this.fb.group({
       firstName: new FormControl('', [
         Validators.required,
@@ -54,25 +64,64 @@ export class UserActionFormComponent implements OnInit, OnDestroy {
         AuthValidators.password()
       ]),
     });
+
+    if (!this.isAddMode) {
+      this.pageTitle = 'Редагування картки працівника';
+      this.userService.getById(this.userId)
+        .pipe(first())
+        .subscribe((res) => {
+          this.user = res;
+          if (this.user.avatar == null) {
+            this.user.avatar = './assets/images/profile-img.png';
+          }
+          this.userForm.patchValue(res);
+        });
+    }
   }
 
   get f(): any {
     return this.userForm.controls;
   }
 
-  saveUser(): void {
-    if (this.userForm.dirty && this.userForm.valid) {
-      // Copy the form values over the customer object values
-      const user = Object.assign({}, this.user, this.userForm.value);
-
-      this.subs.add(this.authService.register(user.firstName, user.lastName, user.email, user.post, user.password)
-        .subscribe(
-          () => this.router.navigate(['dashboard', 'hr']).then(),
-          (error: any) => this.errorMessage = (error as any)
-        ));
-    } else if (!this.userForm.dirty) {
-      this.router.navigate(['dashboard', 'hr']).then();
+  onSubmit(): void {
+    if (this.userForm.invalid) {
+      return;
     }
+    if (this.isAddMode) {
+      this.createUser();
+    } else {
+      this.updateUser();
+    }
+  }
+
+  private createUser(): void {
+    const user = Object.assign({}, this.user, this.userForm.value);
+
+    this.subs.add(this.authService.register(user.firstName, user.lastName, user.email, user.post, user.password)
+      .pipe(first())
+      .subscribe({
+        next: () => {
+          this.notifierService.notify('success', `Користувача ${user.firstName} ${user.lastName} створено!`);
+          this.router.navigate(['dashboard', 'hr']).then();
+        },
+        error: error => {
+          this.notifierService.notify('error', error);
+        }
+      }));
+  }
+
+  private updateUser(): void {
+    this.userService.update(this.userId, this.userForm.value)
+      .pipe(first())
+      .subscribe({
+        next: () => {
+          this.notifierService.notify('success', `Користувача оновлено!`);
+          this.router.navigate(['dashboard', 'hr']).then();
+        },
+        error: error => {
+          this.notifierService.notify('error', error);
+        }
+      });
   }
 
   ngOnDestroy(): void {

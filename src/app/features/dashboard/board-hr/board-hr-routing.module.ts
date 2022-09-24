@@ -3,6 +3,7 @@ import {CommonModule} from '@angular/common';
 import {RouterModule, Routes} from '@angular/router';
 import {BoardHrComponent} from './board-hr.component';
 import {UserActionFormComponent} from './components/user-action-form/user-action-form.component';
+import {UserDetailsComponent} from './components/user-details/user-details.component';
 
 const routes: Routes = [
   {
@@ -11,6 +12,14 @@ const routes: Routes = [
   },
   {
     path: 'user/add',
+    component: UserActionFormComponent
+  },
+  {
+    path: 'user/details/:id',
+    component: UserDetailsComponent
+  },
+  {
+    path: 'user/edit/:id',
     component: UserActionFormComponent
   }
 ];

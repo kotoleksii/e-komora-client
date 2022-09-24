@@ -16,7 +16,7 @@ export class BoardHrComponent implements OnInit, OnDestroy {
   @ViewChild(MatSort) sort: MatSort | undefined;
 
   public dataSource: MatTableDataSource<any> | any;
-  public displayedColumns = ['avatar', 'firstName', 'lastName', 'post'];
+  public displayedColumns = ['avatar', 'firstName', 'lastName', 'post', 'id'];
   public users: any;
 
   imageWidth = 30;

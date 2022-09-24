@@ -15,9 +15,12 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatCardModule} from '@angular/material/card';
 import {UserActionFormComponent} from './components/user-action-form/user-action-form.component';
 import {MatGridListModule} from '@angular/material/grid-list';
+import { UserDetailsComponent } from './components/user-details/user-details.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
-  declarations: [BoardHrComponent, UserActionFormComponent],
+  declarations: [BoardHrComponent, UserActionFormComponent, UserDetailsComponent],
   imports: [
     CommonModule,
     BoardHrRoutingModule,
@@ -33,7 +36,9 @@ import {MatGridListModule} from '@angular/material/grid-list';
     MatToolbarModule,
     MatCardModule,
     FormsModule,
-    MatGridListModule
+    MatGridListModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ]
 })
 export class BoardHrModule {
