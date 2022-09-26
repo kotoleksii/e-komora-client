@@ -28,7 +28,7 @@ export class HeaderComponent implements OnInit {
       this.showHRBoard = this.roles.includes('ROLE_HR');
       this.showEmployeeBoard = this.roles.includes('ROLE_EMPLOYEE');
 
-      this.username = `${user.firstName} ${user.lastName.slice(0, 1)}.`;
+      this.username = `${user.firstName} ${user.lastName?.slice(0, 1)}.`;
     }
   }
 

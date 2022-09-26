@@ -21,25 +21,25 @@ import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [BoardHrComponent, UserActionFormComponent, UserDetailsComponent],
-  imports: [
-    CommonModule,
-    BoardHrRoutingModule,
-    MatFormFieldModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatInputModule,
-    MatSortModule,
-    MatButtonModule,
-    RouterModule,
-    ReactiveFormsModule,
-    MatListModule,
-    MatToolbarModule,
-    MatCardModule,
-    FormsModule,
-    MatGridListModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-  ]
+    imports: [
+        CommonModule,
+        BoardHrRoutingModule,
+        MatFormFieldModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatInputModule,
+        MatSortModule,
+        MatButtonModule,
+        RouterModule,
+        ReactiveFormsModule,
+        MatListModule,
+        MatToolbarModule,
+        MatCardModule,
+        FormsModule,
+        MatGridListModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+    ]
 })
 export class BoardHrModule {
 }

@@ -3,18 +3,22 @@
     <mat-card class="mat-elevation-z6">
       <mat-toolbar>
         <mat-toolbar-row>
-          <a class="btn-action" mat-icon-button [routerLink]="[ '', 'dashboard', 'hr' ]">
-            <i class="fa-solid fa-arrow-left"></i>
-          </a>
-          <span *ngIf="isAddMode" class="view-card-title">{{pageTitle}}</span>
-          <span *ngIf="!isAddMode" class="view-card-title">{{pageTitle}}</span>
-          <span class="title-spacer"></span>
-          <mat-card-actions>
+          <div>
+            <a class="btn-action" mat-icon-button [routerLink]="[ '', 'dashboard', 'hr' ]">
+              <i class="fa-solid fa-arrow-left"></i>
+            </a>
+          </div>
+          <div>
+            <span *ngIf="isAddMode" class="view-card-title">{{pageTitle}}</span>
+            <span *ngIf="!isAddMode" class="view-card-title">{{pageTitle}}</span>
+          </div>
+          <!--          <span class="title-spacer"></span>-->
+          <div>
             <button class="btn-action" mat-icon-button color="accent" type="submit"
                     [disabled]='!userForm.valid'>
               <i class="fa-solid fa-floppy-disk"></i>
             </button>
-          </mat-card-actions>
+          </div>
         </mat-toolbar-row>
       </mat-toolbar>
 
@@ -52,17 +56,19 @@
             <mat-error *ngIf="f.email.invalid">{{errorMsg(f.email, 'Email')}}</mat-error>
           </mat-form-field>
 
-          <mat-form-field class="form-field" appearance="outline">
-            <mat-label>Посада</mat-label>
-            <input matInput id="post" type="text" placeholder="Посада" formControlName="post"/>
-            <mat-error *ngIf="f.post.invalid">{{errorMsg(f.post, 'Посада')}}</mat-error>
-          </mat-form-field>
+<!--          <span>-->
+<!--            <mat-form-field class="form-field" appearance="outline">-->
+<!--              <mat-label>Посада</mat-label>-->
+<!--              <input matInput id="post" type="text" placeholder="Посада" formControlName="post"/>-->
+<!--              &lt;!&ndash;              <mat-error *ngIf="f.post.invalid">{{errorMsg(f.post, 'Посада')}}</mat-error>&ndash;&gt;-->
+<!--            </mat-form-field>-->
+<!--          </span>-->
 
-          <mat-form-field *ngIf="isAddMode" class="form-field" appearance="outline">
-            <mat-label>Пароль</mat-label>
-            <input matInput id="password" type="text" placeholder="Пароль" formControlName="password"/>
-            <mat-error *ngIf="f.password.invalid">{{errorMsg(f.password, 'Пароль')}}</mat-error>
-          </mat-form-field>
+          <!--          <mat-form-field *ngIf="isAddMode" class="form-field" appearance="outline">-->
+          <!--            <mat-label>Пароль</mat-label>-->
+          <!--            <input matInput id="password" type="text" placeholder="Пароль" formControlName="password"/>-->
+          <!--            <mat-error *ngIf="f.password.invalid">{{errorMsg(f.password, 'Пароль')}}</mat-error>-->
+          <!--          </mat-form-field>-->
         </div>
       </mat-card-content>
     </mat-card>

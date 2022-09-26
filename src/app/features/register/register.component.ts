@@ -39,7 +39,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
         Validators.required,
         AuthValidators.emailRegex()
       ]),
-      post: new FormControl(''),
       password: new FormControl('', [
         Validators.required,
         Validators.minLength(8),
@@ -86,7 +85,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
         this.registerForm.value.firstName,
         this.registerForm.value.lastName,
         this.registerForm.value.email,
-        this.registerForm.value.post,
         this.registerForm.value.password
       ).subscribe(
         data => {

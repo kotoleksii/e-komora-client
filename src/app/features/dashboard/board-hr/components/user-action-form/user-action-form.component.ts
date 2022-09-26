@@ -17,6 +17,7 @@ export class UserActionFormComponent implements OnInit, OnDestroy {
   private subs: SubSink = new SubSink();
   errorMsg = AuthValidators.getErrorMessage;
   userForm: any;
+  profileForm: any;
   user: any;
   username = '';
   imageWidth = 100;
@@ -55,14 +56,12 @@ export class UserActionFormComponent implements OnInit, OnDestroy {
         Validators.required,
         AuthValidators.emailRegex()
       ]),
-      post: new FormControl('', [
-        Validators.required
-      ]),
-      password: new FormControl('', [
-        Validators.required,
-        Validators.minLength(8),
-        AuthValidators.password()
-      ]),
+      profile: this.fb.group({
+        post: new FormControl('' )
+      })
+    });
+    this.profileForm = this.fb.group({
+      post: new FormControl('' )
     });
 
     if (!this.isAddMode) {
@@ -71,6 +70,7 @@ export class UserActionFormComponent implements OnInit, OnDestroy {
         .pipe(first())
         .subscribe((res) => {
           this.user = res;
+          console.log(this.user);
           if (this.user.avatar == null) {
             this.user.avatar = './assets/images/profile-img.png';
           }
@@ -97,7 +97,7 @@ export class UserActionFormComponent implements OnInit, OnDestroy {
   private createUser(): void {
     const user = Object.assign({}, this.user, this.userForm.value);
 
-    this.subs.add(this.authService.register(user.firstName, user.lastName, user.email, user.post, user.password)
+    this.subs.add(this.authService.register(user.firstName, user.lastName, user.email, user.password)
       .pipe(first())
       .subscribe({
         next: () => {
@@ -105,7 +105,11 @@ export class UserActionFormComponent implements OnInit, OnDestroy {
           this.router.navigate(['dashboard', 'hr']).then();
         },
         error: error => {
-          this.notifierService.notify('error', error);
+          if (error.status === 400) {
+            this.notifierService.notify('error', '🙈 Ймовірно користувач з таким Email вже існує');
+            return;
+          }
+          this.notifierService.notify('error', error.message);
         }
       }));
   }
