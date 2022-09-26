@@ -24,14 +24,6 @@ export class UserService {
     return this.http.put(`${API_URL}users/${id}`, data);
   }
 
-  // public create(body: any): Observable<any> {
-  //   return this.http.post(API_URL + 'users/', body);
-  // }
-
-  public editById(id: number, body: any): Observable<any> {
-    return this.http.patch(API_URL + 'users/' + id, body);
-  }
-
   public deleteById(id: any): Observable<any> {
     return this.http.delete<any>(API_URL + 'users/' + id);
   }

@@ -56,13 +56,11 @@
             <mat-error *ngIf="f.email.invalid">{{errorMsg(f.email, 'Email')}}</mat-error>
           </mat-form-field>
 
-<!--          <span>-->
-<!--            <mat-form-field class="form-field" appearance="outline">-->
-<!--              <mat-label>Посада</mat-label>-->
-<!--              <input matInput id="post" type="text" placeholder="Посада" formControlName="post"/>-->
-<!--              &lt;!&ndash;              <mat-error *ngIf="f.post.invalid">{{errorMsg(f.post, 'Посада')}}</mat-error>&ndash;&gt;-->
-<!--            </mat-form-field>-->
-<!--          </span>-->
+          <mat-form-field formGroupName="profile" class="form-field" appearance="outline">
+            <mat-label>Посада</mat-label>
+            <input matInput id="post" type="text" placeholder="Посада" formControlName="post"/>
+            <!--              <mat-error *ngIf="f.post.invalid">{{errorMsg(f.post, 'Посада')}}</mat-error>-->
+          </mat-form-field>
 
           <!--          <mat-form-field *ngIf="isAddMode" class="form-field" appearance="outline">-->
           <!--            <mat-label>Пароль</mat-label>-->

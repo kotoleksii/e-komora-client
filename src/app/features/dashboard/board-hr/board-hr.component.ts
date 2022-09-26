@@ -31,7 +31,7 @@ export class BoardHrComponent implements OnInit, OnDestroy {
 
   public getAndSetUserItems(): void {
     this.subs.add(
-      this.userService.getAll().subscribe((data: IUser[]) => {
+      this.userService.getAll().subscribe((data: any) => {
         this.dataSource = new MatTableDataSource<any>(data);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;

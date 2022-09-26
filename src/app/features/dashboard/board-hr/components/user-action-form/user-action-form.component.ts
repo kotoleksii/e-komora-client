@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {UserService} from '../../../../../shared/_services/user.service';
-import {FormBuilder, FormControl, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AuthValidators} from '../../../../../shared/classes/AuthValidators';
 import {SubSink} from 'subsink';
@@ -17,7 +17,6 @@ export class UserActionFormComponent implements OnInit, OnDestroy {
   private subs: SubSink = new SubSink();
   errorMsg = AuthValidators.getErrorMessage;
   userForm: any;
-  profileForm: any;
   user: any;
   username = '';
   imageWidth = 100;
@@ -57,11 +56,8 @@ export class UserActionFormComponent implements OnInit, OnDestroy {
         AuthValidators.emailRegex()
       ]),
       profile: this.fb.group({
-        post: new FormControl('' )
+        post: new FormControl('')
       })
-    });
-    this.profileForm = this.fb.group({
-      post: new FormControl('' )
     });
 
     if (!this.isAddMode) {
