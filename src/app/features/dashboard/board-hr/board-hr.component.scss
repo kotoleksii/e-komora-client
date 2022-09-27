@@ -1,5 +1,6 @@
 .board-hr-wrapper {
   mat-card {
+    height: 100%;
     margin: 20px;
     border-radius: 20px;
   }
@@ -23,6 +24,9 @@
 
     table {
       width: 100%;
+    }
+
+    mat-paginator {
     }
   }
 }

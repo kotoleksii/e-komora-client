@@ -1,7 +1,12 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
-import {UserService} from "../../../../../shared/_services/user.service";
-import {IUser} from "../../../../../shared/interfaces/user";
+import {ActivatedRoute, Router} from '@angular/router';
+import {UserService} from '../../../../../shared/_services/user.service';
+import {IUser} from '../../../../../shared/interfaces/user';
+import {MatDialog} from '@angular/material/dialog';
+import {
+  ConfirmDialogModalComponent
+} from "../../../../../shared/modals/confirm-dialog-modal/confirm-dialog-modal.component";
+import {NotifierService} from "angular-notifier";
 
 @Component({
   selector: 'app-user-details',
@@ -20,6 +25,8 @@ export class UserDetailsComponent implements OnInit {
   constructor(
     private userService: UserService,
     private route: ActivatedRoute,
+    public dialog: MatDialog,
+    private notifierService: NotifierService,
     public router: Router) {
   }
 
@@ -38,8 +45,8 @@ export class UserDetailsComponent implements OnInit {
       });
   }
 
-  deleteUser(): void {
-    this.userService.deleteById(this.currentUser.id)
+  deleteUser(id: number): void {
+    this.userService.deleteById(id)
       .subscribe({
         next: (res) => {
           console.log(res);
@@ -47,5 +54,24 @@ export class UserDetailsComponent implements OnInit {
         },
         error: (e) => console.error(e)
       });
+  }
+
+  openConfirmDialog(id: number, dataToDelete?: any): void {
+    const dialogRef = this.dialog.open(ConfirmDialogModalComponent, {
+      panelClass: 'confirm-dialog-container',
+      data: {
+        title: 'Ви впевнені?',
+        message: `Цю дію не можна скасувати. Це назавжди видалить <b>${dataToDelete.firstName + ' ' + dataToDelete.lastName}</b>.`,
+        initialValue: dataToDelete,
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(dialogResult => {
+      if (dialogResult) {
+        this.notifierService.notify('success', 'Видалення ' + dataToDelete.lastName + ' успішне!');
+        this.deleteUser(id);
+      }
+      console.log(dialogResult);
+    });
   }
 }

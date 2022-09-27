@@ -1,0 +1,22 @@
+<div class="confirm-dialog-wrapper">
+  <mat-card class="confirm-card" [formGroup]="deleteForm">
+    <mat-card-header class="confirm-card-header">
+      <span class="title-spacer"></span>
+      <button class="btn-close" mat-icon-button (click)="onDismiss()"><i class="fa-solid fa-xmark"></i></button>
+    </mat-card-header>
+    <mat-card-content class="confirm-card-content">
+      <h2 mat-dialog-title>{{data.title}}</h2>
+      <p [innerHTML]="data.message"></p>
+      <div class="confirm-input">
+        <p>Будь-ласка введіть <b>{{confirmPhrase}}</b> для підтвердження</p>
+        <mat-form-field appearance="outline" color="accent">
+          <input matInput type="text" formControlName="confirmPhrase" required>
+        </mat-form-field>
+        <button style="width: 100%" class="btn-confirm" mat-raised-button color="primary"
+                (click)="onConfirm()" [disabled]="deleteForm.value.confirmPhrase != confirmPhrase">
+          Я розумію наслідки, видалити
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

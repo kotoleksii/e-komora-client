@@ -15,31 +15,33 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatCardModule} from '@angular/material/card';
 import {UserActionFormComponent} from './components/user-action-form/user-action-form.component';
 import {MatGridListModule} from '@angular/material/grid-list';
-import { UserDetailsComponent } from './components/user-details/user-details.component';
+import {UserDetailsComponent} from './components/user-details/user-details.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
+import {MatNativeDateModule} from '@angular/material/core';
+import {ConfirmDialogModalModule} from 'src/app/shared/modals/confirm-dialog-modal/confirm-dialog-modal.module';
 
 @NgModule({
   declarations: [BoardHrComponent, UserActionFormComponent, UserDetailsComponent],
-    imports: [
-        CommonModule,
-        BoardHrRoutingModule,
-        MatFormFieldModule,
-        MatTableModule,
-        MatPaginatorModule,
-        MatInputModule,
-        MatSortModule,
-        MatButtonModule,
-        RouterModule,
-        ReactiveFormsModule,
-        MatListModule,
-        MatToolbarModule,
-        MatCardModule,
-        FormsModule,
-        MatGridListModule,
-        MatDatepickerModule,
-        MatNativeDateModule,
-    ]
+  imports: [
+    CommonModule,
+    BoardHrRoutingModule,
+    MatFormFieldModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatInputModule,
+    MatSortModule,
+    MatButtonModule,
+    RouterModule,
+    ReactiveFormsModule,
+    MatListModule,
+    MatToolbarModule,
+    MatCardModule,
+    FormsModule,
+    MatGridListModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    ConfirmDialogModalModule,
+  ]
 })
 export class BoardHrModule {
 }

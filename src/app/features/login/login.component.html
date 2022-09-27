@@ -3,22 +3,29 @@
     <mat-card-content>
       <form name="form"
             (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
-        <h2>Вхід</h2>
-        <mat-form-field>
-          <input matInput placeholder="Email" [(ngModel)]="form.email" name="email" required
+        <div class="form-title">
+          <h2>Вхід</h2>
+          <p>У Вас немає облікового запису?</p>
+          <a [routerLink]="['','register']">Створити акаунт</a>
+        </div>
+        <mat-form-field appearance="outline" color="accent">
+          <mat-label>E-mail</mat-label>
+          <input matInput placeholder="E-mail" [(ngModel)]="form.email" name="email" required
                  #email="ngModel">
-          <mat-error *ngIf="email.errors && f.submitted">Username is required!</mat-error>
+          <mat-error *ngIf="email.errors && f.submitted">Email is required!</mat-error>
         </mat-form-field>
-        <mat-form-field>
-          <input matInput type="password" placeholder="Пароль" [(ngModel)]="form.password" name="password" required
+        <mat-form-field appearance="outline" color="accent">
+          <mat-label>Пароль</mat-label>
+          <input matInput [type]="hide ? 'password' : 'text'" placeholder="Пароль" [(ngModel)]="form.password" name="password" required
                  minlength="6"
                  #password="ngModel">
+          <i matSuffix (click)="hide = !hide" class="{{hide ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'}}"></i>
           <mat-error *ngIf="password.errors && f.submitted">
             <mat-error *ngIf="password.errors.required">Password is required</mat-error>
             <mat-error *ngIf="password.errors.minlength">Password must be at least 6 characters</mat-error>
           </mat-error>
         </mat-form-field>
-        <button mat-raised-button color="primary">Далі</button>
+        <button class="btn-next" mat-raised-button color="accent" [disabled]='f.form.invalid'>Продовжити</button>
       </form>
     </mat-card-content>
   </mat-card>

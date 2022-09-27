@@ -12,6 +12,7 @@ import {SubSink} from 'subsink';
 })
 export class LoginComponent implements OnInit, OnDestroy {
   private subs: SubSink = new SubSink();
+  hide = true;
   form: any = {
     email: null,
     password: null

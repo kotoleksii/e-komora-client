@@ -1,0 +1,54 @@
+.confirm-dialog-wrapper {
+
+  .confirm-card {
+    padding: 20px;
+    border-radius: 20px;
+
+    .confirm-card-header {
+      display: flex;
+
+      .title-spacer {
+        flex: 1 1 auto;
+      }
+
+      .btn-close {
+        .fa-solid:hover {
+          color: #548ed9;
+        }
+      }
+    }
+
+    .confirm-card-content {
+      .mat-dialog-title {
+        font-size: 2rem;
+      }
+
+      mat-form-field {
+        width: 100%;
+      }
+
+      .btn-confirm {
+        width: 100%;
+        padding: 8px 0;
+        background: #f05247;
+        color: #000000;
+        font-size: 1rem;
+        font-weight: 400;
+      }
+
+      .btn-confirm:disabled,
+      .btn-confirm[disabled] {
+        background-color: #cccccc;
+        color: #f05247;
+      }
+    }
+  }
+}
+
+.mat-dialog-container {
+  background: transparent;
+}
+
+:host ::ng-deep .mat-button-focus-overlay {
+  display: none;
+}

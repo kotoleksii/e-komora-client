@@ -8,6 +8,8 @@ import {TokenStorageService} from '../../shared/_services/token-storage.service'
 })
 export class HeaderComponent implements OnInit {
   private roles: string[] = [];
+  logo = 'Є-Комора';
+  flagUA = './assets/images/flag-ukraine.png';
   isLoggedIn = false;
   showAccountantBoard = false;
   showHRBoard = false;

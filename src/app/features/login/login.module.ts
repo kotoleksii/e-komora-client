@@ -6,18 +6,20 @@ import {MatCardModule} from '@angular/material/card';
 import {MatInputModule} from '@angular/material/input';
 import {FormsModule} from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
+import {RouterModule} from "@angular/router";
 
 
 @NgModule({
   declarations: [LoginComponent],
-  imports: [
-    CommonModule,
-    LoginRoutingModule,
-    MatCardModule,
-    MatInputModule,
-    FormsModule,
-    MatButtonModule,
-  ]
+    imports: [
+        CommonModule,
+        LoginRoutingModule,
+        MatCardModule,
+        MatInputModule,
+        FormsModule,
+        MatButtonModule,
+        RouterModule,
+    ]
 })
 
 export class LoginModule {

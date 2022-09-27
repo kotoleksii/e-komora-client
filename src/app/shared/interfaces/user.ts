@@ -6,7 +6,3 @@ export interface IUser {
   post?: string;
   avatar?: string;
 }
-
-export interface IProfile {
-  post?: string;
-}

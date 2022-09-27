@@ -33,11 +33,11 @@
       </div>
     </mat-menu>
   </span>
-    <a routerLink="home"><span>Є-Комора</span></a>
+    <a class="logo" routerLink="home"><span>{{logo}} <img class="flag" src="{{flagUA}}" alt=""></span></a>
     <span class="header-spacer"></span>
     <div class="hide-element-mobile" *ngIf="!isLoggedIn">
-      <a mat-button routerLink="/register">Реєстрація</a>
       <a mat-button routerLink="/login">Увійти</a>
+      <a class="btn-signup" mat-raised-button routerLink="/register">Реєстрація</a>
     </div>
     <div class="hide-element-mobile" *ngIf="isLoggedIn">
       <a mat-button [matMenuTriggerFor]="menuProfile" class="auth-link hide-element-mobile">{{ username }}</a>

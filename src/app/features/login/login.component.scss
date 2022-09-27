@@ -1,5 +1,4 @@
 .login-wrapper {
-  margin-top: 50px;
 
   .login-card {
     margin: 2em auto;
@@ -7,9 +6,48 @@
     max-width: 400px;
     border-radius: 20px;
     text-align: center;
+    background: transparent;
+    box-shadow: none;
+
+    .form-title {
+      text-align: left;
+      margin-bottom: 16px;
+
+      h2 {
+        font-size: 1.7rem;
+        font-weight: 500;
+      }
+
+      p {
+        color: #a6a6b0;
+        margin: 0;
+      }
+
+      a {
+        color: #548ed9;
+        font-weight: 500;
+        text-decoration: none;
+      }
+    }
 
     mat-form-field {
       display: block;
+    }
+
+    .btn-next {
+      margin-top: 8px;
+      padding: 10px 0;
+      width: 100%;
+      font-weight: 400;
+      background: #f2d082;
+      color: #000000;
+    }
+
+    .btn-next:disabled,
+    .btn-next[disabled] {
+      border: 1px solid #999999;
+      background-color: #cccccc;
+      color: #666666;
     }
   }
 }
