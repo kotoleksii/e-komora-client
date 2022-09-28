@@ -11,17 +11,27 @@ const routes: Routes = [
     component: BoardHrComponent
   },
   {
-    path: 'user/add',
-    component: UserActionFormComponent
+    path: 'user/:type',
+    component: UserActionFormComponent,
+    // children: [
+    //   {
+    //     path: ':id',
+    //     component: UserActionFormComponent
+    //   }
+    // ]
   },
   {
-    path: 'user/details/:id',
-    component: UserDetailsComponent
+    path: 'user/:type/:id',
+    component: UserActionFormComponent,
   },
-  {
-    path: 'user/edit/:id',
-    component: UserActionFormComponent
-  }
+  // {
+  //   path: 'user/details/:id',
+  //   component: UserDetailsComponent
+  // },
+  // {
+  //   path: 'user/edit/:id',
+  //   component: UserActionFormComponent
+  // }
 ];
 
 @NgModule({

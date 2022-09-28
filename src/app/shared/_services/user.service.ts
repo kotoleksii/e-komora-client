@@ -9,6 +9,8 @@ const API_URL = 'http://localhost:8080/api/test/';
   providedIn: 'root'
 })
 export class UserService {
+  public topic = '';
+
   constructor(private http: HttpClient) {
   }
 

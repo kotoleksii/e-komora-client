@@ -24,6 +24,8 @@ export class UserActionFormComponent implements OnInit, OnDestroy {
   isAddMode = true;
   pageTitle = '';
   userId = 0;
+  topics = ['add', 'edit', 'details'];
+  topic = '';
 
   constructor(private userService: UserService,
               private authService: AuthService,
@@ -34,8 +36,17 @@ export class UserActionFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.topic = this.route.snapshot.params.type;
     this.userId = this.route.snapshot.params.id;
-    this.isAddMode = !this.userId;
+
+    // this.topics.forEach(topic => {
+    //   if (param.includes(topic)) {
+    //     this.topic = topic;
+    //   }
+    // });
+
+    // this.isAddMode = !this.userId;
+
     this.pageTitle = 'Нова картка';
 
     this.userForm = this.fb.group({
@@ -60,7 +71,7 @@ export class UserActionFormComponent implements OnInit, OnDestroy {
       })
     });
 
-    if (!this.isAddMode) {
+    if (this.topic === 'edit') {
       this.pageTitle = 'Редагування картки працівника';
       this.userService.getById(this.userId)
         .pipe(first())
@@ -83,10 +94,11 @@ export class UserActionFormComponent implements OnInit, OnDestroy {
     if (this.userForm.invalid) {
       return;
     }
-    if (this.isAddMode) {
+    if (this.topic === 'add') {
       this.createUser();
-    } else {
+    } else if (this.topic === 'edit') {
       this.updateUser();
+    } else if (this.topic === 'details') {
     }
   }
 

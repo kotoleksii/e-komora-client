@@ -7,7 +7,7 @@
     </mat-card-header>
     <mat-toolbar>
       <mat-toolbar-row>
-        <button mat-mini-fab style="margin-right:10px; background-color:#e07c9e" [routerLink]="['user/add']">
+        <button mat-mini-fab style="margin-right:10px; background-color:#e07c9e" [routerLink]="['user', 'add']">
           <i class="fa-solid fa-plus"></i>
         </button>
         <button mat-mini-fab style="margin-right:10px; background-color:#a28b6e">
@@ -65,7 +65,7 @@
         <ng-container matColumnDef="id">
           <th mat-header-cell *matHeaderCellDef> Деталі</th>
           <td mat-cell *matCellDef="let element">
-            <button mat-mini-fab [routerLink]="['/dashboard/hr/user/details/', element.id]">
+            <button mat-mini-fab [routerLink]="['/dashboard/hr/user/', 'details', element.id]">
               <i class="fa-solid fa-info"></i>
             </button>
           </td>

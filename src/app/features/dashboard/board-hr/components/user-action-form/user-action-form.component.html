@@ -9,8 +9,8 @@
             </a>
           </div>
           <div>
-            <span *ngIf="isAddMode" class="view-card-title">{{pageTitle}}</span>
-            <span *ngIf="!isAddMode" class="view-card-title">{{pageTitle}}</span>
+            <span *ngIf="topic === 'add'" class="view-card-title">{{pageTitle}}</span>
+            <span *ngIf="topic === 'edit'" class="view-card-title">{{pageTitle}}</span>
           </div>
           <!--          <span class="title-spacer"></span>-->
           <div>
@@ -25,8 +25,8 @@
       <mat-card-content>
           <span class="view-label">
             <img mat-card-avatar *ngIf='user?.avatar' class="center-block img-responsive"
-                 [src]='user.avatar'
-                 [title]='user.lastName | uppercase'
+                 [src]='user?.avatar'
+                 [title]='user?.lastName | uppercase'
                  [style.width.px]='imageWidth' [style.height.px]='imageWidth' [style.margin.px]='imageMargin' alt="">
           </span>
         <hr>
@@ -70,7 +70,7 @@
         </div>
       </mat-card-content>
     </mat-card>
-    <mat-card *ngIf="!isAddMode" class="mat-elevation-z6">
+    <mat-card *ngIf="topic === 'edit'" class="mat-elevation-z6">
       <mat-card-content>
         <div class="row">
           <mat-form-field class="form-field" appearance="outline">
