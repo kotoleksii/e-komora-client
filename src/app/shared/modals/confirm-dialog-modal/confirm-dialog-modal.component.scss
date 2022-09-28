@@ -1,3 +1,5 @@
+@import '/src/assets/styles/_colors';
+
 .confirm-dialog-wrapper {
 
   .confirm-card {
@@ -13,7 +15,7 @@
 
       .btn-close {
         .fa-solid:hover {
-          color: #548ed9;
+          color: $color-link;
         }
       }
     }
@@ -23,32 +25,41 @@
         font-size: 2rem;
       }
 
+      .confirm-input {
+        .confirm-message {
+          margin: 8px 0 4px 0;
+
+          span.confirm-phrase {
+            color: $color-danger-light;
+            font-size: 1rem;
+            font-weight: 500;
+          }
+        }
+      }
+
       mat-form-field {
         width: 100%;
+        margin-bottom: -1em;
       }
 
       .btn-confirm {
         width: 100%;
         padding: 8px 0;
-        background: #f05247;
-        color: #000000;
+        background: $color-danger;
+        color: $color-black;
         font-size: 1rem;
         font-weight: 400;
-      }
 
-      .btn-confirm:disabled,
-      .btn-confirm[disabled] {
-        background-color: #cccccc;
-        color: #f05247;
+        &:hover {
+          background-color: $color-danger-light;
+        }
+
+        &:disabled,
+        &[disabled] {
+          background-color: $color-disabled;
+          color: $color-danger;
+        }
       }
     }
   }
-}
-
-.mat-dialog-container {
-  background: transparent;
-}
-
-:host ::ng-deep .mat-button-focus-overlay {
-  display: none;
 }

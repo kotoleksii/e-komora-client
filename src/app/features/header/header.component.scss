@@ -1,4 +1,5 @@
 @import '../../../assets/styles/mixins';
+@import '../../../assets/styles/_colors';
 
 .header-wrapper {
 
@@ -18,6 +19,21 @@
     @include media-property(H, visibility, hidden, visible);
     @include media-property(H, display, none, inline-block);
   }
+}
+
+a.mat-menu-item {
+  margin: 5px;
+
+  &.mat-menu-item:hover {
+    background-color: #101014;
+    color: $color-primary;
+    border-radius: 0.25rem;
+  }
+}
+
+a.mat-button:hover {
+  color: $color-primary;
+  background: transparent;
 }
 
 span.menu-item-text {

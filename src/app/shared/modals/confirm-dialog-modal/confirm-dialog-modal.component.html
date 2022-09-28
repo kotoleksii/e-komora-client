@@ -8,11 +8,11 @@
       <h2 mat-dialog-title>{{data.title}}</h2>
       <p [innerHTML]="data.message"></p>
       <div class="confirm-input">
-        <p>Будь-ласка введіть <b>{{confirmPhrase}}</b> для підтвердження</p>
-        <mat-form-field appearance="outline" color="accent">
+        <p class="confirm-message">Будь-ласка введіть <span class="confirm-phrase">{{confirmPhrase}}</span> для підтвердження</p>
+        <mat-form-field appearance="outline">
           <input matInput type="text" formControlName="confirmPhrase" required>
         </mat-form-field>
-        <button style="width: 100%" class="btn-confirm" mat-raised-button color="primary"
+        <button class="btn-confirm" mat-raised-button color="primary"
                 (click)="onConfirm()" [disabled]="deleteForm.value.confirmPhrase != confirmPhrase">
           Я розумію наслідки, видалити
         </button>

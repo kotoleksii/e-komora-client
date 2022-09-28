@@ -11,7 +11,7 @@ import {NotifierService} from "angular-notifier";
 @Component({
   selector: 'app-user-details',
   templateUrl: './user-details.component.html',
-  styleUrls: ['./user-details.component.css']
+  styleUrls: ['./user-details.component.scss']
 })
 export class UserDetailsComponent implements OnInit {
   @Input() currentUser: IUser = {
@@ -61,7 +61,8 @@ export class UserDetailsComponent implements OnInit {
       panelClass: 'confirm-dialog-container',
       data: {
         title: 'Ви впевнені?',
-        message: `Цю дію не можна скасувати. Це назавжди видалить <b>${dataToDelete.firstName + ' ' + dataToDelete.lastName}</b>.`,
+        message: `Цю дію не можна скасувати. <br>` +
+          `Це назавжди видалить <span class="confirm-message-phrase">${dataToDelete.firstName + ' ' + dataToDelete.lastName}</span> і всі пов'язані дані.`,
         initialValue: dataToDelete,
       }
     });

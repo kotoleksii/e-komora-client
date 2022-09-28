@@ -1,4 +1,6 @@
 @import "node_modules/angular-notifier/styles";
+@import 'assets/styles/_colors';
+@import 'assets/styles/material-settings';
 
 html, body {
   height: 100%;
@@ -7,10 +9,4 @@ html, body {
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
-}
-
-.confirm-dialog-container .mat-dialog-container {
-  padding: 0;
-  background: transparent;
-  box-shadow: none;
 }

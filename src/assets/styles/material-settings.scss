@@ -1,0 +1,21 @@
+@import '/src/assets/styles/_colors';
+
+.confirm-dialog-container .mat-dialog-container {
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+
+  span.confirm-message-phrase {
+    font-size: 1rem;
+    font-weight: 500;
+  }
+}
+
+.mat-button-focus-overlay {
+  background-color: transparent;
+  display: none;
+}
+
+.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+  color: $color-primary;
+}
