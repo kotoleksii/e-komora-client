@@ -7,6 +7,10 @@ import {SubSink} from 'subsink';
 import {AuthService} from '../../../../../shared/_services/auth.service';
 import {first} from 'rxjs/operators';
 import {NotifierService} from 'angular-notifier';
+import {
+  ConfirmDialogModalComponent
+} from "../../../../../shared/modals/confirm-dialog-modal/confirm-dialog-modal.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-user-action-form',
@@ -30,6 +34,7 @@ export class UserActionFormComponent implements OnInit, OnDestroy {
   constructor(private userService: UserService,
               private authService: AuthService,
               private notifierService: NotifierService,
+              public dialog: MatDialog,
               private fb: FormBuilder,
               private route: ActivatedRoute,
               private router: Router) {
@@ -38,18 +43,40 @@ export class UserActionFormComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.topic = this.route.snapshot.params.type;
     this.userId = this.route.snapshot.params.id;
+    this.userForm = this.initUserForm();
+
+    this.pageTitle = 'Нова картка';
+
+    this.userForm.enable();
+
+    if (this.topic === 'edit' || this.topic === 'details') {
+      this.pageTitle = this.topic === 'edit' ? 'Редагування картки працівника' : 'Особова картка працівника';
+
+      if (this.topic === 'details') {
+        this.userForm.disable();
+      }
+
+      this.userService.getById(this.userId)
+        .pipe(first())
+        .subscribe((res) => {
+          this.user = res;
+          console.log(this.user);
+          if (this.user.avatar == null) {
+            this.user.avatar = './assets/images/profile-img.png';
+          }
+          this.userForm.patchValue(res);
+        });
+    }
 
     // this.topics.forEach(topic => {
     //   if (param.includes(topic)) {
     //     this.topic = topic;
     //   }
     // });
+  }
 
-    // this.isAddMode = !this.userId;
-
-    this.pageTitle = 'Нова картка';
-
-    this.userForm = this.fb.group({
+  initUserForm(): FormGroup {
+    return this.fb.group({
       firstName: new FormControl('', [
         Validators.required,
         Validators.minLength(2),
@@ -66,24 +93,11 @@ export class UserActionFormComponent implements OnInit, OnDestroy {
         Validators.required,
         AuthValidators.emailRegex()
       ]),
+      password: new FormControl(null),
       profile: this.fb.group({
         post: new FormControl('')
       })
     });
-
-    if (this.topic === 'edit') {
-      this.pageTitle = 'Редагування картки працівника';
-      this.userService.getById(this.userId)
-        .pipe(first())
-        .subscribe((res) => {
-          this.user = res;
-          console.log(this.user);
-          if (this.user.avatar == null) {
-            this.user.avatar = './assets/images/profile-img.png';
-          }
-          this.userForm.patchValue(res);
-        });
-    }
   }
 
   get f(): any {
@@ -123,17 +137,53 @@ export class UserActionFormComponent implements OnInit, OnDestroy {
   }
 
   private updateUser(): void {
-    this.userService.update(this.userId, this.userForm.value)
+    this.subs.add(this.userService.update(this.userId, this.userForm.value)
       .pipe(first())
       .subscribe({
         next: () => {
           this.notifierService.notify('success', `Користувача оновлено!`);
-          this.router.navigate(['dashboard', 'hr']).then();
+          this.router.navigate(['dashboard', 'hr', 'user', 'details', this.userId]).then(() => {
+            window.location.reload();
+          });
         },
         error: error => {
           this.notifierService.notify('error', error);
         }
-      });
+      }));
+  }
+
+  deleteUser(id: number): void {
+    this.subs.add(this.userService.deleteById(id)
+      .subscribe({
+        next: () => {
+          this.router.navigate(['dashboard', 'hr']).then();
+        },
+        error: (e) => console.error(e)
+      }));
+  }
+
+  openConfirmDialog(id: number, dataToDelete?: any): void {
+    // if (dataToDelete.profile.id != null) {
+    //   console.log('dadad');
+    //   return;
+    // }
+    const dialogRef = this.dialog.open(ConfirmDialogModalComponent, {
+      panelClass: 'confirm-dialog-container',
+      data: {
+        title: 'Ви впевнені?',
+        message: `Цю дію не можна скасувати. <br>` +
+          `Це назавжди видалить <span class="confirm-message-phrase">${dataToDelete.firstName + ' ' + dataToDelete.lastName}</span> і всі пов'язані дані.`,
+        initialValue: dataToDelete,
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(dialogResult => {
+      if (dialogResult) {
+        this.notifierService.notify('success', 'Видалення ' + dataToDelete.lastName + ' успішне!');
+        this.deleteUser(id);
+      }
+      console.log(dialogResult);
+    });
   }
 
   ngOnDestroy(): void {

@@ -1,6 +1,8 @@
+@import '~src/assets/styles/_colors';
+
 .user-action-form-wrapper {
-  //max-width: 600px;
-  //margin: auto;
+  max-width: 800px;
+  margin: auto;
 
   mat-toolbar {
     border-radius: 10px;
@@ -57,4 +59,22 @@
     justify-content: center;
     align-content: center;
   }
+}
+
+a.mat-menu-item {
+  margin: 5px;
+
+  &.mat-menu-item:hover {
+    background-color: #101014;
+    color: $color-primary;
+    border-radius: 0.25rem;
+  }
+}
+
+span.menu-item-text {
+  margin-left: 15px;
+}
+
+mat-label {
+  color: $color-secondary;
 }

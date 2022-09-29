@@ -4,17 +4,21 @@
       <mat-toolbar>
         <mat-toolbar-row>
           <div>
-            <a class="btn-action" mat-icon-button [routerLink]="[ '', 'dashboard', 'hr' ]">
+            <a *ngIf="topic !== 'edit'" class="btn-action" mat-icon-button [routerLink]="[ '', 'dashboard', 'hr' ]">
+              <i class="fa-solid fa-arrow-left"></i>
+            </a>
+            <a *ngIf="topic === 'edit'" class="btn-action" mat-icon-button href="dashboard/hr/user/details/{{userId}}">
               <i class="fa-solid fa-arrow-left"></i>
             </a>
           </div>
           <div>
             <span *ngIf="topic === 'add'" class="view-card-title">{{pageTitle}}</span>
             <span *ngIf="topic === 'edit'" class="view-card-title">{{pageTitle}}</span>
+            <span *ngIf="topic === 'details'" class="view-card-title">{{pageTitle}}</span>
           </div>
-          <!--          <span class="title-spacer"></span>-->
           <div>
-            <button class="btn-action" mat-icon-button color="accent" type="submit"
+            <button *ngIf="topic !== 'details'; else detailsMenu" class="btn-action" mat-icon-button color="accent"
+                    type="submit"
                     [disabled]='!userForm.valid'>
               <i class="fa-solid fa-floppy-disk"></i>
             </button>
@@ -29,6 +33,9 @@
                  [title]='user?.lastName | uppercase'
                  [style.width.px]='imageWidth' [style.height.px]='imageWidth' [style.margin.px]='imageMargin' alt="">
           </span>
+        <div *ngIf="topic === 'details'">
+          Останнє оновлення {{user?.updateDateTime}}
+        </div>
         <hr>
         <br>
         <div class="form-card">
@@ -70,7 +77,7 @@
         </div>
       </mat-card-content>
     </mat-card>
-    <mat-card *ngIf="topic === 'edit'" class="mat-elevation-z6">
+    <mat-card *ngIf="topic === 'edit' || topic === 'details'" class="mat-elevation-z6">
       <mat-card-content>
         <div class="row">
           <mat-form-field class="form-field" appearance="outline">
@@ -104,3 +111,17 @@
     </mat-card>
   </form>
 </div>
+
+<ng-template #detailsMenu>
+  <button mat-icon-button [matMenuTriggerFor]="menuDetails">
+    <i class="fa-solid fa-ellipsis-vertical"></i>
+  </button>
+  <mat-menu #menuDetails="matMenu" [overlapTrigger]="false">
+    <a class="menu-item" mat-menu-item href="dashboard/hr/user/edit/{{userId}}">
+      <i class="fa-solid fa-file-pen"></i><span class="menu-item-text">Редагувати</span>
+    </a>
+    <a class="menu-item" mat-menu-item (click)="openConfirmDialog(userId, user)">
+      <i class="fa-solid fa-trash"></i><span class="menu-item-text">Видалити</span>
+    </a>
+  </mat-menu>
+</ng-template>

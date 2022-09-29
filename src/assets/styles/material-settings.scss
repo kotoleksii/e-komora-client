@@ -19,3 +19,7 @@
 .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
   color: $color-primary;
 }
+
+.mat-input-element:disabled {
+  color: $color-white;
+}

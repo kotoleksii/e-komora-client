@@ -15,13 +15,13 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatCardModule} from '@angular/material/card';
 import {UserActionFormComponent} from './components/user-action-form/user-action-form.component';
 import {MatGridListModule} from '@angular/material/grid-list';
-import {UserDetailsComponent} from './components/user-details/user-details.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
 import {ConfirmDialogModalModule} from 'src/app/shared/modals/confirm-dialog-modal/confirm-dialog-modal.module';
+import {_MatMenuDirectivesModule, MatMenuModule} from '@angular/material/menu';
 
 @NgModule({
-  declarations: [BoardHrComponent, UserActionFormComponent, UserDetailsComponent],
+  declarations: [BoardHrComponent, UserActionFormComponent],
   imports: [
     CommonModule,
     BoardHrRoutingModule,
@@ -41,6 +41,8 @@ import {ConfirmDialogModalModule} from 'src/app/shared/modals/confirm-dialog-mod
     MatDatepickerModule,
     MatNativeDateModule,
     ConfirmDialogModalModule,
+    _MatMenuDirectivesModule,
+    MatMenuModule,
   ]
 })
 export class BoardHrModule {

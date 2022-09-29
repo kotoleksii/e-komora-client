@@ -92,9 +92,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
           this.isSuccessful = true;
           this.isSignUpFailed = false;
           this.notifierService.notify('success', `Реєстрація успішна!`);
-          this.router.navigate(['login']).then(() => {
-            window.location.reload();
-          });
+          this.router.navigate(['login']).then();
         },
         err => {
           this.errorMessage = err.error.message;

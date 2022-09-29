@@ -4,7 +4,7 @@ import {SubSink} from 'subsink';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
-import {IUser} from '../../../shared/interfaces/user';
+import {NotifierService} from 'angular-notifier';
 
 @Component({
   selector: 'app-board-hr',
@@ -16,7 +16,7 @@ export class BoardHrComponent implements OnInit, OnDestroy {
   @ViewChild(MatSort) sort: MatSort | undefined;
 
   public dataSource: MatTableDataSource<any> | any;
-  public displayedColumns = ['avatar', 'firstName', 'lastName', 'post', 'id'];
+  public displayedColumns = ['avatar', 'ID', 'firstName', 'lastName', 'post', 'id'];
   public users: any;
 
   imageWidth = 30;
@@ -26,30 +26,9 @@ export class BoardHrComponent implements OnInit, OnDestroy {
   content?: string;
   private subs: SubSink = new SubSink();
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService,
+              private notifierService: NotifierService) {
   }
-
-  public getAndSetUserItems(): void {
-    this.subs.add(
-      this.userService.getAll().subscribe((data: any) => {
-        this.dataSource = new MatTableDataSource<any>(data);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-      }));
-  }
-
-
-  public getUsers(): void {
-    this.subs.add(
-      this.userService.getAll()
-        .subscribe({
-          next: (data) => {
-            this.users = data;
-          },
-          error: (e) => console.error(e)
-        }));
-  }
-
 
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -60,11 +39,22 @@ export class BoardHrComponent implements OnInit, OnDestroy {
     }
   }
 
-
   ngOnInit(): void {
-    this.getUsers();
+    this.content = 'Картки';
     this.getAndSetUserItems();
+  }
 
+  public getAndSetUserItems(): void {
+    this.subs.add(
+      this.userService.getAll().subscribe((data: any) => {
+        this.dataSource = new MatTableDataSource<any>(data);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        // this.notifierService.notify('success', `💪 Дані оновлено!`);
+      }));
+  }
+
+  getHRServerText(): void {
     this.subs.add(
       this.userService.getHRBoard().subscribe(
         data => {
