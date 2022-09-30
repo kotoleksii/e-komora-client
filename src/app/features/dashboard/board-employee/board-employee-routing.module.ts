@@ -1,12 +1,12 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RouterModule, Routes} from '@angular/router';
-import {BoardUserComponent} from './board-user.component';
+import {BoardEmployeeComponent} from './board-employee.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: BoardUserComponent
+    component: BoardEmployeeComponent
   }
 ];
 
@@ -17,5 +17,5 @@ const routes: Routes = [
     RouterModule.forChild(routes)
   ]
 })
-export class BoardUserRoutingModule {
+export class BoardEmployeeRoutingModule {
 }

@@ -1,38 +1,37 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {UserService} from '../../../shared/_services/user.service';
 import {SubSink} from 'subsink';
-import {MatTableDataSource} from '@angular/material/table';
+import {MaterialService} from '../../../shared/_services/material.service';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
-import {NotifierService} from 'angular-notifier';
+import {MatTableDataSource} from '@angular/material/table';
+import {TokenStorageService} from '../../../shared/_services/token-storage.service';
 
 @Component({
-  selector: 'app-board-hr',
-  templateUrl: './board-hr.component.html',
-  styleUrls: ['./board-hr.component.scss']
+  selector: 'app-board-employee',
+  templateUrl: './board-employee.component.html',
+  styleUrls: ['./board-employee.component.scss']
 })
-export class BoardHrComponent implements OnInit, OnDestroy {
+export class BoardEmployeeComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator) paginator: MatPaginator | any;
   @ViewChild(MatSort) sort: MatSort | undefined;
 
   public dataSource: MatTableDataSource<any> | any;
-  public displayedColumns = ['avatar', 'ID', 'firstName', 'lastName', 'post', 'id'];
-  public users: any;
-
-  imageWidth = 30;
-  imageMargin = 2;
-  showImage = false;
-
+  public displayedColumns = ['ID', 'title', 'inventoryNumber', 'dateStart', 'type', 'userId'];
+  currentUserId: any;
   content?: string;
+  materials?: any;
   private subs: SubSink = new SubSink();
 
-  constructor(private userService: UserService,
-              private notifierService: NotifierService) {
+  constructor(private token: TokenStorageService,
+              private userService: UserService,
+              private materialService: MaterialService) {
   }
 
   ngOnInit(): void {
-    this.content = 'Картки';
-    this.getAndSetUserItems();
+    this.content = 'Мої матеріали';
+    this.currentUserId = this.token.getUser().id;
+    this.getAndSetMaterialItems();
   }
 
   applyFilter(event: Event): void {
@@ -44,19 +43,18 @@ export class BoardHrComponent implements OnInit, OnDestroy {
     }
   }
 
-  public getAndSetUserItems(): void {
+  public getAndSetMaterialItems(): void {
     this.subs.add(
-      this.userService.getAll().subscribe((data: any) => {
+      this.materialService.getByUserId(this.currentUserId).subscribe((data: any) => {
         this.dataSource = new MatTableDataSource<any>(data);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
-        // this.notifierService.notify('success', `💪 Дані оновлено!`);
       }));
   }
 
-  getHRServerText(): void {
+  getEmployeeServerText(): void {
     this.subs.add(
-      this.userService.getHRBoard().subscribe(
+      this.userService.getEmployeeBoard().subscribe(
         data => {
           this.content = data;
         },

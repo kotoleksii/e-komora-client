@@ -1,0 +1,61 @@
+<div class="board-employee-wrapper">
+  <mat-card class="mat-elevation-z6">
+    <mat-card-header>
+      <mat-card-title class="view-card-title">
+        <h1>{{content}}</h1>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-toolbar>
+      <mat-toolbar-row>
+        <span class="title-spacer"></span>
+        <div style="font-size: 16px">
+          <mat-form-field class="search-form-fileld">
+            <mat-label>Фільтр</mat-label>
+            <input matInput placeholder="Фільтр" (keyup)="applyFilter($event)">
+            <i class="fa-solid fa-filter"></i>
+          </mat-form-field>
+        </div>
+      </mat-toolbar-row>
+    </mat-toolbar>
+
+    <div class="employee-table-container">
+      <table mat-table [dataSource]="dataSource" matSort matSortActive="id" matSortDirection="desc">
+
+        <ng-container matColumnDef="ID">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> ID</th>
+          <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="title">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Найменування</th>
+          <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="inventoryNumber">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Інвентарний №</th>
+          <td mat-cell *matCellDef="let element"> {{element.inventoryNumber}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="dateStart">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Дата</th>
+          <td mat-cell *matCellDef="let element"> {{element.dateStart}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="type">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Тип</th>
+          <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="userId">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Власник</th>
+          <td mat-cell *matCellDef="let element"> {{element.userId}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+      <mat-paginator [length]="200" [pageSizeOptions]="[3, 5, 20]" aria-label="Select page"></mat-paginator>
+    </div>
+  </mat-card>
+</div>
