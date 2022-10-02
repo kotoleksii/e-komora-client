@@ -1,1 +1,8 @@
+<div class="board-accountant-wrapper" *ngIf="showAccountantBoard; else loggedOut">
 <p>{{ content }}</p>
+daddadadada
+</div>
+
+<ng-template #loggedOut>
+  Access Denied.
+</ng-template>

@@ -27,6 +27,12 @@ const routes: Routes = [
           loadChildren: () => import('./board-employee/board-employee.module')
             .then((m) => m.BoardEmployeeModule),
           canActivate: [AuthGuard]
+        },
+        {
+          path: 'news-maker',
+          loadChildren: () => import('./board-news-maker/board-news-maker.module')
+            .then((m) => m.BoardNewsMakerModule),
+          canActivate: [AuthGuard]
         }
       ]
   }

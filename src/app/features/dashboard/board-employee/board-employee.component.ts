@@ -21,6 +21,8 @@ export class BoardEmployeeComponent implements OnInit, OnDestroy {
   currentUserId: any;
   content?: string;
   materials?: any;
+  showEmployeeBoard = false;
+  private roles: string[] = [];
   private subs: SubSink = new SubSink();
 
   constructor(private token: TokenStorageService,
@@ -30,7 +32,11 @@ export class BoardEmployeeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.content = 'Мої матеріали';
-    this.currentUserId = this.token.getUser().id;
+    const user = this.token.getUser();
+    this.roles = user.roles;
+    this.showEmployeeBoard = this.roles.includes('ROLE_EMPLOYEE');
+
+    this.currentUserId = user.id;
     this.getAndSetMaterialItems();
   }
 

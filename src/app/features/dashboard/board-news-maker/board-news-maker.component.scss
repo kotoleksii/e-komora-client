@@ -1,0 +1,57 @@
+@import '~src/assets/styles/_colors';
+
+.board-news-maker-wrapper {
+  text-align: left;
+  max-width: 750px;
+  margin: 50px auto;
+
+  h1 {
+    color: $color-white;
+  }
+
+  .btn-add {
+    background-color: $color-primary;
+    color: $color-black;
+    margin-bottom: 20px;
+  }
+
+  mat-expansion-panel {
+    margin-bottom: 5px;
+    border-radius: 10px;
+
+    .last-update {
+      float: right;
+      margin-right: 10px;
+      font-size: 0.8rem;
+    }
+
+    .news-text {
+      margin: 10px;
+      word-wrap: break-word;
+    }
+
+    .btn-actions {
+      float: right;
+    }
+
+    .btn-edit {
+      margin: 5px;
+
+      &:hover {
+        background-color: $color-black;
+        color: $color-primary;
+        border-radius: 0.25rem;
+      }
+    }
+  }
+
+  .background-green {
+    background: $color-success;
+  }
+
+  .background-red {
+    background: $color-danger;
+  }
+}
+
+

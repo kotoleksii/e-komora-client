@@ -1,0 +1,76 @@
+@import 'src/assets/styles/_colors.scss';
+
+.post-wrapper {
+  .post-card {
+    margin: 2em auto;
+    padding: 25px;
+    max-width: 600px;
+    border-radius: 20px;
+    text-align: center;
+    background: transparent;
+    box-shadow: none;
+
+    .form-title {
+      text-align: left;
+      margin-bottom: 16px;
+
+      h2 {
+        font-size: 1.7rem;
+        font-weight: 500;
+      }
+
+      p {
+        color: $color-secondary;
+        margin: 0;
+      }
+
+      a {
+        color: $color-link;
+        font-weight: 500;
+        text-decoration: none;
+
+        &:hover {
+          color: $color-link-hover;
+        }
+      }
+    }
+
+    mat-form-field {
+      display: block;
+
+      i {
+        position: relative;
+        bottom: 6px;
+      }
+    }
+
+    .btn-next {
+      margin: 8px 0;
+      padding: 10px 0;
+      width: 100%;
+      font-weight: 400;
+      background: $color-primary;
+      color: $color-black;
+
+      &:hover {
+        background-color: $color-primary-hover;
+      }
+
+      &:disabled,
+      &[disabled] {
+        background-color: $color-disabled;
+        color: $color-disabled-text;
+      }
+    }
+
+    .btn-back {
+      margin-top: 8px;
+      text-decoration: none;
+      color: $color-white;
+
+      &:hover {
+        color: $color-primary;
+      }
+    }
+  }
+}

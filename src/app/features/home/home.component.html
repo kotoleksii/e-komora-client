@@ -1,1 +1,10 @@
+<li
+  class="list-group-item"
+  *ngFor="let post of posts; let i = index"
+>
+  {{ post.title }}
+  {{post.description}}
+  {{post.published}}
+</li>
+
 <p>{{ content }}</p>

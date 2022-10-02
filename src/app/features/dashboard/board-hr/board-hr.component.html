@@ -1,4 +1,4 @@
-<div class="board-hr-wrapper">
+<div class="board-hr-wrapper" *ngIf="showHRBoard; else loggedOut">
   <mat-card class="mat-elevation-z6">
     <mat-card-header>
       <mat-card-title class="view-card-title">
@@ -78,3 +78,7 @@
     </div>
   </mat-card>
 </div>
+
+<ng-template #loggedOut>
+  Access Denied.
+</ng-template>

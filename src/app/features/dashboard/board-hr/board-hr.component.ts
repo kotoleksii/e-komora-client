@@ -5,6 +5,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {NotifierService} from 'angular-notifier';
+import {TokenStorageService} from '../../../shared/_services/token-storage.service';
 
 @Component({
   selector: 'app-board-hr',
@@ -19,6 +20,9 @@ export class BoardHrComponent implements OnInit, OnDestroy {
   public displayedColumns = ['avatar', 'ID', 'firstName', 'lastName', 'post', 'id'];
   public users: any;
 
+  private roles: string[] = [];
+  showHRBoard = false;
+
   imageWidth = 30;
   imageMargin = 2;
   showImage = false;
@@ -27,10 +31,15 @@ export class BoardHrComponent implements OnInit, OnDestroy {
   private subs: SubSink = new SubSink();
 
   constructor(private userService: UserService,
-              private notifierService: NotifierService) {
+              private notifierService: NotifierService,
+              private token: TokenStorageService) {
   }
 
   ngOnInit(): void {
+    const user = this.token.getUser();
+    this.roles = user.roles;
+    this.showHRBoard = this.roles.includes('ROLE_HR');
+
     this.content = 'Картки';
     this.getAndSetUserItems();
   }
