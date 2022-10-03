@@ -6,6 +6,7 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {TokenStorageService} from '../../../shared/_services/token-storage.service';
+import {TestService} from '../../../shared/_services/test.service';
 
 @Component({
   selector: 'app-board-employee',
@@ -27,6 +28,7 @@ export class BoardEmployeeComponent implements OnInit, OnDestroy {
 
   constructor(private token: TokenStorageService,
               private userService: UserService,
+              private testService: TestService,
               private materialService: MaterialService) {
   }
 
@@ -60,7 +62,7 @@ export class BoardEmployeeComponent implements OnInit, OnDestroy {
 
   getEmployeeServerText(): void {
     this.subs.add(
-      this.userService.getEmployeeBoard().subscribe(
+      this.testService.getEmployeeBoard().subscribe(
         data => {
           this.content = data;
         },

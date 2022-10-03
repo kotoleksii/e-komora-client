@@ -8,13 +8,17 @@ import {TokenStorageService} from '../../shared/_services/token-storage.service'
 })
 export class HeaderComponent implements OnInit {
   private roles: string[] = [];
-  logo = 'Є-Комора';
-  flagUA = './assets/images/flag-ukraine.png';
-  isLoggedIn = false;
-  showAccountantBoard = false;
-  showHRBoard = false;
-  showEmployeeBoard = false;
-  username?: string;
+  public logo = 'Є-Робота';
+  public flagUA = './assets/images/flag-ukraine.png';
+  public isLoggedIn = false;
+  public showHome = true;
+  public showAccountantBoard = false;
+  public showHRBoard = false;
+  public showEmployeeBoard = false;
+  public showNewsMakerBoard = false;
+  public username?: string;
+  public menuItems: Array<any> = [];
+
 
   constructor(private tokenStorageService: TokenStorageService) {
   }
@@ -29,8 +33,52 @@ export class HeaderComponent implements OnInit {
       this.showAccountantBoard = this.roles.includes('ROLE_ACCOUNTANT');
       this.showHRBoard = this.roles.includes('ROLE_HR');
       this.showEmployeeBoard = this.roles.includes('ROLE_EMPLOYEE');
+      this.showNewsMakerBoard = this.roles.includes('ROLE_NEWS_MAKER');
 
       this.username = `${user.firstName} ${user.lastName?.slice(0, 1)}.`;
+
+      this.menuItems = [
+        {
+          icon: 'fa-solid fa-house',
+          title: 'Головна',
+          access: this.showHome,
+          link: '/home',
+          dropMenu: false,
+          dropMenuType: ''
+        },
+        {
+          icon: 'fa-solid fa-box-open',
+          title: 'Мій Інвентар',
+          access: this.showEmployeeBoard,
+          link: '/dashboard/employee',
+          dropMenu: false,
+          dropMenuType: ''
+        },
+        {
+          icon: 'fa-solid fa-folder-open',
+          title: 'Особові справи',
+          access: this.showHRBoard,
+          link: '/dashboard/hr',
+          dropMenu: false,
+          dropMenuType: ''
+        },
+        {
+          icon: 'fa-solid fa-hand-holding-dollar',
+          title: 'Матеріальні цінності',
+          access: this.showAccountantBoard,
+          link: '/dashboard/accountant',
+          dropMenu: false,
+          dropMenuType: ''
+        },
+        {
+          icon: 'fa-solid fa-newspaper',
+          title: 'Менеджер новин',
+          access: this.showNewsMakerBoard,
+          link: '/dashboard/news-maker',
+          dropMenu: true,
+          dropMenuType: 'newsMaker'
+        }
+      ];
     }
   }
 

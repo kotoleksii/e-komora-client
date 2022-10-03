@@ -6,6 +6,7 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {NotifierService} from 'angular-notifier';
 import {TokenStorageService} from '../../../shared/_services/token-storage.service';
+import {TestService} from '../../../shared/_services/test.service';
 
 @Component({
   selector: 'app-board-hr',
@@ -16,21 +17,20 @@ export class BoardHrComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator) paginator: MatPaginator | any;
   @ViewChild(MatSort) sort: MatSort | undefined;
 
+  private subs: SubSink = new SubSink();
+  private roles: string[] = [];
+
   public dataSource: MatTableDataSource<any> | any;
   public displayedColumns = ['avatar', 'ID', 'firstName', 'lastName', 'post', 'id'];
   public users: any;
-
-  private roles: string[] = [];
-  showHRBoard = false;
-
-  imageWidth = 30;
-  imageMargin = 2;
-  showImage = false;
-
-  content?: string;
-  private subs: SubSink = new SubSink();
+  public showHRBoard = false;
+  public imageWidth = 30;
+  public imageMargin = 2;
+  public showImage = false;
+  public content?: string;
 
   constructor(private userService: UserService,
+              private testService: TestService,
               private notifierService: NotifierService,
               private token: TokenStorageService) {
   }
@@ -65,7 +65,7 @@ export class BoardHrComponent implements OnInit, OnDestroy {
 
   getHRServerText(): void {
     this.subs.add(
-      this.userService.getHRBoard().subscribe(
+      this.testService.getHRBoard().subscribe(
         data => {
           this.content = data;
         },

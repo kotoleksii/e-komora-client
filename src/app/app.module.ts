@@ -15,10 +15,10 @@ import {HeaderComponent} from './features/header/header.component';
 import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HeaderComponent,
-  ],
+    declarations: [
+        AppComponent,
+        HeaderComponent,
+    ],
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
@@ -33,8 +33,8 @@ import {MatDialogModule} from '@angular/material/dialog';
         NotifierModule,
         MatDialogModule
     ],
-  providers: [authInterceptorProviders],
-  bootstrap: [AppComponent]
+    providers: [authInterceptorProviders],
+    bootstrap: [AppComponent]
 })
 export class AppModule {
 }

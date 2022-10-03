@@ -2,6 +2,8 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {UserService} from '../../../shared/_services/user.service';
 import {SubSink} from 'subsink';
 import {TokenStorageService} from '../../../shared/_services/token-storage.service';
+import {TestService} from '../../../shared/_services/test.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-board-accountant',
@@ -15,7 +17,9 @@ export class BoardAccountantComponent implements OnInit, OnDestroy {
   private subs: SubSink = new SubSink();
 
   constructor(private userService: UserService,
-              private token: TokenStorageService) {
+              private testService: TestService,
+              private token: TokenStorageService,
+              private router: Router) {
   }
 
   ngOnInit(): void {
@@ -23,8 +27,12 @@ export class BoardAccountantComponent implements OnInit, OnDestroy {
     this.roles = user.roles;
     this.showAccountantBoard = this.roles.includes('ROLE_ACCOUNTANT');
 
+    if (!this.showAccountantBoard) {
+      this.router.navigate(['home']).then();
+    }
+
     this.subs.add(
-      this.userService.getAccountantBoard().subscribe(
+      this.testService.getAccountantBoard().subscribe(
         data => {
           this.content = data;
           console.log(this.content);

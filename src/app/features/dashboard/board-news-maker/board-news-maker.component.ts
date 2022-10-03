@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {IPost} from '../../../shared/interfaces/Post';
 import {PostService} from '../../../shared/_services/post.service';
 import {NotifierService} from 'angular-notifier';
 import {ActivatedRoute, Router} from '@angular/router';
 import {SubSink} from 'subsink';
 import {first} from 'rxjs/operators';
+import {TokenStorageService} from '../../../shared/_services/token-storage.service';
 
 @Component({
   selector: 'app-board-news-maker',
@@ -13,18 +14,24 @@ import {first} from 'rxjs/operators';
 })
 export class BoardNewsMakerComponent implements OnInit {
   private subs: SubSink = new SubSink();
-  posts?: IPost[];
-  currentPost: IPost = {};
-  currentIndex = -1;
-  title = '';
+  private roles: string[] = [];
+  public showNewsMakerBoard = false;
+  public posts?: IPost[];
+  public currentPost: IPost = {};
+  public pageTitle = 'Менеджер новин';
 
   constructor(private postService: PostService,
               private notifierService: NotifierService,
               private route: ActivatedRoute,
-              private router: Router) {
+              private router: Router,
+              private token: TokenStorageService) {
   }
 
   ngOnInit(): void {
+    const user = this.token.getUser();
+    this.roles = user.roles;
+    this.showNewsMakerBoard = this.roles.includes('ROLE_NEWS_MAKER');
+
     this.getAllPosts();
   }
 
@@ -77,30 +84,4 @@ export class BoardNewsMakerComponent implements OnInit {
   refreshPage(): void {
     window.location.reload();
   }
-
-  refreshList(): void {
-    this.getAllPosts();
-    this.currentPost = {};
-    this.currentIndex = -1;
-  }
-
-  setActivePost(post: IPost, index: number): void {
-    this.currentPost = post;
-    this.currentIndex = index;
-  }
-
-  searchTitle(): void {
-    this.currentPost = {};
-    this.currentIndex = -1;
-
-    this.postService.findByTitle(this.title)
-      .subscribe({
-        next: (data) => {
-          this.posts = data;
-          console.log(data);
-        },
-        error: (e) => console.error(e)
-      });
-  }
-
 }

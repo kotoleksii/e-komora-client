@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RouterModule, Routes} from '@angular/router';
 import {BoardNewsMakerComponent} from './board-news-maker.component';
-import {AddPostComponent} from './components/add-post/add-post.component';
+import {PostActionFormComponent} from './components/post-action-form/post-action-form.component';
 
 const routes: Routes = [
   {
@@ -11,7 +11,11 @@ const routes: Routes = [
   },
   {
     path: 'posts/add',
-    component: AddPostComponent
+    component: PostActionFormComponent
+  },
+  {
+    path: 'posts/edit/:id',
+    component: PostActionFormComponent
   }
 ];
 

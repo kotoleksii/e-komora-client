@@ -5,18 +5,29 @@
       <i class="fa-solid fa-bars"></i>
     </a>
     <mat-menu #menuMain="matMenu" [overlapTrigger]="false" routerLinkActive="active">
-      <a class="menu-item" mat-menu-item routerLink="/home">
-        <i class="fa-solid fa-house"></i><span class="menu-item-text">Головна</span>
-      </a>
-      <a class="menu-item" mat-menu-item *ngIf="showEmployeeBoard" routerLink="/dashboard/employee">
-        <i class="fa-solid fa-box-open"></i><span class="menu-item-text">Мій Інвентар</span>
-      </a>
-      <a class="menu-item" mat-menu-item *ngIf="showHRBoard" routerLink="/dashboard/hr">
-        <i class="fa-solid fa-folder-open"></i><span class="menu-item-text">Панель кадровика</span>
-      </a>
-      <a class="menu-item" mat-menu-item *ngIf="showAccountantBoard" routerLink="/dashboard/accountant">
-       <i class="fa-solid fa-hand-holding-dollar"></i><span class="menu-item-text">Панель бухгалтера</span>
-      </a>
+      <span *ngFor="let item of menuItems">
+        <ng-container *ngIf="!item.dropMenu">
+           <a class="menu-item" *ngIf="item.access" mat-menu-item routerLink="{{item.link}}">
+            <i class="{{item.icon}}"></i><span class="menu-item-text">{{item.title}}</span>
+          </a>
+        </ng-container>
+        <ng-container *ngIf="item.dropMenu">
+           <a class="menu-item" *ngIf="item.access" mat-menu-item routerLink="{{item.link}}"
+              [matMenuTriggerFor]="options">
+            <i class="{{item.icon}}"></i><span class="menu-item-text">{{item.title}}</span>
+          </a>
+        </ng-container>
+         <mat-menu #options>
+         <ng-container *ngIf="item.dropMenuType === 'newsMaker'">
+           <ng-container *ngTemplateOutlet="newsMakerOptions"></ng-container>
+         </ng-container>
+      </mat-menu>
+      </span>
+      <!--       <a class="menu-item" mat-menu-item *ngIf="showNewsMakerBoard" routerLink="/dashboard/news-maker"-->
+      <!--          [matMenuTriggerFor]="newsMakerOptions">-->
+      <!--       <i class="fa-solid fa-newspaper"></i><span class="menu-item-text">Менеджер новин</span>-->
+      <!--      </a>-->
+
       <div class="show-element-mobile" *ngIf="isLoggedIn">
         <a routerLink="/profile" class="menu-item" mat-menu-item>
           <i class="fa-solid fa-user"></i><span class="menu-item-text">{{ username }}</span>
@@ -56,3 +67,25 @@
     </div>
   </mat-toolbar>
 </div>
+
+<ng-template #newsMakerOptions>
+  <a class="menu-item" mat-menu-item routerLink="/dashboard/news-maker">
+    <i class="fa-solid fa-list-check"></i><span class="menu-item-text">Всі новини</span>
+  </a>
+  <a class="menu-item" mat-menu-item routerLink="/dashboard/news-maker/posts/add">
+    <i class="fa-solid fa-circle-plus"></i><span class="menu-item-text">Створити</span>
+  </a>
+</ng-template>
+
+<!--      <a class="menu-item" mat-menu-item routerLink="/home">-->
+<!--        <i class="fa-solid fa-house"></i><span class="menu-item-text">Головна</span>-->
+<!--      </a>-->
+<!--      <a class="menu-item" mat-menu-item *ngIf="showEmployeeBoard" routerLink="/dashboard/employee">-->
+<!--        <i class="fa-solid fa-box-open"></i><span class="menu-item-text">Мій Інвентар</span>-->
+<!--      </a>-->
+<!--      <a class="menu-item" mat-menu-item *ngIf="showHRBoard" routerLink="/dashboard/hr">-->
+<!--        <i class="fa-solid fa-folder-open"></i><span class="menu-item-text">Особові справи</span>-->
+<!--      </a>-->
+<!--      <a class="menu-item" mat-menu-item *ngIf="showAccountantBoard" routerLink="/dashboard/accountant">-->
+<!--       <i class="fa-solid fa-hand-holding-dollar"></i><span class="menu-item-text">Матеріальні цінності</span>-->
+<!--      </a>-->

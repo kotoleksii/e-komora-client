@@ -3,6 +3,7 @@ import {UserService} from '../../shared/_services/user.service';
 import {SubSink} from 'subsink';
 import {PostService} from '../../shared/_services/post.service';
 import {IPost} from '../../shared/interfaces/Post';
+import {TestService} from '../../shared/_services/test.service';
 
 @Component({
   selector: 'app-home',
@@ -15,7 +16,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   private subs: SubSink = new SubSink();
 
   constructor(private userService: UserService,
-              private postService: PostService) {
+              private postService: PostService,
+              private testService: TestService) {
   }
 
   ngOnInit(): void {
@@ -34,7 +36,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   getHomeServerContent(): void {
     this.subs.add(
-      this.userService.getPublicContent().subscribe(
+      this.testService.getPublicContent().subscribe(
         data => {
           this.content = data;
         },

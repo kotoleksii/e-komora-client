@@ -9,8 +9,8 @@ import {first} from 'rxjs/operators';
 import {NotifierService} from 'angular-notifier';
 import {
   ConfirmDialogModalComponent
-} from "../../../../../shared/modals/confirm-dialog-modal/confirm-dialog-modal.component";
-import {MatDialog} from "@angular/material/dialog";
+} from '../../../../../shared/modals/confirm-dialog-modal/confirm-dialog-modal.component';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-user-action-form',
