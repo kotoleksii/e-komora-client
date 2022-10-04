@@ -36,7 +36,7 @@ export class BoardNewsMakerComponent implements OnInit {
   }
 
   getAllPosts(): void {
-    this.postService.getAll()
+    this.postService.getAllDesc()
       .subscribe({
         next: (data) => {
           this.posts = data;

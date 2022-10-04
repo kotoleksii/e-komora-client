@@ -2,7 +2,7 @@ import {
   AbstractControl,
   ValidatorFn,
   FormControl,
-  FormGroup
+  UntypedFormGroup
 } from '@angular/forms';
 
 export class AuthValidators {
@@ -79,7 +79,7 @@ export class AuthValidators {
   }
 
   public static mustMatch(controlName: string, matchingControlName: string): any {
-    return (formGroup: FormGroup) => {
+    return (formGroup: UntypedFormGroup) => {
       const control = formGroup.controls[controlName];
       const matchingControl = formGroup.controls[matchingControlName];
 

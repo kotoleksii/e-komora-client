@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {UserService} from '../../../../../shared/_services/user.service';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AuthValidators} from '../../../../../shared/classes/AuthValidators';
 import {SubSink} from 'subsink';
@@ -35,7 +35,7 @@ export class UserActionFormComponent implements OnInit, OnDestroy {
               private authService: AuthService,
               private notifierService: NotifierService,
               public dialog: MatDialog,
-              private fb: FormBuilder,
+              private fb: UntypedFormBuilder,
               private route: ActivatedRoute,
               private router: Router) {
   }
@@ -75,27 +75,27 @@ export class UserActionFormComponent implements OnInit, OnDestroy {
     // });
   }
 
-  initUserForm(): FormGroup {
+  initUserForm(): UntypedFormGroup {
     return this.fb.group({
-      firstName: new FormControl('', [
+      firstName: new UntypedFormControl('', [
         Validators.required,
         Validators.minLength(2),
         Validators.maxLength(30),
         AuthValidators.onlyChar()
       ]),
-      lastName: new FormControl('', [
+      lastName: new UntypedFormControl('', [
         Validators.required,
         Validators.minLength(2),
         Validators.maxLength(30),
         AuthValidators.onlyChar()
       ]),
-      email: new FormControl('', [
+      email: new UntypedFormControl('', [
         Validators.required,
         AuthValidators.emailRegex()
       ]),
-      password: new FormControl(null),
+      password: new UntypedFormControl(null),
       profile: this.fb.group({
-        post: new FormControl('')
+        post: new UntypedFormControl('')
       })
     });
   }

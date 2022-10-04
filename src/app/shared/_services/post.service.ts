@@ -17,8 +17,16 @@ export class PostService {
     return this.http.get<IPost[]>(baseUrl);
   }
 
+  getAllDesc(): Observable<IPost[]> {
+    return this.http.get<IPost[]>(`${baseUrl}/desc`);
+  }
+
   getAllPublished(): Observable<IPost[]> {
     return this.http.get<IPost[]>(`${baseUrl}/published`);
+  }
+
+  getAllPublishedDesc(): Observable<IPost[]> {
+    return this.http.get<IPost[]>(`${baseUrl}/published/desc`);
   }
 
   get(id: any): Observable<IPost> {

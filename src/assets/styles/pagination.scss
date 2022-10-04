@@ -1,0 +1,99 @@
+@import 'src/assets/styles/_colors';
+
+.ngx-pagination {
+  margin-left: 0;
+  margin-bottom: 1rem;
+  line-height: 20px;
+  padding: 7px 0 7px;
+  font-size: 12px;
+  float: right;
+}
+
+.ngx-pagination::before,
+.ngx-pagination::after {
+  content: " " !important;
+  display: table !important;
+}
+
+.ngx-pagination::after {
+  clear: both !important;
+}
+
+.ngx-pagination li {
+  -moz-user-select: none !important;
+  -webkit-user-select: none !important;
+  -ms-user-select: none !important;
+  margin-right: 0.2rem !important;
+  border-radius: 0 !important;
+}
+
+.ngx-pagination li {
+  //display: inline-block !important;
+  //color: $color-hint !important;
+}
+
+.ngx-pagination a,
+.ngx-pagination button {
+  display: block !important;
+  background-color: #424242 !important;
+  color: $color-white !important;
+  padding: 0.5rem 1rem !important;
+  border-radius: 20px !important;
+}
+
+.ngx-pagination a:hover,
+.ngx-pagination button:hover {
+  background: $color-black !important;
+  color: $color-primary !important;
+}
+
+.ngx-pagination .current {
+  background: $color-black !important;
+  color: $color-primary !important;
+  cursor: default !important;
+  padding: 0.5rem 1rem !important;
+  border-radius: 20px !important;
+}
+
+.ngx-pagination .disabled {
+  //padding: 0.1875rem 0.625rem !important;
+  //color: #cacaca00 !important;
+  //cursor: default !important;
+}
+
+.ngx-pagination .disabled:hover {
+  background: transparent !important;
+}
+
+.ngx-pagination a,
+.ngx-pagination button {
+  cursor: pointer !important;
+}
+
+.ngx-pagination .pagination-previous a::before,
+.ngx-pagination .pagination-previous.disabled::before {
+  font-family: FontAwesome !important;
+  content: "\f053" !important;
+  display: inline-block !important;
+  margin-right: 0 !important;
+}
+
+.ngx-pagination .pagination-next a::after,
+.ngx-pagination .pagination-next.disabled::after {
+  font-family: FontAwesome !important;
+  content: "\f054" !important;
+  display: inline-block !important;
+  margin-left: 0 !important;
+}
+
+.ngx-pagination .show-for-sr {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+}
+
+.ngx-pagination .small-screen {
+  display: none !important;
+}

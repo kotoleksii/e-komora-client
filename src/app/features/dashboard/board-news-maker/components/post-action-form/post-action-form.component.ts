@@ -3,7 +3,7 @@ import {PostService} from '../../../../../shared/_services/post.service';
 import {IPost} from '../../../../../shared/interfaces/Post';
 import {ActivatedRoute, Router} from '@angular/router';
 import {first} from 'rxjs/operators';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {UntypedFormBuilder, UntypedFormControl, FormGroup, Validators} from '@angular/forms';
 import {NotifierService} from 'angular-notifier';
 import {SubSink} from 'subsink';
 
@@ -20,7 +20,7 @@ export class PostActionFormComponent implements OnInit, OnDestroy {
   pageTitle = '';
 
   constructor(private postService: PostService,
-              private formBuilder: FormBuilder,
+              private formBuilder: UntypedFormBuilder,
               private notifierService: NotifierService,
               private router: Router,
               private route: ActivatedRoute) {
@@ -46,7 +46,7 @@ export class PostActionFormComponent implements OnInit, OnDestroy {
     }
   }
 
-  get f(): FormControl {
+  get f(): UntypedFormControl {
     return this.postForm.controls;
   }
 

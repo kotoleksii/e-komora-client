@@ -1,4 +1,4 @@
-<div class="profile-card-wrapper" *ngIf="currentUser; else loggedOut">
+<div class="profile-card-wrapper" *ngIf="currentUser">
   <mat-card class="profile-card">
     <mat-card-header>
       <img [src]="currentUser.avatar != null
@@ -11,23 +11,59 @@
       </mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-      <p>
-        <strong>Email:</strong>
-        {{ currentUser.email }}
-      </p>
-      <div class="roles">
-        <strong>Roles:</strong>
+      <p>Email: <span>{{ currentUser.email }}</span></p>
+        <p>Доступ:</p>
         <ul class="roles-list">
-          <li *ngFor="let role of currentUser.roles">
-            {{ role }}
-          </li>
+          <li *ngFor="let role of currentUser.roles">{{ role.substring(5).replace('_', ' ') | lowercase }}</li>
         </ul>
+      <mat-accordion>
+        <mat-expansion-panel class="mat-elevation-z0">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Змінити пароль
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+            <mat-form-field appearance="outline" color="accent">
+              <mat-label>Пароль</mat-label>
+              <input matInput [type]="hide ? 'password' : 'text'" placeholder="Пароль" formControlName="password"
+                     [ngClass]="{ 'is-invalid': submitted && f.password.errors }" required>
+              <i matSuffix (click)="hide = !hide" class="{{hide ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'}}"></i>
+              <mat-error *ngIf="f.password.errors?.required; else minLengthElem">*Пароль обов`язковий!</mat-error>
+              <ng-template #minLengthElem>
+                <mat-error *ngIf="f.password.errors?.minlength; else checkControlUppercaseElem">
+                  *Пароль має бути не менше 8 символів
+                </mat-error>
+              </ng-template>
+              <ng-template #checkControlUppercaseElem>
+                <mat-error *ngIf="!checkControlUppercase(f.password); else checkControlLowercaseElem">
+                  *Пароль має містити хоча б одну велику літеру
+                </mat-error>
+              </ng-template>
+              <ng-template #checkControlLowercaseElem>
+                <mat-error *ngIf="!checkControlLowercase(f.password)">
+                  *Пароль має містити хоча б одну маленьку літеру
+                </mat-error>
+              </ng-template>
+            </mat-form-field>
+            <mat-form-field appearance="outline" color="accent">
+              <mat-label>Повтор паролю</mat-label>
+              <input matInput [type]="hide ? 'password' : 'text'" placeholder="Повтор паролю"
+                     formControlName="confirmPassword"
+                     [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }" required>
+              <mat-error *ngIf="f.confirmPassword.errors?.required">*Повтор паролю обов`язково!</mat-error>
+              <mat-error *ngIf="f.confirmPassword.errors?.mustMatch">*Паролі не співпадають</mat-error>
+            </mat-form-field>
+            <div class="btn-actions">
+              <button mat-raised-button class="btn-confirm" [disabled]='!profileForm.valid'>Підтвердити</button>
+            </div>
+          </form>
+        </mat-expansion-panel>
+      </mat-accordion>
+      <div class="btn-back">
+        <a routerLink="/home">Назад</a>
       </div>
     </mat-card-content>
-
-    <mat-card-actions>
-      <button mat-raised-button color="primary" routerLink="/home">НАЗАД</button>
-    </mat-card-actions>
   </mat-card>
 </div>
 
@@ -38,6 +74,3 @@
 <!--  {{ currentUser.accessToken.substr(currentUser.accessToken.length - 20) }}-->
 <!--</p>-->
 
-<ng-template #loggedOut>
-  Please login.
-</ng-template>

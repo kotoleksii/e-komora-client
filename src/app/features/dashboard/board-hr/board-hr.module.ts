@@ -18,7 +18,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
 import {ConfirmDialogModalModule} from 'src/app/shared/modals/confirm-dialog-modal/confirm-dialog-modal.module';
-import {_MatMenuDirectivesModule, MatMenuModule} from '@angular/material/menu';
+import {MatMenuModule} from "@angular/material/menu";
 
 @NgModule({
   declarations: [BoardHrComponent, UserActionFormComponent],
@@ -35,13 +35,12 @@ import {_MatMenuDirectivesModule, MatMenuModule} from '@angular/material/menu';
     ReactiveFormsModule,
     MatListModule,
     MatToolbarModule,
-    MatCardModule,
     FormsModule,
     MatGridListModule,
     MatDatepickerModule,
     MatNativeDateModule,
     ConfirmDialogModalModule,
-    _MatMenuDirectivesModule,
+    MatCardModule,
     MatMenuModule,
   ]
 })

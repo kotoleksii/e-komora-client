@@ -1,3 +1,5 @@
+@import '../../../assets/styles/_colors.scss';
+
 .profile-card-wrapper {
   margin-top: 50px;
 
@@ -7,14 +9,81 @@
     max-width: 400px;
     border-radius: 20px;
 
+    p {
+      font-weight: 500;
+      margin-bottom: 6px;
+
+      span {
+        font-weight: 300;
+      }
+    }
+
     mat-card-content {
       .roles-list {
         margin-top: 5px;
+
+        li {
+          list-style-type: '👉';
+          padding-inline-start: 1ch;
+        }
+      }
+
+      mat-form-field {
+        width: 100%;
+
+        i {
+          position: relative;
+          bottom: 6px;
+        }
+      }
+
+      .btn-actions {
+        text-align: center;
+
+        .btn-confirm {
+          padding: 10px 0;
+          margin-bottom: 16px;
+          width: 100%;
+          font-weight: 400;
+          background: $color-primary;
+          color: $color-black;
+
+          &:hover {
+            background-color: $color-primary-hover;
+          }
+
+          &:disabled,
+          &[disabled] {
+            background-color: $color-disabled;
+            color: $color-disabled-text;
+          }
+        }
+      }
+
+      .btn-back {
+        text-align: center;
+        margin-top: 8px;
+
+        a {
+          color: $color-secondary;
+          text-decoration: none;
+
+          &:hover {
+            color: $color-white;
+          }
+        }
       }
     }
   }
 
-  mat-card-actions {
-    text-align: center;
-  }
 }
+
+mat-expansion-panel-header {
+  padding: 0 8px 0 0;
+}
+
+mat-panel-title {
+  font-weight: 500;
+  font-size: 14px;
+}
+

@@ -3,7 +3,7 @@ import {AuthService} from '../../shared/_services/auth.service';
 import {NotifierService} from 'angular-notifier';
 import {SubSink} from 'subsink';
 import {Router} from '@angular/router';
-import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 import {AuthValidators} from '../../shared/classes/AuthValidators';
 
 
@@ -21,30 +21,30 @@ export class RegisterComponent implements OnInit, OnDestroy {
   submitted = false;
   hide = true;
   errorMessage = '';
-  registerForm = new FormGroup(
+  registerForm = new UntypedFormGroup(
     {
-      firstName: new FormControl('', [
+      firstName: new UntypedFormControl('', [
         Validators.required,
         Validators.minLength(2),
         Validators.maxLength(30),
         AuthValidators.onlyChar()
       ]),
-      lastName: new FormControl('', [
+      lastName: new UntypedFormControl('', [
         Validators.required,
         Validators.minLength(2),
         Validators.maxLength(30),
         AuthValidators.onlyChar()
       ]),
-      email: new FormControl('', [
+      email: new UntypedFormControl('', [
         Validators.required,
         AuthValidators.emailRegex()
       ]),
-      password: new FormControl('', [
+      password: new UntypedFormControl('', [
         Validators.required,
         Validators.minLength(8),
         AuthValidators.password()
       ]),
-      confirmPassword: new FormControl('', [Validators.required])
+      confirmPassword: new UntypedFormControl('', [Validators.required])
     },
     AuthValidators.mustMatch('password', 'confirmPassword')
   );

@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, Inject, OnInit} from '@angular/core';
 import {DialogData} from '../../interfaces/dialog-data';
-import {FormBuilder} from '@angular/forms';
+import {UntypedFormBuilder} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
@@ -23,7 +23,7 @@ export class ConfirmDialogModalComponent implements OnInit {
   public itemId = 0;
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     public dialogRef: MatDialogRef<ConfirmDialogModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {
   }

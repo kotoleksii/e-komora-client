@@ -2,6 +2,11 @@
 @import '../../../assets/styles/_colors';
 
 .header-wrapper {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
 
   .header-spacer {
     flex: 1 1 auto;

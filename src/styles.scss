@@ -1,6 +1,7 @@
 @import "node_modules/angular-notifier/styles";
 @import 'assets/styles/_colors';
-@import 'assets/styles/material-settings';
+@import 'assets/styles/material';
+@import 'assets/styles/pagination';
 
 html, body {
   height: 100%;
@@ -9,4 +10,8 @@ html, body {
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+a {
+  color: $color-link;
 }
