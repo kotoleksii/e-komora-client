@@ -14,7 +14,7 @@ export class MaterialService {
   }
 
   public getAll(): Observable<IMaterial[]> {
-    return this.http.get<IMaterial[]>(API_URL + 'materials');
+    return this.http.get<IMaterial[]>(API_URL + 'users/materials');
   }
 
   public getByUserId(id: number): Observable<any> {

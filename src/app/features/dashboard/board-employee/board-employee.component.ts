@@ -18,7 +18,7 @@ export class BoardEmployeeComponent implements OnInit, OnDestroy {
   @ViewChild(MatSort) sort: MatSort | undefined;
 
   public dataSource: MatTableDataSource<any> | any;
-  public displayedColumns = ['ID', 'title', 'inventoryNumber', 'dateStart', 'type', 'userId'];
+  public displayedColumns = ['ID', 'title', 'inventoryNumber', 'dateStart', 'type'];
   currentUserId: any;
   content?: string;
   materials?: any;
@@ -42,15 +42,6 @@ export class BoardEmployeeComponent implements OnInit, OnDestroy {
     this.getAndSetMaterialItems();
   }
 
-  applyFilter(event: Event): void {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
-
   public getAndSetMaterialItems(): void {
     this.subs.add(
       this.materialService.getByUserId(this.currentUserId).subscribe((data: any) => {
@@ -71,6 +62,15 @@ export class BoardEmployeeComponent implements OnInit, OnDestroy {
         }
       ));
   }
+
+    applyFilter(event: Event): void {
+        const filterValue = (event.target as HTMLInputElement).value;
+        this.dataSource.filter = filterValue.trim().toLowerCase();
+
+        if (this.dataSource.paginator) {
+            this.dataSource.paginator.firstPage();
+        }
+    }
 
   ngOnDestroy(): void {
     this.subs.unsubscribe();

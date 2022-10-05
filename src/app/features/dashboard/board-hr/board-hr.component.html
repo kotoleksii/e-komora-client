@@ -1,4 +1,4 @@
-<div class="board-hr-wrapper" *ngIf="showHRBoard; else error404">
+<div class="board-hr-wrapper" *ngIf="showHRBoard">
   <mat-card class="mat-elevation-z6">
     <mat-card-header>
       <mat-card-title class="view-card-title">
@@ -78,7 +78,3 @@
     </div>
   </mat-card>
 </div>
-
-<ng-template #error404>
-  Не забудь створити сторінку 404
-</ng-template>

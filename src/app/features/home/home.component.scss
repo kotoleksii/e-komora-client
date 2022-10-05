@@ -1,3 +1,5 @@
+@import 'src/assets/styles/_colors';
+
 .home-wrapper {
   max-width: 700px;
   text-align: left;
@@ -8,8 +10,23 @@
     padding: 30px;
     border-radius: 20px;
 
-    mat-card-title {
+    .post-title {
       margin-bottom: 20px;
+    }
+
+    .post-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+
+      .post-date, .btn-views {
+        color: $color-hint;
+      }
+
+      .card-spacer {
+        flex: 1 1 auto;
+      }
     }
   }
 }
