@@ -1,26 +1,26 @@
 <div class="post-wrapper">
-  <mat-card class="post-card">
-    <div class="form-title">
-      <h2>{{pageTitle}}</h2>
-    </div>
-    <form [formGroup]="postForm" (ngSubmit)="onSubmit()">
-      <mat-card-content>
-        <mat-form-field appearance="outline" color="accent">
-          <mat-label>Заголовок</mat-label>
-          <input matInput formControlName="title" placeholder="Заголовок" required>
-        </mat-form-field>
-        <mat-form-field appearance="outline" color="accent">
-        <textarea matInput formControlName="description" placeholder="Текст новини" required
-                  oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'>
-        </textarea>
-        </mat-form-field>
-        <button class="btn-next" mat-raised-button color="accent" [disabled]='!postForm.valid'>
-          Зберегти
-        </button>
-        <a class="btn-back" [routerLink]="['', 'dashboard', 'news-maker']">
-          Назад
-        </a>
-      </mat-card-content>
-    </form>
-  </mat-card>
+    <mat-card class="post-card">
+        <div class="form-title">
+            <h2>{{pageTitle}}</h2>
+        </div>
+        <form [formGroup]="postForm" (ngSubmit)="onSubmit()">
+            <mat-card-content>
+                <mat-form-field appearance="outline" color="accent">
+                    <mat-label>Заголовок</mat-label>
+                    <input matInput formControlName="title" placeholder="Заголовок" required>
+                </mat-form-field>
+                <mat-form-field appearance="outline" color="accent">
+                    <textarea matInput formControlName="description" placeholder="Текст новини" required
+                              oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'>
+                    </textarea>
+                </mat-form-field>
+                <button class="btn-next" mat-raised-button color="accent" [disabled]='!postForm.valid'>
+                    Зберегти
+                </button>
+                <a class="btn-back" [routerLink]="['', 'dashboard', 'news-maker']">
+                    Назад
+                </a>
+            </mat-card-content>
+        </form>
+    </mat-card>
 </div>

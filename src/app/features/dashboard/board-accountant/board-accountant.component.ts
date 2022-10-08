@@ -9,10 +9,8 @@ import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {MaterialService} from '../../../shared/_services/material.service';
 import {IUser} from '../../../shared/interfaces/user';
-import {map, reduce, switchMap} from 'rxjs/operators';
-import {combineLatest, forkJoin, merge, Observable, pipe} from 'rxjs';
-import {FormControl} from '@angular/forms';
-import * as _ from 'lodash';
+import {map} from 'rxjs/operators';
+import {forkJoin} from 'rxjs';
 
 @Component({
     selector: 'app-board-accountant',
@@ -20,19 +18,19 @@ import * as _ from 'lodash';
     styleUrls: ['./board-accountant.component.scss']
 })
 export class BoardAccountantComponent implements OnInit, OnDestroy {
-    @ViewChild(MatPaginator) paginator: MatPaginator | any;
-    @ViewChild(MatSort) sort: MatSort | undefined;
+    @ViewChild(MatPaginator) private paginator: MatPaginator | any;
+    @ViewChild(MatSort) private sort: MatSort | undefined;
+
+    private roles: string[] = [];
+    private subs: SubSink = new SubSink();
 
     public dataSource: MatTableDataSource<any> | any;
     public displayedColumns = ['id', 'title', 'inventoryNumber', 'dateStart', 'type', 'userId', 'lastName', 'ID'];
-    materials?: any;
-    users?: any;
-    userId: number = 0;
-    content?: string;
-    showAccountantBoard = false;
-    private roles: string[] = [];
-    private subs: SubSink = new SubSink();
-    employeesForm = new FormControl('');
+    public materials?: any;
+    public users?: any;
+    public userId: number = 0;
+    public content?: string;
+    public showAccountantBoard = false;
 
     constructor(private userService: UserService,
                 private testService: TestService,
@@ -51,24 +49,12 @@ export class BoardAccountantComponent implements OnInit, OnDestroy {
             this.router.navigate(['home']).then();
         }
 
-        // this.getAndSetMaterials();
         this.getEmployeeItems();
-        this.merge();
+        this.getAndSetMaterialsWithUsers();
     }
 
-    public getAndSetMaterials(): void {
-        this.subs.add(
-            this.materialService.getAll().subscribe((data: any) => {
-                this.materials = data;
-                console.log(this.materials);
-                this.dataSource = new MatTableDataSource<any>(this.materials);
-                this.dataSource.paginator = this.paginator;
-                this.dataSource.sort = this.sort;
-            }));
-    }
-
-    merge(): void {
-        let observable = forkJoin([
+    getAndSetMaterialsWithUsers(): void {
+        this.subs.add(forkJoin([
             this.materialService.getAll(),
             this.userService.getAll()
         ]).pipe(map(([materials, users]) => materials.map(material => {
@@ -82,19 +68,56 @@ export class BoardAccountantComponent implements OnInit, OnDestroy {
                     'lastName': users.find((x: any) => x.id === material.userId).lastName
                 };
             })
-        )).subscribe((res) => {
-            this.materials = res;
-            console.log(this.materials);
-            this.dataSource = new MatTableDataSource<any>(this.materials);
-            this.dataSource.paginator = this.paginator;
-            this.dataSource.sort = this.sort;
-        });
+        )).subscribe((data) => {
+            this.initDataTable(data);
+        }));
+    }
+
+    private initDataTable(data: any): void {
+        this.materials = data;
+        this.dataSource = new MatTableDataSource<any>(this.materials);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+    }
+
+    public getAndSetMaterials(): void {
+        this.subs.add(
+            this.materialService.getAll().subscribe((data: any) => {
+                this.initDataTable(data);
+            }));
     }
 
     public getEmployeeItems(): void {
-        this.userService.getAll().subscribe((res: IUser[]) => {
-            this.users = res;
-        });
+        this.subs.add(
+            this.userService.getAll().subscribe((res: IUser[]) => {
+                this.users = res;
+            }));
+    }
+
+    onChange(event: any): void {
+        const filterValue = event.value;
+        if (filterValue === 'не обрано') {
+            this.initDataTable(this.materials);
+        } else {
+            const filteredData = this.materials.filter((item: any) => {
+                return item.userId === filterValue;
+            });
+            this.dataSource = new MatTableDataSource<any>(filteredData);
+            this.dataSource.sort = this.sort;
+
+            if (this.dataSource.paginator) {
+                this.dataSource.paginator.firstPage();
+            }
+        }
+    }
+
+    applyFilter(event: Event): void {
+        const filterValue = (event.target as HTMLInputElement).value;
+        this.dataSource.filter = filterValue.trim().toLowerCase();
+
+        if (this.dataSource.paginator) {
+            this.dataSource.paginator.firstPage();
+        }
     }
 
     public getEmployeeById(id: number): string {
@@ -112,31 +135,6 @@ export class BoardAccountantComponent implements OnInit, OnDestroy {
                     this.content = err?.message;
                 }
             ));
-    }
-
-    onChange(event: any): void {
-        if (event.value === 'не обрано') {
-            console.log(this.materials);
-            this.dataSource = new MatTableDataSource<any>(this.materials);
-            this.dataSource.paginator = this.paginator;
-            this.dataSource.sort = this.sort;
-        }else {
-            let filteredData = _.filter(this.materials, (item) => {
-                return item.userId === event.value;
-            });
-            this.dataSource = new MatTableDataSource<any>(filteredData);
-            this.dataSource.paginator = this.paginator;
-            this.dataSource.sort = this.sort;
-        }
-    }
-
-    applyFilter(event: Event): void {
-        const filterValue = (event.target as HTMLInputElement).value;
-        this.dataSource.filter = filterValue.trim().toLowerCase();
-
-        if (this.dataSource.paginator) {
-            this.dataSource.paginator.firstPage();
-        }
     }
 
     ngOnDestroy(): void {
