@@ -1,9 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {PostService} from '../../../../../shared/_services/post.service';
-import {IPost} from '../../../../../shared/interfaces/Post';
 import {ActivatedRoute, Router} from '@angular/router';
 import {first} from 'rxjs/operators';
-import {UntypedFormBuilder, UntypedFormControl, FormGroup, Validators} from '@angular/forms';
+import {UntypedFormBuilder, UntypedFormControl, Validators} from '@angular/forms';
 import {NotifierService} from 'angular-notifier';
 import {SubSink} from 'subsink';
 

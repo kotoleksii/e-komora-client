@@ -25,7 +25,8 @@ export class BoardAccountantComponent implements OnInit, OnDestroy {
     private subs: SubSink = new SubSink();
 
     public dataSource: MatTableDataSource<any> | any;
-    public displayedColumns = ['id', 'title', 'inventoryNumber', 'dateStart', 'type', 'userId', 'lastName', 'ID'];
+    public displayedColumns = ['id', 'title', 'inventoryNumber', 'dateStart', 'type', 'amount', 'price',
+        'userId', 'lastName', 'ID'];
     public materials?: any;
     public users?: any;
     public userId: number = 0;
@@ -64,6 +65,8 @@ export class BoardAccountantComponent implements OnInit, OnDestroy {
                     'inventoryNumber': material.inventoryNumber,
                     'dateStart': material.dateStart,
                     'type': material.type,
+                    'amount': material.amount,
+                    'price': material.price,
                     'userId': material.userId,
                     'lastName': users.find((x: any) => x.id === material.userId).lastName
                 };

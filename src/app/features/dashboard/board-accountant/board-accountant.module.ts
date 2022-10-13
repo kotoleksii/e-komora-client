@@ -14,9 +14,13 @@ import {RouterModule} from '@angular/router';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatSelectModule} from '@angular/material/select';
+import {MaterialActionFormComponent} from './components/material-action-form/material-action-form.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
+import {MatMenuModule} from '@angular/material/menu';
 
 @NgModule({
-  declarations: [BoardAccountantComponent],
+    declarations: [BoardAccountantComponent, MaterialActionFormComponent],
     imports: [
         CommonModule,
         BoardAccountantRoutingModule,
@@ -31,7 +35,10 @@ import {MatSelectModule} from '@angular/material/select';
         RouterModule,
         ReactiveFormsModule,
         MatAutocompleteModule,
-        MatSelectModule
+        MatSelectModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatMenuModule
     ]
 })
 export class BoardAccountantModule {

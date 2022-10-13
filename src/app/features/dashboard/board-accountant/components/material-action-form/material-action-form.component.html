@@ -1,0 +1,104 @@
+<div class="material-action-form-wrapper">
+    <form [formGroup]="materialForm" (ngSubmit)="onSubmit()">
+        <mat-card class="mat-elevation-z6">
+            <mat-toolbar>
+                <mat-toolbar-row>
+                    <div>
+                        <a *ngIf="topic !== 'edit'" class="btn-action" mat-icon-button
+                           [routerLink]="[ '', 'dashboard', 'accountant' ]">
+                            <i class="fa-solid fa-arrow-left"></i>
+                        </a>
+                        <a *ngIf="topic === 'edit'" class="btn-action" mat-icon-button
+                           href="dashboard/accountant/user/{{userId}}/material/{{materialId}}/details">
+                            <i class="fa-solid fa-arrow-left"></i>
+                        </a>
+                    </div>
+                    <div>
+                        <span *ngIf="topic === 'add'" class="view-card-title">{{pageTitle}}</span>
+                        <span *ngIf="topic === 'edit'" class="view-card-title">{{pageTitle}}</span>
+                        <span *ngIf="topic === 'details'" class="view-card-title">{{pageTitle}}</span>
+                    </div>
+                    <div>
+                        <button *ngIf="topic !== 'details'; else detailsMenu" class="btn-action" mat-icon-button
+                                color="accent"
+                                type="submit"
+                                [disabled]='!materialForm.valid'>
+                            <i class="fa-solid fa-floppy-disk"></i>
+                        </button>
+                    </div>
+                </mat-toolbar-row>
+            </mat-toolbar>
+
+            <mat-card-content>
+                <div *ngIf="topic === 'details'">
+                    Останнє оновлення {{material?.updateDateTime | date:'dd/MM/yyyy HH:mm:ss'}}
+                </div>
+                <hr>
+                <br>
+                <div class="form-card">
+                    <div class="row">
+                        <mat-form-field class="form-field" appearance="outline">
+                            <mat-label>Найменування</mat-label>
+                            <input matInput id="title" type="text" placeholder="Найменування"
+                                   formControlName="title"/>
+                            <!--                            <mat-error *ngIf="f.lastName.invalid">{{errorMsg(f.lastName, 'Прізвище')}}</mat-error>-->
+                        </mat-form-field>
+                        <mat-form-field class="form-field" appearance="outline">
+                            <mat-label>Інвентарний номер</mat-label>
+                            <input matInput id="inventoryNumber" type="text" placeholder="Інвентарний номер"
+                                   formControlName="inventoryNumber"/>
+                            <!--                            <mat-error *ngIf="f.firstName.invalid">{{errorMsg(f.firstName, 'Ім`я')}}</mat-error>-->
+                        </mat-form-field>
+                        <mat-form-field class="form-field" appearance="outline">
+                            <mat-label>Дата старту</mat-label>
+                            <input matInput [matDatepicker]="picker" formControlName="dateStart">
+                            <mat-datepicker-toggle matSuffix [for]="picker">
+                                <i class="fa-solid fa-calendar-days"></i>
+                            </mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Тип</mat-label>
+                            <mat-select formControlName="type" required>
+                                <mat-option>None</mat-option>
+                                <mat-option *ngFor="let type of types"
+                                            [value]="type">{{type}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field class="form-field" appearance="outline">
+                            <mat-label>Кількість</mat-label>
+                            <input matInput id="amount" type="number" placeholder="Кількість"
+                                   formControlName="amount"/>
+                        </mat-form-field>
+                        <mat-form-field class="form-field" appearance="outline">
+                            <mat-label>Ціна</mat-label>
+                            <input matInput id="price" type="number" placeholder="Ціна"
+                                   formControlName="price"/>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+        <mat-card *ngIf="topic === 'edit' || topic === 'details'" class="mat-elevation-z6">
+            <mat-card-content>
+                <div class="row">
+
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </form>
+</div>
+
+<ng-template #detailsMenu>
+    <button mat-icon-button [matMenuTriggerFor]="menuDetails">
+        <i class="fa-solid fa-ellipsis-vertical"></i>
+    </button>
+    <mat-menu #menuDetails="matMenu" [overlapTrigger]="false">
+        <a class="menu-item" mat-menu-item href="dashboard/accountant/user/{{userId}}/material/{{materialId}}/edit">
+            <i class="fa-solid fa-file-pen"></i><span class="menu-item-text">Редагувати</span>
+        </a>
+        <!--        <a class="menu-item" mat-menu-item (click)="openConfirmDialog(userId, material)">-->
+        <!--            <i class="fa-solid fa-trash"></i><span class="menu-item-text">Видалити</span>-->
+        <!--        </a>-->
+    </mat-menu>
+</ng-template>

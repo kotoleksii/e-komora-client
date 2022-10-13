@@ -20,6 +20,6 @@
   color: $color-primary;
 }
 
-.mat-input-element:disabled {
+.mat-input-element:disabled, .mat-select-disabled .mat-select-value {
   color: $color-white;
 }

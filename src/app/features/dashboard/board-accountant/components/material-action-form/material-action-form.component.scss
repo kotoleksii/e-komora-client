@@ -1,0 +1,73 @@
+@import 'src/assets/styles/_colors';
+
+.material-action-form-wrapper {
+  max-width: 800px;
+  margin: auto;
+
+  mat-toolbar {
+    border-radius: 10px;
+    padding: 12px 0;
+    margin-bottom: 20px;
+    background: #424242;
+
+    mat-toolbar-row {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: space-between;
+    }
+  }
+
+  mat-card {
+    margin: 50px 20px;
+    border-radius: 20px;
+
+    mat-card-content {
+      padding: 10px 0;
+      text-align: center;
+
+      mat-form-field {
+        margin: 0 10px;
+      }
+    }
+  }
+
+  .title-spacer {
+    flex: 1 1 auto;
+  }
+
+  .form-field {
+    //width: 100%;
+    //margin-left: 20px;
+    //margin-right: 20px;
+  }
+
+  .btn-action {
+    margin-right: 10px;
+    font-size: 22px;
+  }
+
+  .centered {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+  }
+}
+
+a.mat-menu-item {
+  margin: 5px;
+
+  &.mat-menu-item:hover {
+    background-color: #101014;
+    color: $color-primary;
+    border-radius: 0.25rem;
+  }
+}
+
+span.menu-item-text {
+  margin-left: 15px;
+}
+
+mat-label {
+  color: $color-secondary;
+}
