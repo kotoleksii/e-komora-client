@@ -10,7 +10,7 @@ const API_URL = 'http://localhost:8080/api/';
 })
 export class MaterialService {
 
-    constructor(private http: HttpClient) {
+    public constructor(private http: HttpClient) {
     }
 
     public getAll(): Observable<IMaterial[]> {
@@ -19,6 +19,10 @@ export class MaterialService {
 
     public getByUserId(id: number): Observable<any> {
         return this.http.get<any>(`${API_URL}users/${id}/materials`);
+    }
+
+    public getByMaterialId(id: number): Observable<any> {
+        return this.http.get<any>(`${API_URL}users/material/${id}`);
     }
 
     public create(userId: any, data: any): Observable<any> {

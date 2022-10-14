@@ -9,61 +9,53 @@ import {TokenStorageService} from '../../../shared/_services/token-storage.servi
 import {TestService} from '../../../shared/_services/test.service';
 
 @Component({
-  selector: 'app-board-employee',
-  templateUrl: './board-employee.component.html',
-  styleUrls: ['./board-employee.component.scss']
+    selector: 'app-board-employee',
+    templateUrl: './board-employee.component.html',
+    styleUrls: ['./board-employee.component.scss']
 })
 export class BoardEmployeeComponent implements OnInit, OnDestroy {
-  @ViewChild(MatPaginator) paginator: MatPaginator | any;
-  @ViewChild(MatSort) sort: MatSort | undefined;
+    @ViewChild(MatPaginator) private paginator: MatPaginator | any;
+    @ViewChild(MatSort) private sort: MatSort | undefined;
+    private roles: string[] = [];
+    private subs: SubSink = new SubSink();
 
-  public dataSource: MatTableDataSource<any> | any;
-  public displayedColumns = ['ID', 'title', 'inventoryNumber', 'dateStart', 'type'];
-  currentUserId: any;
-  content?: string;
-  materials?: any;
-  showEmployeeBoard = false;
-  private roles: string[] = [];
-  private subs: SubSink = new SubSink();
+    public dataSource: MatTableDataSource<any> | any;
+    public displayedColumns = ['ID', 'title', 'inventoryNumber', 'dateStart', 'type'];
+    public currentUserId: any;
+    public content?: string;
+    public materials?: any;
+    public showEmployeeBoard = false;
 
-  constructor(private token: TokenStorageService,
-              private userService: UserService,
-              private testService: TestService,
-              private materialService: MaterialService) {
-  }
+    public constructor(private token: TokenStorageService,
+                       private userService: UserService,
+                       private testService: TestService,
+                       private materialService: MaterialService) {
+    }
 
-  ngOnInit(): void {
-    this.content = 'Мої матеріали';
-    const user = this.token.getUser();
-    this.roles = user.roles;
-    this.showEmployeeBoard = this.roles.includes('ROLE_EMPLOYEE');
+    public ngOnInit(): void {
+        this.content = 'Мої матеріали';
+        const user = this.token.getUser();
+        this.roles = user.roles;
+        this.showEmployeeBoard = this.roles.includes('ROLE_EMPLOYEE');
 
-    this.currentUserId = user.id;
-    this.getAndSetMaterialItems();
-  }
+        this.currentUserId = user.id;
+        this.getAndSetMaterialItems();
+    }
 
-  public getAndSetMaterialItems(): void {
-    this.subs.add(
-      this.materialService.getByUserId(this.currentUserId).subscribe((data: any) => {
-        this.dataSource = new MatTableDataSource<any>(data);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-      }));
-  }
+    public ngOnDestroy(): void {
+        this.subs.unsubscribe();
+    }
 
-  getEmployeeServerText(): void {
-    this.subs.add(
-      this.testService.getEmployeeBoard().subscribe(
-        data => {
-          this.content = data;
-        },
-        err => {
-          this.content = err?.message;
-        }
-      ));
-  }
+    public getAndSetMaterialItems(): void {
+        this.subs.add(
+            this.materialService.getByUserId(this.currentUserId).subscribe((data: any) => {
+                this.dataSource = new MatTableDataSource<any>(data);
+                this.dataSource.paginator = this.paginator;
+                this.dataSource.sort = this.sort;
+            }));
+    }
 
-    applyFilter(event: Event): void {
+    public applyFilter(event: Event): void {
         const filterValue = (event.target as HTMLInputElement).value;
         this.dataSource.filter = filterValue.trim().toLowerCase();
 
@@ -72,7 +64,15 @@ export class BoardEmployeeComponent implements OnInit, OnDestroy {
         }
     }
 
-  ngOnDestroy(): void {
-    this.subs.unsubscribe();
-  }
+    private getEmployeeServerText(): void {
+        this.subs.add(
+            this.testService.getEmployeeBoard().subscribe(
+                (data) => {
+                    this.content = data;
+                },
+                (err) => {
+                    this.content = err?.message;
+                }
+            ));
+    }
 }

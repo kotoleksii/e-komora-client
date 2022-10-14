@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {IPost} from '../../../shared/interfaces/Post';
 import {PostService} from '../../../shared/_services/post.service';
 import {NotifierService} from 'angular-notifier';
@@ -15,19 +15,19 @@ import {TokenStorageService} from '../../../shared/_services/token-storage.servi
 export class BoardNewsMakerComponent implements OnInit {
     private subs: SubSink = new SubSink();
     private roles: string[] = [];
-    public showNewsMakerBoard = false;
+    public showNewsMakerBoard: boolean = false;
     public posts?: IPost[];
     public currentPost: IPost = {};
-    public pageTitle = 'Менеджер новин';
+    public pageTitle: string = 'Менеджер новин';
 
-    constructor(private postService: PostService,
-                private notifierService: NotifierService,
-                private route: ActivatedRoute,
-                private router: Router,
-                private token: TokenStorageService) {
+    public constructor(private postService: PostService,
+                       private notifierService: NotifierService,
+                       private route: ActivatedRoute,
+                       private router: Router,
+                       private token: TokenStorageService) {
     }
 
-    ngOnInit(): void {
+    public ngOnInit(): void {
         const user = this.token.getUser();
         this.roles = user.roles;
         this.showNewsMakerBoard = this.roles.includes('ROLE_NEWS_MAKER');
@@ -35,33 +35,11 @@ export class BoardNewsMakerComponent implements OnInit {
         this.getAllPosts();
     }
 
-    getAllPosts(): void {
-        this.postService.getAllDesc()
-            .subscribe({
-                next: (data) => {
-                    this.posts = data;
-                    console.log(data);
-                },
-                error: (e) => console.error(e)
-            });
-    }
-
-    getPost(id: number): void {
-        this.postService.get(id)
-            .subscribe({
-                next: (data) => {
-                    this.currentPost = data;
-                    console.log(data);
-                },
-                error: (e) => console.error(e)
-            });
-    }
-
     public getPostById(id: number): any {
         return this.posts?.find((el: IPost) => el.id === id);
     }
 
-    updatePublished(id: number, status: boolean): void {
+    public updatePublished(id: number, status: boolean): void {
         const data = {
             title: this.getPostById(id).title,
             description: this.getPostById(id).description,
@@ -72,33 +50,63 @@ export class BoardNewsMakerComponent implements OnInit {
             .pipe(first())
             .subscribe({
                 next: (res) => {
-                    console.log(res);
+                    // console.log(res);
                     this.currentPost.published = status;
-                    this.notifierService.notify('success', `Статус новини оновлено успішно!`);
-                    this.refreshPage();
+                    this.notifierService.notify('success', 'Статус новини оновлено успішно!');
+                    BoardNewsMakerComponent.refreshPage();
                 },
-                error: (e) => console.error(e)
+                error: (e) => {
+                    // console.error(e)
+                }
             }));
     }
 
-    deletePost(id: number): void {
+    public deletePost(id: number): void {
         if (confirm('Ви впевнені, що хочете видалити цей пост?')) {
             this.subs.add(this.postService.delete(id)
                 .subscribe({
                     next: () => {
-                        this.refreshPage();
+                        BoardNewsMakerComponent.refreshPage();
                     },
-                    error: (e) => console.error(e)
+                    error: (e) => {
+                        // console.error(e)
+                    }
                 }));
-            console.log('Видалено');
+            // console.log('Видалено');
         } else {
-            console.log('Скасувати.');
+            // console.log('Скасувати.');
             return;
         }
 
     }
 
-    refreshPage(): void {
+    private getAllPosts(): void {
+        this.postService.getAllDesc()
+            .subscribe({
+                next: (data) => {
+                    this.posts = data;
+                    // console.log(data);
+                },
+                error: (e) => {
+                    // console.error(e)
+                }
+            });
+    }
+
+    private getPost(id: number): void {
+        this.postService.get(id)
+            .subscribe({
+                next: (data) => {
+                    this.currentPost = data;
+                    // console.log(data);
+                },
+                error: (e) => {
+                    // console.error(e);
+                }
+            });
+    }
+
+    private static refreshPage(): void {
         window.location.reload();
     }
 }

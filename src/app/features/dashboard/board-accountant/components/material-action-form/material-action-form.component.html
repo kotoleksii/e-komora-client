@@ -30,10 +30,6 @@
             </mat-toolbar>
 
             <mat-card-content>
-                <div *ngIf="topic === 'details'">
-                    Останнє оновлення {{material?.updateDateTime | date:'dd/MM/yyyy HH:mm:ss'}}
-                </div>
-                <hr>
                 <br>
                 <div class="form-card">
                     <div class="row">
@@ -57,6 +53,8 @@
                             </mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
                         </mat-form-field>
+                    </div>
+                    <div class="row">
                         <mat-form-field appearance="outline">
                             <mat-label>Тип</mat-label>
                             <mat-select formControlName="type" required>
@@ -76,13 +74,17 @@
                                    formControlName="price"/>
                         </mat-form-field>
                     </div>
-                </div>
-            </mat-card-content>
-        </mat-card>
-        <mat-card *ngIf="topic === 'edit' || topic === 'details'" class="mat-elevation-z6">
-            <mat-card-content>
-                <div class="row">
-
+                    <div class="row">
+                        <mat-form-field class="form-field" appearance="outline">
+                            <mat-label>Відповідальна особа</mat-label>
+                            <mat-select placeholder="Працівники" formControlName="userId">
+                                <mat-option [value]="'не обрано'">не обрано</mat-option>
+                                <mat-option *ngFor="let user of users" [value]="user.id">
+                                    {{user.lastName}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
                 </div>
             </mat-card-content>
         </mat-card>
@@ -97,8 +99,8 @@
         <a class="menu-item" mat-menu-item href="dashboard/accountant/user/{{userId}}/material/{{materialId}}/edit">
             <i class="fa-solid fa-file-pen"></i><span class="menu-item-text">Редагувати</span>
         </a>
-        <!--        <a class="menu-item" mat-menu-item (click)="openConfirmDialog(userId, material)">-->
-        <!--            <i class="fa-solid fa-trash"></i><span class="menu-item-text">Видалити</span>-->
-        <!--        </a>-->
+        <a class="menu-item" mat-menu-item (click)="deleteMaterial(userId, materialId)">
+            <i class="fa-solid fa-trash"></i><span class="menu-item-text">Видалити</span>
+        </a>
     </mat-menu>
 </ng-template>

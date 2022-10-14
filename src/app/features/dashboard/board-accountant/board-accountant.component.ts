@@ -11,6 +11,7 @@ import {MaterialService} from '../../../shared/_services/material.service';
 import {IUser} from '../../../shared/interfaces/user';
 import {map} from 'rxjs/operators';
 import {forkJoin} from 'rxjs';
+import {IMaterial} from '../../../shared/interfaces/material';
 
 @Component({
     selector: 'app-board-accountant',
@@ -25,7 +26,7 @@ export class BoardAccountantComponent implements OnInit, OnDestroy {
     private subs: SubSink = new SubSink();
 
     public dataSource: MatTableDataSource<any> | any;
-    public displayedColumns = ['id', 'title', 'inventoryNumber', 'dateStart', 'type', 'amount', 'price',
+    public displayedColumns: string[] = ['id', 'title', 'inventoryNumber', 'dateStart', 'type', 'amount', 'price',
         'userId', 'lastName', 'ID'];
     public materials?: any;
     public users?: any;
@@ -33,14 +34,14 @@ export class BoardAccountantComponent implements OnInit, OnDestroy {
     public content?: string;
     public showAccountantBoard = false;
 
-    constructor(private userService: UserService,
-                private testService: TestService,
-                private token: TokenStorageService,
-                private materialService: MaterialService,
-                private router: Router) {
+    public constructor(private userService: UserService,
+                       private testService: TestService,
+                       private token: TokenStorageService,
+                       private materialService: MaterialService,
+                       private router: Router) {
     }
 
-    ngOnInit(): void {
+    public ngOnInit(): void {
         this.content = 'Матеріальні цінності';
         const user = this.token.getUser();
         this.roles = user.roles;
@@ -54,21 +55,68 @@ export class BoardAccountantComponent implements OnInit, OnDestroy {
         this.getAndSetMaterialsWithUsers();
     }
 
-    getAndSetMaterialsWithUsers(): void {
+    public onChange(event: any): void {
+        const filterValue = event.value;
+        if (filterValue === 'не обрано') {
+            this.initDataTable(this.materials);
+        } else {
+            const filteredData = this.materials.filter((item: IMaterial) => {
+                return item.userId === filterValue;
+            });
+            this.dataSource = new MatTableDataSource<any>(filteredData);
+            this.dataSource.sort = this.sort;
+
+            if (this.dataSource.paginator) {
+                this.dataSource.paginator.firstPage();
+            }
+        }
+    }
+
+    public applyFilter(event: Event): void {
+        const filterValue = (event.target as HTMLInputElement).value;
+        this.dataSource.filter = filterValue.trim().toLowerCase();
+
+        if (this.dataSource.paginator) {
+            this.dataSource.paginator.firstPage();
+        }
+    }
+
+    public getEmployeeById(id: number): string {
+        return this.users?.find((el: IUser) => el.id === id).lastName;
+    }
+
+    public getAccountantServerText(): void {
+        this.subs.add(
+            this.testService.getAccountantBoard().subscribe(
+                (data) => {
+                    this.content = data;
+                    // console.log(this.content);
+                },
+                (err) => {
+                    this.content = err?.message;
+                }
+            ));
+    }
+
+    public ngOnDestroy(): void {
+        this.subs.unsubscribe();
+    }
+
+    private getAndSetMaterialsWithUsers(): void {
         this.subs.add(forkJoin([
             this.materialService.getAll(),
             this.userService.getAll()
-        ]).pipe(map(([materials, users]) => materials.map(material => {
+        ]).pipe(map(([materials, users]) => materials.map((material) => {
                 return {
-                    'id': material.id,
-                    'title': material.title,
-                    'inventoryNumber': material.inventoryNumber,
-                    'dateStart': material.dateStart,
-                    'type': material.type,
-                    'amount': material.amount,
-                    'price': material.price,
-                    'userId': material.userId,
-                    'lastName': users.find((x: any) => x.id === material.userId).lastName
+                    id: material.id,
+                    title: material.title,
+                    inventoryNumber: material.inventoryNumber,
+                    dateStart: material.dateStart,
+                    type: material.type,
+                    amount: material.amount,
+                    price: material.price,
+                    userId: material.userId,
+                    lastName: users.find((x: IUser) => x.id === material.userId).lastName
                 };
             })
         )).subscribe((data) => {
@@ -83,64 +131,10 @@ export class BoardAccountantComponent implements OnInit, OnDestroy {
         this.dataSource.sort = this.sort;
     }
 
-    public getAndSetMaterials(): void {
-        this.subs.add(
-            this.materialService.getAll().subscribe((data: any) => {
-                this.initDataTable(data);
-            }));
-    }
-
-    public getEmployeeItems(): void {
+    private getEmployeeItems(): void {
         this.subs.add(
             this.userService.getAll().subscribe((res: IUser[]) => {
                 this.users = res;
             }));
-    }
-
-    onChange(event: any): void {
-        const filterValue = event.value;
-        if (filterValue === 'не обрано') {
-            this.initDataTable(this.materials);
-        } else {
-            const filteredData = this.materials.filter((item: any) => {
-                return item.userId === filterValue;
-            });
-            this.dataSource = new MatTableDataSource<any>(filteredData);
-            this.dataSource.sort = this.sort;
-
-            if (this.dataSource.paginator) {
-                this.dataSource.paginator.firstPage();
-            }
-        }
-    }
-
-    applyFilter(event: Event): void {
-        const filterValue = (event.target as HTMLInputElement).value;
-        this.dataSource.filter = filterValue.trim().toLowerCase();
-
-        if (this.dataSource.paginator) {
-            this.dataSource.paginator.firstPage();
-        }
-    }
-
-    public getEmployeeById(id: number): string {
-        return this.users?.find((el: any) => el.id === id).lastName;
-    }
-
-    getAccountantServerText(): void {
-        this.subs.add(
-            this.testService.getAccountantBoard().subscribe(
-                data => {
-                    this.content = data;
-                    console.log(this.content);
-                },
-                err => {
-                    this.content = err?.message;
-                }
-            ));
-    }
-
-    ngOnDestroy(): void {
-        this.subs.unsubscribe();
     }
 }

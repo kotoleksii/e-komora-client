@@ -8,7 +8,7 @@
         <mat-toolbar>
             <mat-toolbar-row>
                 <button mat-mini-fab style="margin-right:10px; background-color:#e07c9e"
-                        [routerLink]="['material', 'add']">
+                        [routerLink]="['user', userId,'material', 'add']">
                     <i class="fa-solid fa-plus"></i>
                 </button>
                 <span class="title-spacer"></span>
@@ -17,8 +17,8 @@
                         <mat-label>Працівники</mat-label>
                         <mat-select placeholder="Працівники" (selectionChange)="onChange($event)">
                             <mat-option [value]="'не обрано'">не обрано</mat-option>
-                            <mat-option *ngFor="let material of materials" [value]="material.userId">
-                                {{material.lastName}}
+                            <mat-option *ngFor="let user of users" [value]="user.id">
+                                {{user.lastName}}
                             </mat-option>
                         </mat-select>
                     </mat-form-field>

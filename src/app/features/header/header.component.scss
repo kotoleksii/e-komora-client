@@ -68,7 +68,8 @@ a {
 .logo {
   .flag {
     height: 22px;
-    //display: inline-block;
-    //vertical-align: middle;
+    display: inline-block;
+    vertical-align: middle;
+    transform: scaleX(-1);
   }
 }

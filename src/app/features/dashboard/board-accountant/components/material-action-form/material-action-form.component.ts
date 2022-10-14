@@ -6,6 +6,9 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {first} from 'rxjs/operators';
 import {MatDialog} from '@angular/material/dialog';
+import {IUser} from '../../../../../shared/interfaces/user';
+import {UserService} from '../../../../../shared/_services/user.service';
+import {IMaterial} from '../../../../../shared/interfaces/material';
 
 @Component({
     selector: 'app-material-action-form',
@@ -14,29 +17,32 @@ import {MatDialog} from '@angular/material/dialog';
 })
 export class MaterialActionFormComponent implements OnInit, OnDestroy {
     private subs: SubSink = new SubSink();
-    public materialForm: any;
-    public material: any;
+    public materialForm: FormGroup | any;
+    public material: IMaterial | any;
+    public users?: IUser[];
     public userId: number = 0;
     public materialId: number = 0;
-    public types = ['шт.', 'од.', 'кг', 'м'];
-    public topics = ['add', 'edit', 'details'];
-    public topic = '';
+    public types: string[] = ['шт.', 'од.', 'кг', 'м'];
+    public topics: string[] = ['add', 'edit', 'details'];
+    public topic: string = '';
     public pageTitle: string = '';
 
-    constructor(private materialService: MaterialService,
-                private fb: FormBuilder,
-                public dialog: MatDialog,
-                private notifierService: NotifierService,
-                private route: ActivatedRoute,
-                private router: Router) {
+    public constructor(private materialService: MaterialService,
+                       private userService: UserService,
+                       private fb: FormBuilder,
+                       public dialog: MatDialog,
+                       private notifierService: NotifierService,
+                       private route: ActivatedRoute,
+                       private router: Router) {
     }
 
-    ngOnInit(): void {
+    public ngOnInit(): void {
         this.topic = this.route.snapshot.params.type;
         this.userId = this.route.snapshot.params.userId;
         this.materialId = this.route.snapshot.params.materialId;
 
         this.materialForm = this.initMaterialForm();
+        this.getEmployeeItems();
 
         this.pageTitle = 'Новий матеріал';
 
@@ -49,43 +55,25 @@ export class MaterialActionFormComponent implements OnInit, OnDestroy {
                 this.materialForm.disable();
             }
 
-            this.subs.add(this.materialService.getByUserId(this.userId)
+            this.subs.add(this.materialService.getByMaterialId(this.materialId)
                 .pipe(first())
-                .subscribe((res) => {
+                .subscribe((res: IMaterial) => {
                     this.material = res;
-                    console.log(this.material);
+                    // console.log(this.material);
 
-                    this.materialForm.patchValue(res[0]);
+                    this.materialForm.patchValue(res);
                 }));
         }
     }
 
-    private initMaterialForm(): FormGroup {
-        return this.fb.group({
-            title: new FormControl('', [
-                Validators.required,
-                Validators.minLength(2),
-                Validators.maxLength(30),
-            ]),
-            inventoryNumber: new FormControl('', [
-                Validators.required,
-                Validators.minLength(2),
-                Validators.maxLength(30),
-            ]),
-            dateStart: new FormControl(new Date(), [
-                Validators.required,
-            ]),
-            type: new FormControl(''),
-            amount: new FormControl(''),
-            price: new FormControl(''),
-        });
+    public getEmployeeItems(): void {
+        this.subs.add(
+            this.userService.getAll().subscribe((res: IUser[]) => {
+                this.users = res;
+            }));
     }
 
-    get f(): FormControl {
-        return this.materialForm.controls;
-    }
-
-    onSubmit(): void {
+    public onSubmit(): void {
         if (this.materialForm.invalid) {
             return;
         }
@@ -97,18 +85,64 @@ export class MaterialActionFormComponent implements OnInit, OnDestroy {
         }
     }
 
+    public ngOnDestroy(): void {
+        this.subs.unsubscribe();
+    }
+
+    public deleteMaterial(userId: number, materialId: number): void {
+        if (confirm('Are you sure you want to delete this thing into the database?')) {
+            this.subs.add(this.materialService.delete(userId, materialId)
+                .subscribe({
+                    next: () => {
+                        this.router.navigate(['dashboard', 'accountant']).then();
+                    },
+                    error: (error) => {
+                        this.notifierService.notify('error', error.message);
+                    }
+                }));
+            // console.log('Thing was deleted to the database.');
+        } else {
+            // console.log('Thing was not deleted to the database.');
+            return;
+        }
+    }
+
+    private initMaterialForm(): FormGroup {
+        return this.fb.group({
+            title: new FormControl('', [
+                Validators.required,
+                Validators.minLength(2),
+                Validators.maxLength(30)
+            ]),
+            inventoryNumber: new FormControl('', [
+                Validators.required,
+                Validators.minLength(2),
+                Validators.maxLength(30)
+            ]),
+            dateStart: new FormControl(new Date(), [
+                Validators.required
+            ]),
+            type: new FormControl(''),
+            amount: new FormControl(''),
+            price: new FormControl(''),
+            userId: new FormControl('')
+        });
+    }
+
     private createMaterial(): void {
-        this.subs.add(this.materialService.create(this.userId, this.materialForm.value)
+        const selectedUser = this.materialForm.controls.userId.value;
+
+        this.subs.add(this.materialService.create(selectedUser, this.materialForm.value)
             .pipe(first())
             .subscribe({
                 next: () => {
-                    this.notifierService.notify('success', `Матеріал створено!`);
+                    this.notifierService.notify('success', 'Матеріал створено!');
                     this.router.navigate(['dashboard', 'accountant']).then(() => {
                         window.location.reload();
                     });
                 },
-                error: error => {
-                    this.notifierService.notify('error', error);
+                error: (error) => {
+                    this.notifierService.notify('error', error.message);
                 }
             }));
     }
@@ -118,28 +152,20 @@ export class MaterialActionFormComponent implements OnInit, OnDestroy {
             .pipe(first())
             .subscribe({
                 next: () => {
-                    this.notifierService.notify('success', `Матеріал оновлено!`);
-                    this.router.navigate(['dashboard', 'accountant', 'user', this.userId, 'material', this.materialId, 'details']).then(() => {
-                        window.location.reload();
-                    });
+                    this.notifierService.notify('success', 'Матеріал оновлено!');
+                    this.router.navigate(
+                        ['dashboard', 'accountant', 'user', this.userId, 'material', this.materialId, 'details'])
+                        .then(() => {
+                            window.location.reload();
+                        });
                 },
-                error: error => {
-                    this.notifierService.notify('error', error);
+                error: (error) => {
+                    this.notifierService.notify('error', error.message);
                 }
             }));
     }
 
-    deleteMaterial(userId: number, materialId: number): void {
-        this.subs.add(this.materialService.delete(userId, materialId)
-            .subscribe({
-                next: () => {
-                    this.router.navigate(['dashboard', 'accountant']).then();
-                },
-                error: (e) => console.error(e)
-            }));
-    }
-
-    ngOnDestroy(): void {
-        this.subs.unsubscribe();
+    public get f(): FormControl {
+        return this.materialForm.controls;
     }
 }

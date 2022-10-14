@@ -11,7 +11,7 @@ routes = [
         component: BoardAccountantComponent
     },
     {
-        path: 'material/:type',
+        path: 'user/:userId/material/:type',
         component: MaterialActionFormComponent
     },
     {
