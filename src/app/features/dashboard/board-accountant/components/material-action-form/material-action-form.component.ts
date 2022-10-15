@@ -9,6 +9,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {IUser} from '../../../../../shared/interfaces/user';
 import {UserService} from '../../../../../shared/_services/user.service';
 import {IMaterial} from '../../../../../shared/interfaces/material';
+import {BehaviorSubject} from 'rxjs';
 
 @Component({
     selector: 'app-material-action-form',
@@ -26,6 +27,7 @@ export class MaterialActionFormComponent implements OnInit, OnDestroy {
     public topics: string[] = ['add', 'edit', 'details'];
     public topic: string = '';
     public pageTitle: string = '';
+    public qrCodeData: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
     public constructor(private materialService: MaterialService,
                        private userService: UserService,
@@ -57,10 +59,13 @@ export class MaterialActionFormComponent implements OnInit, OnDestroy {
 
             this.subs.add(this.materialService.getByMaterialId(this.materialId)
                 .pipe(first())
-                .subscribe((res: IMaterial) => {
+                .subscribe((res: any) => {
                     this.material = res;
                     // console.log(this.material);
-
+                    this.qrCodeData.next(
+                        `найменування: ${res.title}, ` +
+                        `інвентарний №: ${res.inventoryNumber}`
+                    );
                     this.materialForm.patchValue(res);
                 }));
         }
@@ -90,7 +95,7 @@ export class MaterialActionFormComponent implements OnInit, OnDestroy {
     }
 
     public deleteMaterial(userId: number, materialId: number): void {
-        if (confirm('Are you sure you want to delete this thing into the database?')) {
+        if (confirm('Ви впевнені, що хочете видалити цей матеріал назавжди?')) {
             this.subs.add(this.materialService.delete(userId, materialId)
                 .subscribe({
                     next: () => {

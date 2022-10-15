@@ -1,5 +1,5 @@
-export interface DialogData {
-  title: string;
-  message: string;
-  initialValue: any;
+export interface IDialogData {
+    title: string;
+    message: string;
+    initialValue: any;
 }

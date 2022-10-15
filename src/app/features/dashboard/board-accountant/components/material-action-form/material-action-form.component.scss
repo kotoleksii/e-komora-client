@@ -7,7 +7,7 @@
   mat-toolbar {
     border-radius: 10px;
     padding: 12px 0;
-    margin-bottom: 20px;
+    //margin-bottom: 20px;
     background: #424242;
 
     mat-toolbar-row {
@@ -25,6 +25,18 @@
     mat-card-content {
       padding: 10px 0;
       text-align: center;
+
+      .qr-code {
+        margin-bottom: 1.2rem;
+
+        .qr-code-container {
+          padding: 3px;
+          width: 130px;
+          height: 130px;
+          background-color: $color-white;
+          border-radius: 8px;
+        }
+      }
 
       mat-form-field {
         width: 200px;

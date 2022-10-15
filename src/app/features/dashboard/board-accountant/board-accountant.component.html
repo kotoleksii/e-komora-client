@@ -11,6 +11,9 @@
                         [routerLink]="['user', userId,'material', 'add']">
                     <i class="fa-solid fa-plus"></i>
                 </button>
+                <a mat-mini-fab style="margin-right:10px; background-color:#a28b6e" (click)="openQrReaderModal()">
+                    <i class="fa-solid fa-qrcode"></i>
+                </a>
                 <span class="title-spacer"></span>
                 <div style="font-size: 16px">
                     <mat-form-field style="margin-right: 5px">
@@ -24,7 +27,7 @@
                     </mat-form-field>
                     <mat-form-field class="search-form-fileld">
                         <mat-label>Фільтр</mat-label>
-                        <input matInput placeholder="Фільтр" (keyup)="applyFilter($event)">
+                        <input #filter matInput placeholder="Фільтр" (keyup)="applyFilter($event)">
                         <i class="fa-solid fa-filter"></i>
                     </mat-form-field>
                 </div>

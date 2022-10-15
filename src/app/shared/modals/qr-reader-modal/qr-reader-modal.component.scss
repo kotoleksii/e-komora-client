@@ -1,0 +1,25 @@
+.qr-reader-modal-wrapper {
+  zxing-scanner {
+    border-radius: 20px;
+  }
+
+  mat-dialog-content {
+    .qrDataInfo {
+
+    }
+  }
+
+  mat-dialog-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .question {
+
+    }
+
+    .buttons {
+
+    }
+  }
+}

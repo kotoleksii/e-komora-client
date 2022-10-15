@@ -30,6 +30,14 @@
             </mat-toolbar>
 
             <mat-card-content>
+                <div class="qr-code centered" *ngIf="topic === 'details'">
+                    <div class="qr-code-container">
+                        <qr-code value="{{qrCodeData | async}}"
+                                 size="128" errorCorrectionLevel="M">
+                        </qr-code>
+                    </div>
+                </div>
+                <hr>
                 <br>
                 <div class="form-card">
                     <div class="row">

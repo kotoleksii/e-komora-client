@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {UserService} from '../../../shared/_services/user.service';
 import {SubSink} from 'subsink';
 import {TokenStorageService} from '../../../shared/_services/token-storage.service';
@@ -12,6 +12,9 @@ import {IUser} from '../../../shared/interfaces/user';
 import {map} from 'rxjs/operators';
 import {forkJoin} from 'rxjs';
 import {IMaterial} from '../../../shared/interfaces/material';
+import {MAT_DIALOG_DATA, MatDialog} from '@angular/material/dialog';
+import {QrReaderModalComponent} from '../../../shared/modals/qr-reader-modal/qr-reader-modal.component';
+import {IDialogData} from '../../../shared/interfaces/dialog-data';
 
 @Component({
     selector: 'app-board-accountant',
@@ -19,6 +22,7 @@ import {IMaterial} from '../../../shared/interfaces/material';
     styleUrls: ['./board-accountant.component.scss']
 })
 export class BoardAccountantComponent implements OnInit, OnDestroy {
+    @ViewChild('filter') private filterField: ElementRef<HTMLInputElement> | any;
     @ViewChild(MatPaginator) private paginator: MatPaginator | any;
     @ViewChild(MatSort) private sort: MatSort | undefined;
 
@@ -32,12 +36,14 @@ export class BoardAccountantComponent implements OnInit, OnDestroy {
     public users?: any;
     public userId: number = 0;
     public content?: string;
-    public showAccountantBoard = false;
+    public showAccountantBoard: boolean = false;
+    public qrReadData: any;
 
     public constructor(private userService: UserService,
                        private testService: TestService,
-                       private token: TokenStorageService,
                        private materialService: MaterialService,
+                       private token: TokenStorageService,
+                       public dialog: MatDialog,
                        private router: Router) {
     }
 
@@ -53,6 +59,25 @@ export class BoardAccountantComponent implements OnInit, OnDestroy {
 
         this.getEmployeeItems();
         this.getAndSetMaterialsWithUsers();
+    }
+
+    public openQrReaderModal(): void {
+        const dialogRef = this.dialog.open(QrReaderModalComponent, {
+            width: '350px',
+            data: {qrReadData: this.qrReadData}
+        });
+
+        dialogRef.afterClosed().subscribe((dialogResult) => {
+            this.qrReadData = dialogResult;
+            // console.log(this.qrReadData);
+            if (this.qrReadData !== undefined) {
+                this.filterField.nativeElement.focus();
+                this.filterField.nativeElement.value = this.qrReadData;
+                let keyUpEvent = new KeyboardEvent('keyup', {bubbles: true});
+                this.filterField.nativeElement.dispatchEvent(keyUpEvent);
+            }
+            this.qrReadData = '';
+        });
     }
 
     public onChange(event: any): void {

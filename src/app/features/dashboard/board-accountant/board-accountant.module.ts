@@ -18,6 +18,9 @@ import {MaterialActionFormComponent} from './components/material-action-form/mat
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatMenuModule} from '@angular/material/menu';
+import {QrCodeModule} from 'ng-qrcode';
+import {ZXingScannerModule} from '@zxing/ngx-scanner';
+import {QrReaderModalModule} from '../../../shared/modals/qr-reader-modal/qr-reader-modal.module';
 
 @NgModule({
     declarations: [BoardAccountantComponent, MaterialActionFormComponent],
@@ -38,7 +41,10 @@ import {MatMenuModule} from '@angular/material/menu';
         MatSelectModule,
         MatDatepickerModule,
         MatNativeDateModule,
-        MatMenuModule
+        MatMenuModule,
+        QrCodeModule,
+        ZXingScannerModule,
+        QrReaderModalModule
     ]
 })
 export class BoardAccountantModule {

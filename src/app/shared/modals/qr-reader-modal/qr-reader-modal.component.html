@@ -1,0 +1,15 @@
+<div class="qr-reader-modal-wrapper">
+    <zxing-scanner (scanSuccess)="scanSuccessHandler($event)"></zxing-scanner>
+    <mat-dialog-content>
+        <p class="qrDataInfo">{{qrModalData}}</p>
+    </mat-dialog-content>
+    <mat-dialog-actions *ngIf="showButtons" class="actions">
+        <div class="question">
+            <p>Хочете знайти в таблиці?</p>
+        </div>
+        <div class="buttons">
+            <button mat-button (click)="onNoClick()">Ні, дякую</button>
+            <button mat-button [mat-dialog-close]="data.qrReadData">Так</button>
+        </div>
+    </mat-dialog-actions>
+</div>
