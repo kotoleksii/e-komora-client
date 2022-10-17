@@ -1,4 +1,4 @@
-export class IPost {
+export interface IPost {
   id?: any;
   title?: string;
   description?: string;

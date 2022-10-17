@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {UserService} from '../../shared/_services/user.service';
 import {SubSink} from 'subsink';
 import {PostService} from '../../shared/_services/post.service';
-import {IPost} from '../../shared/interfaces/Post';
+import {IPost} from '../../shared/interfaces/post';
 import {TestService} from '../../shared/_services/test.service';
 
 @Component({
@@ -11,43 +11,45 @@ import {TestService} from '../../shared/_services/test.service';
     styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit, OnDestroy {
-    posts: any;
-    p: number = 1;
-    content?: string;
     private subs: SubSink = new SubSink();
+    public posts: any;
+    public p: number = 1;
+    public content?: string;
 
-    constructor(private userService: UserService,
-                private postService: PostService,
-                private testService: TestService) {
+    public constructor(private userService: UserService,
+                       private postService: PostService,
+                       private testService: TestService) {
     }
 
-    ngOnInit(): void {
+    public ngOnInit(): void {
         this.getAllPosts();
     }
 
-    getAllPosts(): void {
+    public ngOnDestroy(): void {
+        this.subs.unsubscribe();
+    }
+
+    private getAllPosts(): void {
         this.subs.add(this.postService.getAllPublishedDesc()
             .subscribe({
                 next: (data) => {
                     this.posts = data;
                 },
-                error: (e) => console.error(e)
+                error: (e) => {
+                    // console.error(e);
+                }
             }));
     }
 
-    getHomeServerContent(): void {
+    private getHomeServerContent(): void {
         this.subs.add(
             this.testService.getPublicContent().subscribe(
-                data => {
+                (data) => {
                     this.content = data;
                 },
-                err => {
-                    this.content = JSON.parse(err.error).message;
+                (error) => {
+                    // this.content = JSON.parse(error.error).message;
                 }
             ));
-    }
-
-    ngOnDestroy(): void {
-        this.subs.unsubscribe();
     }
 }

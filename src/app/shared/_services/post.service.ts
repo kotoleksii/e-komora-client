@@ -1,51 +1,51 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {IPost} from '../interfaces/Post';
+import {IPost} from '../interfaces/post';
 import {Observable} from 'rxjs';
 
 const baseUrl = 'http://localhost:8080/api/posts';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class PostService {
 
-  constructor(private http: HttpClient) {
-  }
+    public constructor(private http: HttpClient) {
+    }
 
-  getAll(): Observable<IPost[]> {
-    return this.http.get<IPost[]>(baseUrl);
-  }
+    public getAll(): Observable<IPost[]> {
+        return this.http.get<IPost[]>(baseUrl);
+    }
 
-  getAllDesc(): Observable<IPost[]> {
-    return this.http.get<IPost[]>(`${baseUrl}/desc`);
-  }
+    public getAllDesc(): Observable<IPost[]> {
+        return this.http.get<IPost[]>(`${baseUrl}/desc`);
+    }
 
-  getAllPublished(): Observable<IPost[]> {
-    return this.http.get<IPost[]>(`${baseUrl}/published`);
-  }
+    public getAllPublished(): Observable<IPost[]> {
+        return this.http.get<IPost[]>(`${baseUrl}/published`);
+    }
 
-  getAllPublishedDesc(): Observable<IPost[]> {
-    return this.http.get<IPost[]>(`${baseUrl}/published/desc`);
-  }
+    public getAllPublishedDesc(): Observable<IPost[]> {
+        return this.http.get<IPost[]>(`${baseUrl}/published/desc`);
+    }
 
-  get(id: any): Observable<IPost> {
-    return this.http.get<IPost>(`${baseUrl}/${id}`);
-  }
+    public get(id: any): Observable<IPost> {
+        return this.http.get<IPost>(`${baseUrl}/${id}`);
+    }
 
-  create(data: any): Observable<any> {
-    return this.http.post(baseUrl, data);
-  }
+    public create(data: any): Observable<any> {
+        return this.http.post(baseUrl, data);
+    }
 
-  update(id: any, data: any): Observable<any> {
-    return this.http.put(`${baseUrl}/${id}`, data);
-  }
+    public update(id: any, data: any): Observable<any> {
+        return this.http.put(`${baseUrl}/${id}`, data);
+    }
 
-  delete(id: any): Observable<any> {
-    return this.http.delete(`${baseUrl}/${id}`);
-  }
+    public delete(id: any): Observable<any> {
+        return this.http.delete(`${baseUrl}/${id}`);
+    }
 
-  findByTitle(title: any): Observable<IPost[]> {
-    return this.http.get<IPost[]>(`${baseUrl}?title=${title}`);
-  }
+    public findByTitle(title: any): Observable<IPost[]> {
+        return this.http.get<IPost[]>(`${baseUrl}?title=${title}`);
+    }
 }

@@ -20,7 +20,7 @@ export class MaterialActionFormComponent implements OnInit, OnDestroy {
     private subs: SubSink = new SubSink();
     public materialForm: FormGroup | any;
     public material: IMaterial | any;
-    public users?: IUser[];
+    public users?: any;
     public userId: number = 0;
     public materialId: number = 0;
     public types: string[] = ['шт.', 'од.', 'кг', 'м'];
@@ -153,13 +153,15 @@ export class MaterialActionFormComponent implements OnInit, OnDestroy {
     }
 
     private updateMaterial(): void {
-        this.subs.add(this.materialService.update(this.userId, this.materialId, this.materialForm.value)
+        const selectedUser = this.materialForm.controls.userId.value;
+
+        this.subs.add(this.materialService.update(selectedUser, this.materialId, this.materialForm.value)
             .pipe(first())
             .subscribe({
                 next: () => {
                     this.notifierService.notify('success', 'Матеріал оновлено!');
                     this.router.navigate(
-                        ['dashboard', 'accountant', 'user', this.userId, 'material', this.materialId, 'details'])
+                        ['dashboard', 'accountant', 'user', selectedUser, 'material', this.materialId, 'details'])
                         .then(() => {
                             window.location.reload();
                         });

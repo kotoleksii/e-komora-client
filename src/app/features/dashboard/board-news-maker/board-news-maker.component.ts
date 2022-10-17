@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {IPost} from '../../../shared/interfaces/Post';
+import {IPost} from '../../../shared/interfaces/post';
 import {PostService} from '../../../shared/_services/post.service';
 import {NotifierService} from 'angular-notifier';
 import {ActivatedRoute, Router} from '@angular/router';
