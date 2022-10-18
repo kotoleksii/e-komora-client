@@ -1,4 +1,4 @@
-import {Component, ElementRef, Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {UserService} from '../../../shared/_services/user.service';
 import {SubSink} from 'subsink';
 import {TokenStorageService} from '../../../shared/_services/token-storage.service';
@@ -12,9 +12,8 @@ import {IUser} from '../../../shared/interfaces/user';
 import {map} from 'rxjs/operators';
 import {forkJoin} from 'rxjs';
 import {IMaterial} from '../../../shared/interfaces/material';
-import {MAT_DIALOG_DATA, MatDialog} from '@angular/material/dialog';
+import {MatDialog} from '@angular/material/dialog';
 import {QrReaderModalComponent} from '../../../shared/modals/qr-reader-modal/qr-reader-modal.component';
-import {IDialogData} from '../../../shared/interfaces/dialog-data';
 
 @Component({
     selector: 'app-board-accountant',
@@ -22,7 +21,7 @@ import {IDialogData} from '../../../shared/interfaces/dialog-data';
     styleUrls: ['./board-accountant.component.scss']
 })
 export class BoardAccountantComponent implements OnInit, OnDestroy {
-    @ViewChild('filter') private filterField: ElementRef<HTMLInputElement> | any;
+    @ViewChild('filter') private filterField: ElementRef<HTMLInputElement> = {} as ElementRef<HTMLInputElement>;
     @ViewChild(MatPaginator) private paginator: MatPaginator | any;
     @ViewChild(MatSort) private sort: MatSort | undefined;
 
@@ -32,8 +31,8 @@ export class BoardAccountantComponent implements OnInit, OnDestroy {
     public dataSource: MatTableDataSource<any> | any;
     public displayedColumns: string[] = ['id', 'title', 'inventoryNumber', 'dateStart', 'type', 'amount', 'price',
         'userId', 'lastName', 'ID'];
-    public materials?: any;
-    public users?: any;
+    public materials: IMaterial | any;
+    public users: IUser | any;
     public userId: number = 0;
     public content?: string;
     public showAccountantBoard: boolean = false;
@@ -50,6 +49,7 @@ export class BoardAccountantComponent implements OnInit, OnDestroy {
     public ngOnInit(): void {
         this.content = 'Матеріальні цінності';
         const user = this.token.getUser();
+        // console.log(user);
         this.roles = user.roles;
         this.showAccountantBoard = this.roles.includes('ROLE_ACCOUNTANT');
 
@@ -88,7 +88,7 @@ export class BoardAccountantComponent implements OnInit, OnDestroy {
             const filteredData = this.materials.filter((item: IMaterial) => {
                 return item.userId === filterValue;
             });
-            this.dataSource = new MatTableDataSource<any>(filteredData);
+            this.dataSource = new MatTableDataSource<IMaterial>(filteredData);
             this.dataSource.sort = this.sort;
 
             if (this.dataSource.paginator) {
@@ -106,10 +106,6 @@ export class BoardAccountantComponent implements OnInit, OnDestroy {
         }
     }
 
-    public getEmployeeById(id: number): string {
-        return this.users?.find((el: IUser) => el.id === id).lastName;
-    }
-
     public getAccountantServerText(): void {
         this.subs.add(
             this.testService.getAccountantBoard().subscribe(
@@ -117,7 +113,7 @@ export class BoardAccountantComponent implements OnInit, OnDestroy {
                     this.content = data;
                     // console.log(this.content);
                 },
-                (err) => {
+                (err: Error) => {
                     this.content = err?.message;
                 }
             ));
@@ -144,14 +140,14 @@ export class BoardAccountantComponent implements OnInit, OnDestroy {
                     lastName: users.find((x: IUser) => x.id === material.userId).lastName
                 };
             })
-        )).subscribe((data) => {
+        )).subscribe((data: IMaterial[]) => {
             this.initDataTable(data);
         }));
     }
 
-    private initDataTable(data: any): void {
+    private initDataTable(data: IMaterial[]): void {
         this.materials = data;
-        this.dataSource = new MatTableDataSource<any>(this.materials);
+        this.dataSource = new MatTableDataSource<IMaterial>(this.materials);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
     }

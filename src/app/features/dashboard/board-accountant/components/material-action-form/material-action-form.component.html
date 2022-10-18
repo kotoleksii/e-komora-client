@@ -4,19 +4,15 @@
             <mat-toolbar>
                 <mat-toolbar-row>
                     <div>
-                        <a *ngIf="topic !== 'edit'" class="btn-action" mat-icon-button
-                           [routerLink]="[ '', 'dashboard', 'accountant' ]">
-                            <i class="fa-solid fa-arrow-left"></i>
-                        </a>
-                        <a *ngIf="topic === 'edit'" class="btn-action" mat-icon-button
-                           href="dashboard/accountant/user/{{userId}}/material/{{materialId}}/details">
+                        <a class="btn-action" mat-icon-button
+                           [href]="topic === 'edit'
+                            ? 'dashboard/accountant/user/' + userId + '/material/' + materialId + '/details/'
+                            : 'dashboard/accountant'">
                             <i class="fa-solid fa-arrow-left"></i>
                         </a>
                     </div>
                     <div>
-                        <span *ngIf="topic === 'add'" class="view-card-title">{{pageTitle}}</span>
-                        <span *ngIf="topic === 'edit'" class="view-card-title">{{pageTitle}}</span>
-                        <span *ngIf="topic === 'details'" class="view-card-title">{{pageTitle}}</span>
+                        <span class="view-card-title">{{pageTitle}}</span>
                     </div>
                     <div>
                         <button *ngIf="topic !== 'details'; else detailsMenu" class="btn-action" mat-icon-button
@@ -37,21 +33,36 @@
                         </qr-code>
                     </div>
                 </div>
+                <div class="row" *ngIf="topic === 'send'">
+                    <div [innerHTML]="materialToSendInfo | async"></div>
+                </div>
                 <hr>
                 <br>
-                <div class="form-card">
+                <div class="form-card" *ngIf="topic === 'send' || topic === 'add'">
+                    <div class="row">
+                        <mat-form-field class="form-field" appearance="outline">
+                            <mat-label>Відповідальна особа</mat-label>
+                            <mat-select placeholder="Працівники" formControlName="userId">
+                                <mat-option [value]="'не обрано'">не обрано</mat-option>
+                                <mat-option *ngFor="let user of users" [value]="user.id">
+                                    <span>{{user.id}}. {{user.lastName}}</span>
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="form-card" *ngIf="topic !== 'send'">
                     <div class="row">
                         <mat-form-field class="form-field" appearance="outline">
                             <mat-label>Найменування</mat-label>
                             <input matInput id="title" type="text" placeholder="Найменування"
                                    formControlName="title"/>
-                            <!--                            <mat-error *ngIf="f.lastName.invalid">{{errorMsg(f.lastName, 'Прізвище')}}</mat-error>-->
+<!--                                        <mat-error *ngIf="f.lastName.invalid">{{errorMsg(f.lastName, 'Прізвище')}}</mat-error>-->
                         </mat-form-field>
                         <mat-form-field class="form-field" appearance="outline">
                             <mat-label>Інвентарний номер</mat-label>
                             <input matInput id="inventoryNumber" type="text" placeholder="Інвентарний номер"
                                    formControlName="inventoryNumber"/>
-                            <!--                            <mat-error *ngIf="f.firstName.invalid">{{errorMsg(f.firstName, 'Ім`я')}}</mat-error>-->
                         </mat-form-field>
                         <mat-form-field class="form-field" appearance="outline">
                             <mat-label>Дата старту</mat-label>
@@ -82,17 +93,6 @@
                                    formControlName="price"/>
                         </mat-form-field>
                     </div>
-                    <div class="row">
-                        <mat-form-field class="form-field" appearance="outline">
-                            <mat-label>Відповідальна особа</mat-label>
-                            <mat-select placeholder="Працівники" formControlName="userId">
-                                <mat-option [value]="'не обрано'">не обрано</mat-option>
-                                <mat-option *ngFor="let user of users" [value]="user.id">
-                                    {{user.lastName}}
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </div>
                 </div>
             </mat-card-content>
         </mat-card>
@@ -106,6 +106,9 @@
     <mat-menu #menuDetails="matMenu" [overlapTrigger]="false">
         <a class="menu-item" mat-menu-item href="dashboard/accountant/user/{{userId}}/material/{{materialId}}/edit">
             <i class="fa-solid fa-file-pen"></i><span class="menu-item-text">Редагувати</span>
+        </a>
+        <a class="menu-item" mat-menu-item href="dashboard/accountant/user/{{userId}}/material/{{materialId}}/send">
+            <i class="fa-solid fa-file-import"></i><span class="menu-item-text">Відправити</span>
         </a>
         <a class="menu-item" mat-menu-item (click)="deleteMaterial(userId, materialId)">
             <i class="fa-solid fa-trash"></i><span class="menu-item-text">Видалити</span>

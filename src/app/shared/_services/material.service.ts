@@ -33,6 +33,10 @@ export class MaterialService {
         return this.http.put(`${API_URL}users/${userId}/materials/${materialId}`, data);
     }
 
+    public send(userId: any, materialId: any, data: any): Observable<any> {
+        return this.http.put(`${API_URL}users/${userId}/materials/${materialId}/send`, data);
+    }
+
     public delete(userId: any, materialId: any): Observable<any> {
         return this.http.delete(`${API_URL}users/${userId}/materials/${materialId}`);
     }

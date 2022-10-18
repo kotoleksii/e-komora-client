@@ -18,15 +18,16 @@ import {BehaviorSubject} from 'rxjs';
 })
 export class MaterialActionFormComponent implements OnInit, OnDestroy {
     private subs: SubSink = new SubSink();
-    public materialForm: FormGroup | any;
+    public materialForm: FormGroup = {} as FormGroup;
     public material: IMaterial | any;
-    public users?: any;
+    public users: IUser[] = {} as IUser[];
     public userId: number = 0;
     public materialId: number = 0;
     public types: string[] = ['шт.', 'од.', 'кг', 'м'];
     public topics: string[] = ['add', 'edit', 'details'];
     public topic: string = '';
     public pageTitle: string = '';
+    public materialToSendInfo: BehaviorSubject<string> = new BehaviorSubject<string>('');
     public qrCodeData: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
     public constructor(private materialService: MaterialService,
@@ -36,6 +37,7 @@ export class MaterialActionFormComponent implements OnInit, OnDestroy {
                        private notifierService: NotifierService,
                        private route: ActivatedRoute,
                        private router: Router) {
+        this.materialForm = this.initMaterialForm();
     }
 
     public ngOnInit(): void {
@@ -43,25 +45,30 @@ export class MaterialActionFormComponent implements OnInit, OnDestroy {
         this.userId = this.route.snapshot.params.userId;
         this.materialId = this.route.snapshot.params.materialId;
 
-        this.materialForm = this.initMaterialForm();
         this.getEmployeeItems();
 
         this.pageTitle = 'Новий матеріал';
 
         this.materialForm.enable();
 
-        if (this.topic === 'edit' || this.topic === 'details') {
-            this.pageTitle = this.topic === 'edit' ? 'Редагування матеріалу' : 'Картка матеріалу';
+        if (this.topic === 'edit' || this.topic === 'details' || this.topic === 'send') {
+            this.pageTitle = this.topic === 'edit' ? 'Редагування матеріалу' : 'Передача матеріалу';
 
             if (this.topic === 'details') {
+                this.pageTitle = 'Картка матеріалу';
                 this.materialForm.disable();
             }
 
             this.subs.add(this.materialService.getByMaterialId(this.materialId)
                 .pipe(first())
-                .subscribe((res: any) => {
+                .subscribe((res: IMaterial) => {
                     this.material = res;
                     // console.log(this.material);
+                    this.materialToSendInfo.next(
+                        `ID - ${res.id}<br>
+                        Найменування - ${res.title}<br>
+                        Інв.№ - ${res.inventoryNumber}<br>`
+                    );
                     this.qrCodeData.next(
                         `найменування: ${res.title}, ` +
                         `інвентарний №: ${res.inventoryNumber}`
@@ -78,6 +85,11 @@ export class MaterialActionFormComponent implements OnInit, OnDestroy {
             }));
     }
 
+    public getEmployeeById(id: number): string {
+        const user = this.users?.find((el: IUser) => el.id === id);
+        return `${user?.lastName} ${user?.firstName?.slice(0, 1)}.(${user?.id})`;
+    }
+
     public onSubmit(): void {
         if (this.materialForm.invalid) {
             return;
@@ -87,6 +99,8 @@ export class MaterialActionFormComponent implements OnInit, OnDestroy {
         } else if (this.topic === 'edit') {
             this.updateMaterial();
         } else if (this.topic === 'details') {
+        } else if (this.topic === 'send') {
+            this.sendMaterial();
         }
     }
 
@@ -101,7 +115,7 @@ export class MaterialActionFormComponent implements OnInit, OnDestroy {
                     next: () => {
                         this.router.navigate(['dashboard', 'accountant']).then();
                     },
-                    error: (error) => {
+                    error: (error: Error) => {
                         this.notifierService.notify('error', error.message);
                     }
                 }));
@@ -112,7 +126,7 @@ export class MaterialActionFormComponent implements OnInit, OnDestroy {
         }
     }
 
-    private initMaterialForm(): FormGroup {
+    private initMaterialForm(): any {
         return this.fb.group({
             title: new FormControl('', [
                 Validators.required,
@@ -127,10 +141,10 @@ export class MaterialActionFormComponent implements OnInit, OnDestroy {
             dateStart: new FormControl(new Date(), [
                 Validators.required
             ]),
-            type: new FormControl(''),
-            amount: new FormControl(''),
-            price: new FormControl(''),
-            userId: new FormControl('')
+            type: new FormControl('', [Validators.required]),
+            amount: new FormControl('', [Validators.required]),
+            price: new FormControl('', [Validators.required]),
+            userId: new FormControl('', [Validators.required])
         });
     }
 
@@ -146,33 +160,52 @@ export class MaterialActionFormComponent implements OnInit, OnDestroy {
                         window.location.reload();
                     });
                 },
-                error: (error) => {
-                    this.notifierService.notify('error', error.message);
+                error: (error: Error) => {
+                    this.notifierService.notify('error', error?.message);
                 }
             }));
     }
 
     private updateMaterial(): void {
-        const selectedUser = this.materialForm.controls.userId.value;
-
-        this.subs.add(this.materialService.update(selectedUser, this.materialId, this.materialForm.value)
+        this.subs.add(this.materialService.update(this.userId, this.materialId, this.materialForm.value)
             .pipe(first())
             .subscribe({
                 next: () => {
                     this.notifierService.notify('success', 'Матеріал оновлено!');
+                    this.router.navigate(
+                        ['dashboard', 'accountant', 'user', this.userId, 'material', this.materialId, 'details'])
+                        .then(() => {
+                            window.location.reload();
+                        });
+                },
+                error: (error: Error) => {
+                    this.notifierService.notify('error', error.message);
+                }
+            }));
+    }
+
+    private sendMaterial(): void {
+        const selectedUser = this.materialForm.controls.userId.value;
+
+        this.subs.add(this.materialService.send(selectedUser, this.materialId, this.materialForm.value)
+            .pipe(first())
+            .subscribe({
+                next: () => {
+                    this.notifierService.notify('success',
+                        `Матеріал відправлено користувачу ${this.getEmployeeById(selectedUser)}!`);
                     this.router.navigate(
                         ['dashboard', 'accountant', 'user', selectedUser, 'material', this.materialId, 'details'])
                         .then(() => {
                             window.location.reload();
                         });
                 },
-                error: (error) => {
+                error: (error: Error) => {
                     this.notifierService.notify('error', error.message);
                 }
             }));
     }
 
-    public get f(): FormControl {
+    public get f(): any {
         return this.materialForm.controls;
     }
 }
