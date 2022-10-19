@@ -6,5 +6,6 @@ export interface IMaterial {
   type?: string;
   amount?: number;
   price?: number;
+  total?: number;
   userId?: number;
 }

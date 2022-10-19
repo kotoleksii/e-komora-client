@@ -11,7 +11,12 @@
     border-radius: 20px;
 
     .post-title {
+      font-family: e-Ukraine-Regular, sans-serif;
       margin-bottom: 20px;
+    }
+
+    .post-description {
+      font-family: e-Ukraine-UltraLight, sans-serif;
     }
 
     .post-actions {
@@ -21,6 +26,7 @@
       margin: 0;
 
       .post-date, .btn-views {
+        font-family: e-Ukraine-UltraThin, sans-serif;
         color: $color-hint;
       }
 

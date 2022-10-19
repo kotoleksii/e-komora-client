@@ -1,70 +1,76 @@
 <div class="profile-card-wrapper" *ngIf="currentUser">
-  <mat-card class="profile-card">
-    <mat-card-header>
-      <img [src]="currentUser.avatar != null
+    <mat-card class="profile-card">
+        <mat-card-header>
+            <img [src]="currentUser.avatar !== null
        ? currentUser.avatar
         : './assets/images/profile-img.png'"
-           mat-card-avatar alt="avatar">
-      <mat-card-title>{{ currentUser.firstName | titlecase }} {{ currentUser.lastName | titlecase }}</mat-card-title>
-      <mat-card-subtitle>
-        {{currentUser.post != null ? currentUser.post : 'не вказано'}}
-      </mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-      <p>Email: <span>{{ currentUser.email }}</span></p>
-        <p>Доступ:</p>
-        <ul class="roles-list">
-          <li *ngFor="let role of currentUser.roles">{{ role.substring(5).replace('_', ' ') | lowercase }}</li>
-        </ul>
-      <mat-accordion>
-        <mat-expansion-panel class="mat-elevation-z0">
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              Змінити пароль
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
-            <mat-form-field appearance="outline" color="accent">
-              <mat-label>Пароль</mat-label>
-              <input matInput [type]="hide ? 'password' : 'text'" placeholder="Пароль" formControlName="password"
-                     [ngClass]="{ 'is-invalid': submitted && f.password.errors }" required>
-              <i matSuffix (click)="hide = !hide" class="{{hide ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'}}"></i>
-              <mat-error *ngIf="f.password.errors?.required; else minLengthElem">*Пароль обов`язковий!</mat-error>
-              <ng-template #minLengthElem>
-                <mat-error *ngIf="f.password.errors?.minlength; else checkControlUppercaseElem">
-                  *Пароль має бути не менше 8 символів
-                </mat-error>
-              </ng-template>
-              <ng-template #checkControlUppercaseElem>
-                <mat-error *ngIf="!checkControlUppercase(f.password); else checkControlLowercaseElem">
-                  *Пароль має містити хоча б одну велику літеру
-                </mat-error>
-              </ng-template>
-              <ng-template #checkControlLowercaseElem>
-                <mat-error *ngIf="!checkControlLowercase(f.password)">
-                  *Пароль має містити хоча б одну маленьку літеру
-                </mat-error>
-              </ng-template>
-            </mat-form-field>
-            <mat-form-field appearance="outline" color="accent">
-              <mat-label>Повтор паролю</mat-label>
-              <input matInput [type]="hide ? 'password' : 'text'" placeholder="Повтор паролю"
-                     formControlName="confirmPassword"
-                     [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }" required>
-              <mat-error *ngIf="f.confirmPassword.errors?.required">*Повтор паролю обов`язково!</mat-error>
-              <mat-error *ngIf="f.confirmPassword.errors?.mustMatch">*Паролі не співпадають</mat-error>
-            </mat-form-field>
-            <div class="btn-actions">
-              <button mat-raised-button class="btn-confirm" [disabled]='!profileForm.valid'>Підтвердити</button>
+                 mat-card-avatar alt="avatar">
+            <mat-card-title class="title">{{ currentUser.firstName | titlecase }} {{ currentUser.lastName | titlecase }}</mat-card-title>
+            <mat-card-subtitle class="subtitle">
+                {{currentUser.post !== null ? currentUser.post : 'не вказано'}}
+            </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <p>Email: <span>{{ currentUser.email }}</span></p>
+            <p>Доступ:</p>
+            <ul class="roles-list">
+                <li *ngFor="let role of currentUser.roles">{{ role.substring(5).replace('_', ' ') | lowercase }}</li>
+            </ul>
+            <mat-accordion>
+                <mat-expansion-panel class="mat-elevation-z0">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <p>Змінити пароль</p>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+                        <mat-form-field appearance="outline" color="accent">
+                            <mat-label><span>Пароль</span></mat-label>
+                            <input matInput [type]="hide ? 'password' : 'text'" placeholder="Пароль"
+                                   formControlName="password"
+                                   [ngClass]="{ 'is-invalid': submitted && f.password.errors }" required>
+                            <i matSuffix (click)="hide = !hide"
+                               class="{{hide ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'}}"></i>
+                            <mat-error *ngIf="f.password.errors?.required; else minLengthElem">*Пароль обов`язковий!
+                            </mat-error>
+                            <ng-template #minLengthElem>
+                                <mat-error *ngIf="f.password.errors?.minlength; else checkControlUppercaseElem">
+                                    *Пароль має бути не менше 8 символів
+                                </mat-error>
+                            </ng-template>
+                            <ng-template #checkControlUppercaseElem>
+                                <mat-error *ngIf="!checkControlUppercase(f.password); else checkControlLowercaseElem">
+                                    *Пароль має містити хоча б одну велику літеру
+                                </mat-error>
+                            </ng-template>
+                            <ng-template #checkControlLowercaseElem>
+                                <mat-error *ngIf="!checkControlLowercase(f.password)">
+                                    *Пароль має містити хоча б одну маленьку літеру
+                                </mat-error>
+                            </ng-template>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" color="accent">
+                            <mat-label><span>Повтор паролю</span></mat-label>
+                            <input matInput [type]="hide ? 'password' : 'text'" placeholder="Повтор паролю"
+                                   formControlName="confirmPassword"
+                                   [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }" required>
+                            <mat-error *ngIf="f.confirmPassword.errors?.required">*Повтор паролю обов`язково!
+                            </mat-error>
+                            <mat-error *ngIf="f.confirmPassword.errors?.mustMatch">*Паролі не співпадають</mat-error>
+                        </mat-form-field>
+                        <div class="btn-actions">
+                            <button mat-raised-button class="btn-confirm" [disabled]='!profileForm.valid'>
+                                <p>Підтвердити</p>
+                            </button>
+                        </div>
+                    </form>
+                </mat-expansion-panel>
+            </mat-accordion>
+            <div class="btn-back">
+                <a routerLink="/home"><span>Назад</span></a>
             </div>
-          </form>
-        </mat-expansion-panel>
-      </mat-accordion>
-      <div class="btn-back">
-        <a routerLink="/home">Назад</a>
-      </div>
-    </mat-card-content>
-  </mat-card>
+        </mat-card-content>
+    </mat-card>
 </div>
 
 

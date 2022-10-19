@@ -4,7 +4,7 @@
       <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
         <div class="form-title">
         <h2>Створити акаунт</h2>
-        <p>Вже є акаунт?  <a [routerLink]="['','login']">Увійти</a></p>
+        <p><span>Вже є акаунт? </span>  <a [routerLink]="['','login']">Увійти</a></p>
         </div>
         <mat-form-field appearance="outline" color="accent">
           <mat-label>Ім`я</mat-label>
@@ -54,7 +54,7 @@
           <mat-error *ngIf="f.confirmPassword.errors?.required">*Повтор паролю обов`язково!</mat-error>
           <mat-error *ngIf="f.confirmPassword.errors?.mustMatch">*Паролі не співпадають</mat-error>
         </mat-form-field>
-        <button mat-raised-button class="btn-next" [disabled]='!registerForm.valid'>Продовжити</button>
+        <button mat-raised-button class="btn-next" [disabled]='!registerForm.valid'><span>Продовжити</span></button>
       </form>
     </mat-card-content>
   </mat-card>

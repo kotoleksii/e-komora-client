@@ -29,8 +29,7 @@ export class BoardAccountantComponent implements OnInit, OnDestroy {
     private subs: SubSink = new SubSink();
 
     public dataSource: MatTableDataSource<any> | any;
-    public displayedColumns: string[] = ['id', 'title', 'inventoryNumber', 'dateStart', 'type', 'amount', 'price',
-        'userId', 'lastName', 'ID'];
+    public displayedColumns: string[] = ['id', 'title', 'inventoryNumber', 'dateStart', 'type', 'amount', 'price', 'lastName'];
     public materials: IMaterial | any;
     public users: IUser | any;
     public userId: number = 0;

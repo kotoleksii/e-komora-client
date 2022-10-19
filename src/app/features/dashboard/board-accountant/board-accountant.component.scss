@@ -27,6 +27,10 @@
 
     table {
       width: 100%;
+
+      .material-details-link {
+        text-decoration: none;
+      }
     }
 
     mat-paginator {

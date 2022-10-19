@@ -39,11 +39,15 @@
                 <hr>
                 <br>
                 <div class="form-card" *ngIf="topic === 'send' || topic === 'add'">
+                    <div class="row" *ngIf="topic === 'send'">
+                        <h4 class="subtitle">Оберіть особу, кому передати</h4>
+                        <div class="down-emoji">👇</div>
+                    </div>
                     <div class="row">
                         <mat-form-field class="form-field" appearance="outline">
                             <mat-label>Відповідальна особа</mat-label>
-                            <mat-select placeholder="Працівники" formControlName="userId">
-                                <mat-option [value]="'не обрано'">не обрано</mat-option>
+                            <mat-select placeholder="Відповідальна особа" formControlName="userId">
+                                <mat-option [value]="''">не обрано</mat-option>
                                 <mat-option *ngFor="let user of users" [value]="user.id">
                                     <span>{{user.id}}. {{user.lastName}}</span>
                                 </mat-option>

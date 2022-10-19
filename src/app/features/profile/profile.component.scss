@@ -9,13 +9,21 @@
     max-width: 400px;
     border-radius: 20px;
 
-    p {
-      font-weight: 500;
-      margin-bottom: 6px;
+    .title {
+      font-family: e-Ukraine-Regular, sans-serif;
+    }
 
-      span {
-        font-weight: 300;
-      }
+    .subtitle {
+      font-family: e-Ukraine-UltraLight, sans-serif;
+    }
+
+    p {
+      font-family: e-Ukraine-Regular, sans-serif;
+      margin-bottom: 0;
+    }
+
+    span {
+      font-family: e-Ukraine-Thin, sans-serif;
     }
 
     mat-card-content {
@@ -23,6 +31,7 @@
         margin-top: 5px;
 
         li {
+          font-family: e-Ukraine-Thin, sans-serif;
           list-style-type: '👉';
           padding-inline-start: 1ch;
         }
@@ -42,7 +51,7 @@
 
         .btn-confirm {
           padding: 10px 0;
-          margin-bottom: 16px;
+          //margin-bottom: 16px;
           width: 100%;
           font-weight: 400;
           background: $color-primary;
@@ -83,7 +92,6 @@ mat-expansion-panel-header {
 }
 
 mat-panel-title {
-  font-weight: 500;
   font-size: 14px;
 }
 

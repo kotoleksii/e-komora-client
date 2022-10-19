@@ -59,6 +59,15 @@
     justify-content: center;
     align-content: center;
   }
+
+  .subtitle {
+    font-weight: 500;
+    color: $color-secondary;
+    margin-bottom: 8px;
+  }
+  .down-emoji {
+    margin-bottom: 8px;
+  }
 }
 
 a.mat-menu-item {

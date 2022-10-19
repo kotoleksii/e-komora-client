@@ -4,12 +4,12 @@ import {NotifierService} from 'angular-notifier';
 import {MaterialService} from '../../../../../shared/_services/material.service';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
-import {first} from 'rxjs/operators';
+import {debounceTime, distinctUntilChanged, first, map, startWith, switchMap} from 'rxjs/operators';
 import {MatDialog} from '@angular/material/dialog';
 import {IUser} from '../../../../../shared/interfaces/user';
 import {UserService} from '../../../../../shared/_services/user.service';
 import {IMaterial} from '../../../../../shared/interfaces/material';
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 
 @Component({
     selector: 'app-material-action-form',
@@ -20,7 +20,7 @@ export class MaterialActionFormComponent implements OnInit, OnDestroy {
     private subs: SubSink = new SubSink();
     public materialForm: FormGroup = {} as FormGroup;
     public material: IMaterial | any;
-    public users: IUser[] = {} as IUser[];
+    public users: any;
     public userId: number = 0;
     public materialId: number = 0;
     public types: string[] = ['шт.', 'од.', 'кг', 'м'];

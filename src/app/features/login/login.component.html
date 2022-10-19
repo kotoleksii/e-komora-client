@@ -5,8 +5,8 @@
             (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
         <div class="form-title">
           <h2>Вхід</h2>
-          <p>У Вас немає облікового запису?</p>
-          <a [routerLink]="['','register']">Створити акаунт</a>
+          <span>У Вас немає облікового запису?</span><br>
+          <a [routerLink]="['','register']"><p>Створити акаунт</p></a>
         </div>
         <mat-form-field appearance="outline" color="accent">
           <mat-label>E-mail</mat-label>
@@ -25,7 +25,7 @@
             <mat-error *ngIf="password.errors.minlength">Password must be at least 6 characters</mat-error>
           </mat-error>
         </mat-form-field>
-        <button class="btn-next" mat-raised-button color="accent" [disabled]='f.form.invalid'>Продовжити</button>
+        <button class="btn-next" mat-raised-button color="accent" [disabled]='f.form.invalid'><span>Продовжити</span></button>
       </form>
     </mat-card-content>
   </mat-card>

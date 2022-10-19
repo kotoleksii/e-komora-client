@@ -2,7 +2,7 @@
   <mat-toolbar>
   <span class="menu">
     <a mat-icon-button [matMenuTriggerFor]="menuMain">
-      <i class="fa-solid fa-bars"></i>
+      <i class="fa-solid fa-bars menu-icon"></i>
     </a>
     <mat-menu #menuMain="matMenu" [overlapTrigger]="false" routerLinkActive="active">
       <span *ngFor="let item of menuItems">
@@ -46,7 +46,7 @@
       </div>
     </mat-menu>
   </span>
-    <a class="logo" routerLink="home"><span>{{logo}} <img class="flag" src="{{flagUA}}" alt=""></span></a>
+    <a class="logo" routerLink="home"><span class="logo-title">{{logo}} <img class="flag" src="{{flagUA}}" alt=""></span></a>
     <span class="header-spacer"></span>
     <div class="hide-element-mobile" *ngIf="!isLoggedIn">
       <a mat-button routerLink="/login">Увійти</a>

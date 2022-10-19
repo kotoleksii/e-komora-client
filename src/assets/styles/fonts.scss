@@ -1,0 +1,68 @@
+$eUkraine: '../fonts/e-Ukraine';
+$eUkraineHead: '../fonts/e-Ukraine-Head';
+
+@font-face {
+  font-family: e-Ukraine-Bold;
+  src: url($eUkraine + '/e-Ukraine-Bold.otf');
+}
+
+@font-face {
+  font-family: e-Ukraine-Light;
+  src: url($eUkraine + '/e-Ukraine-Light.otf');
+}
+
+@font-face {
+  font-family: e-Ukraine-Medium;
+  src: url($eUkraine + '/e-Ukraine-Medium.otf');
+}
+
+@font-face {
+  font-family: e-Ukraine-Regular;
+  src: url($eUkraine + '/e-Ukraine-Regular.otf');
+}
+
+@font-face {
+  font-family: e-Ukraine-Thin;
+  src: url($eUkraine + '/e-Ukraine-Thin.otf');
+}
+
+@font-face {
+  font-family: e-Ukraine-UltraLight;
+  src: url($eUkraine + '/e-Ukraine-UltraLight.otf');
+}
+
+@font-face {
+  font-family: e-UkraineHead-Bold;
+  src: url($eUkraineHead + '/e-UkraineHead-Bold.otf');
+}
+
+@font-face {
+  font-family: e-UkraineHead-Light;
+  src: url($eUkraineHead + '/e-UkraineHead-Light.otf');
+}
+
+@font-face {
+  font-family: e-UkraineHead-LOGO;
+  src: url($eUkraineHead + '/e-UkraineHead-LOGO.otf');
+}
+
+@font-face {
+  font-family: e-UkraineHead-Medium;
+  src: url($eUkraineHead + '/e-UkraineHead-Medium.otf');
+}
+
+@font-face {
+  font-family: e-UkraineHead-Regular;
+  src: url($eUkraineHead + '/e-UkraineHead-Regular.otf');
+}
+
+@font-face {
+  font-family: e-UkraineHead-Thin;
+  src: url($eUkraineHead + '/e-UkraineHead-Thin.otf');
+}
+
+
+@font-face {
+  font-family: e-UkraineHead-UltraLight;
+  src: url($eUkraineHead + '/e-UkraineHead-Ultralight.otf');
+}

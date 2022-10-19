@@ -10,23 +10,32 @@
     background: transparent;
     box-shadow: none;
 
+    p {
+      font-family: e-Ukraine-Regular, sans-serif;
+      margin: 0;
+    }
+
+    span {
+      font-family: e-Ukraine-Thin, sans-serif;
+    }
+
     .form-title {
       text-align: left;
       margin-bottom: 16px;
 
       h2 {
+        font-family: e-Ukraine-Medium, sans-serif;
         font-size: 1.7rem;
-        font-weight: 500;
       }
 
-      p {
+      span {
+        font-family: e-Ukraine-Thin, sans-serif;
         color: $color-secondary;
         margin: 0;
       }
 
       a {
         color: $color-link;
-        font-weight: 500;
         text-decoration: none;
 
         &:hover {
@@ -36,6 +45,7 @@
     }
 
     mat-form-field {
+      font-family: e-Ukraine-Thin, sans-serif;
       display: block;
 
       i {
@@ -48,7 +58,6 @@
       margin-top: 8px;
       padding: 10px 0;
       width: 100%;
-      font-weight: 400;
       background: $color-primary;
       color: $color-black;
 

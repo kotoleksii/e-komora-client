@@ -51,21 +51,31 @@ span.menu-item-text {
 }
 
 a {
+  font-family: e-Ukraine-UltraLight, sans-serif;
+  font-size: 14px;
   text-decoration: none;
   color: #ffffff;
   /*color: inherit;*/
   //padding: 0 8px;
+  .menu-icon:before {
+    font-size: 16px;
+  }
 }
 
 .btn-signup {
-  background: #f2d082;
-  color: #000000;
+  font-family: e-Ukraine-UltraLight, sans-serif;
+  font-size: 11px;
+  background: $color-primary;
+  color: $color-black;
   margin-left: 10px;
-  font-size: 12px;
-  font-weight: 400;
 }
 
 .logo {
+  .logo-title {
+    font-family: e-UkraineHead-Medium, sans-serif;
+    font-size: 1.2rem;
+  }
+
   .flag {
     height: 22px;
     display: inline-block;
