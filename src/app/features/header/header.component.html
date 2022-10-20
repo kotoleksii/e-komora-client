@@ -1,5 +1,5 @@
 <div class="header-wrapper">
-  <mat-toolbar>
+    <mat-toolbar>
   <span class="menu">
     <a mat-icon-button [matMenuTriggerFor]="menuMain">
       <i class="fa-solid fa-bars menu-icon"></i>
@@ -23,10 +23,10 @@
          </ng-container>
       </mat-menu>
       </span>
-      <!--       <a class="menu-item" mat-menu-item *ngIf="showNewsMakerBoard" routerLink="/dashboard/news-maker"-->
-      <!--          [matMenuTriggerFor]="newsMakerOptions">-->
-      <!--       <i class="fa-solid fa-newspaper"></i><span class="menu-item-text">Менеджер новин</span>-->
-      <!--      </a>-->
+        <!--       <a class="menu-item" mat-menu-item *ngIf="showNewsMakerBoard" routerLink="/dashboard/news-maker"-->
+        <!--          [matMenuTriggerFor]="newsMakerOptions">-->
+        <!--       <i class="fa-solid fa-newspaper"></i><span class="menu-item-text">Менеджер новин</span>-->
+        <!--      </a>-->
 
       <div class="show-element-mobile" *ngIf="isLoggedIn">
         <a routerLink="/profile" class="menu-item" mat-menu-item>
@@ -37,44 +37,45 @@
         </a>
        </div>
       <div class="show-element-mobile" *ngIf="!isLoggedIn">
-        <a class="menu-item" mat-menu-item routerLink="/register">
+        <a class="menu-item" mat-menu-item routerLink="auth/register">
           <i class="fa-solid fa-id-card"></i><span class="menu-item-text">Реєстрація</span>
         </a>
-        <a class="menu-item" mat-menu-item routerLink="/login">
+        <a class="menu-item" mat-menu-item routerLink="auth/login">
           <i class="fa-solid fa-lock-open"></i><span class="menu-item-text">Увійти</span>
         </a>
       </div>
     </mat-menu>
   </span>
-    <a class="logo" routerLink="home"><span class="logo-title">{{logo}} <img class="flag" src="{{flagUA}}" alt=""></span></a>
-    <span class="header-spacer"></span>
-    <div class="hide-element-mobile" *ngIf="!isLoggedIn">
-      <a mat-button routerLink="/login">Увійти</a>
-      <a class="btn-signup" mat-raised-button routerLink="/register">Реєстрація</a>
-    </div>
-    <div class="hide-element-mobile" *ngIf="isLoggedIn">
-      <a mat-button [matMenuTriggerFor]="menuProfile" class="auth-link hide-element-mobile">{{ username }}</a>
-      <mat-menu #menuProfile="matMenu" [overlapTrigger]="false" routerLinkActive="active">
-        <div>
-          <a class="menu-item" mat-menu-item routerLink="/profile">
-            <i class="fa-solid fa-user"></i><span class="menu-item-text">Профіль</span>
-          </a>
+        <a class="logo" routerLink="home"><span class="logo-title">{{logo}} <img class="flag" src="{{flagUA}}"
+                                                                                 alt=""></span></a>
+        <span class="header-spacer"></span>
+        <div class="hide-element-mobile" *ngIf="!isLoggedIn">
+            <a mat-button routerLink="auth/login">Увійти</a>
+            <a class="btn-signup" mat-raised-button routerLink="auth/register">Реєстрація</a>
         </div>
-        <a class="menu-item" mat-menu-item href (click)="logout()">
-          <i class="fa-solid fa-arrow-right-from-bracket"></i><span class="menu-item-text">Вийти</span>
-        </a>
-      </mat-menu>
-    </div>
-  </mat-toolbar>
+        <div class="hide-element-mobile" *ngIf="isLoggedIn">
+            <a mat-button [matMenuTriggerFor]="menuProfile" class="auth-link hide-element-mobile">{{ username }}</a>
+            <mat-menu #menuProfile="matMenu" [overlapTrigger]="false" routerLinkActive="active">
+                <div>
+                    <a class="menu-item" mat-menu-item routerLink="/profile">
+                        <i class="fa-solid fa-user"></i><span class="menu-item-text">Профіль</span>
+                    </a>
+                </div>
+                <a class="menu-item" mat-menu-item href (click)="logout()">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i><span class="menu-item-text">Вийти</span>
+                </a>
+            </mat-menu>
+        </div>
+    </mat-toolbar>
 </div>
 
 <ng-template #newsMakerOptions>
-  <a class="menu-item" mat-menu-item routerLink="/dashboard/news-maker">
-    <i class="fa-solid fa-list-check"></i><span class="menu-item-text">Всі новини</span>
-  </a>
-  <a class="menu-item" mat-menu-item routerLink="/dashboard/news-maker/posts/add">
-    <i class="fa-solid fa-circle-plus"></i><span class="menu-item-text">Створити</span>
-  </a>
+    <a class="menu-item" mat-menu-item routerLink="/dashboard/news-maker">
+        <i class="fa-solid fa-list-check"></i><span class="menu-item-text">Всі новини</span>
+    </a>
+    <a class="menu-item" mat-menu-item routerLink="/dashboard/news-maker/posts/add">
+        <i class="fa-solid fa-circle-plus"></i><span class="menu-item-text">Створити</span>
+    </a>
 </ng-template>
 
 <!--      <a class="menu-item" mat-menu-item routerLink="/home">-->

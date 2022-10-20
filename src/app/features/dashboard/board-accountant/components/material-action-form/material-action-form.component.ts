@@ -45,6 +45,7 @@ export class MaterialActionFormComponent implements OnInit, OnDestroy {
         this.userId = this.route.snapshot.params.userId;
         this.materialId = this.route.snapshot.params.materialId;
 
+        this.checkBadUrl();
         this.getEmployeeItems();
 
         this.pageTitle = 'Новий матеріал';
@@ -203,6 +204,12 @@ export class MaterialActionFormComponent implements OnInit, OnDestroy {
                     this.notifierService.notify('error', error.message);
                 }
             }));
+    }
+
+    private checkBadUrl(): void {
+        if (this.topic !== 'add' && this.topic !== 'edit' && this.topic !== 'details') {
+            this.router.navigate(['dashboard', 'accountant']).then();
+        }
     }
 
     public get f(): any {

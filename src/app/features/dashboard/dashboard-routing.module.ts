@@ -33,7 +33,7 @@ const routes: Routes = [
           loadChildren: () => import('./board-news-maker/board-news-maker.module')
             .then((m) => m.BoardNewsMakerModule),
           canActivate: [AuthGuard]
-        },
+        }
       ]
   }
 ];

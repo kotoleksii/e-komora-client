@@ -15,7 +15,7 @@ const routes: Routes = [
   },
   {
     path: 'user/:type/:id',
-    component: UserActionFormComponent,
+    component: UserActionFormComponent
   }
 ];
 

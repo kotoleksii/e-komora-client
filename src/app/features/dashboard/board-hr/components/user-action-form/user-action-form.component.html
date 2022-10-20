@@ -1,127 +1,130 @@
 <div class="user-action-form-wrapper">
-  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-    <mat-card class="mat-elevation-z6">
-      <mat-toolbar>
-        <mat-toolbar-row>
-          <div>
-            <a *ngIf="topic !== 'edit'" class="btn-action" mat-icon-button [routerLink]="[ '', 'dashboard', 'hr' ]">
-              <i class="fa-solid fa-arrow-left"></i>
-            </a>
-            <a *ngIf="topic === 'edit'" class="btn-action" mat-icon-button href="dashboard/hr/user/details/{{userId}}">
-              <i class="fa-solid fa-arrow-left"></i>
-            </a>
-          </div>
-          <div>
-            <span *ngIf="topic === 'add'" class="view-card-title">{{pageTitle}}</span>
-            <span *ngIf="topic === 'edit'" class="view-card-title">{{pageTitle}}</span>
-            <span *ngIf="topic === 'details'" class="view-card-title">{{pageTitle}}</span>
-          </div>
-          <div>
-            <button *ngIf="topic !== 'details'; else detailsMenu" class="btn-action" mat-icon-button color="accent"
-                    type="submit"
-                    [disabled]='!userForm.valid'>
-              <i class="fa-solid fa-floppy-disk"></i>
-            </button>
-          </div>
-        </mat-toolbar-row>
-      </mat-toolbar>
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+        <mat-card class="mat-elevation-z6">
+            <mat-toolbar>
+                <mat-toolbar-row>
+                    <div>
+                        <a *ngIf="topic !== 'edit'" class="btn-action" mat-icon-button
+                           [routerLink]="[ '', 'dashboard', 'hr' ]">
+                            <i class="fa-solid fa-arrow-left"></i>
+                        </a>
+                        <a *ngIf="topic === 'edit'" class="btn-action" mat-icon-button
+                           href="dashboard/hr/user/details/{{userId}}">
+                            <i class="fa-solid fa-arrow-left"></i>
+                        </a>
+                    </div>
+                    <div>
+                        <span *ngIf="topic === 'add'" class="view-card-title">{{pageTitle}}</span>
+                        <span *ngIf="topic === 'edit'" class="view-card-title">{{pageTitle}}</span>
+                        <span *ngIf="topic === 'details'" class="view-card-title">{{pageTitle}}</span>
+                    </div>
+                    <div>
+                        <button *ngIf="topic !== 'details'; else detailsMenu" class="btn-action" mat-icon-button
+                                color="accent"
+                                type="submit"
+                                [disabled]='!userForm.valid'>
+                            <i class="fa-solid fa-floppy-disk"></i>
+                        </button>
+                    </div>
+                </mat-toolbar-row>
+            </mat-toolbar>
 
-      <mat-card-content>
+            <mat-card-content>
           <span class="view-label">
             <img mat-card-avatar *ngIf='user?.avatar' class="center-block img-responsive"
                  [src]='user?.avatar'
                  [title]='user?.lastName | uppercase'
                  [style.width.px]='imageWidth' [style.height.px]='imageWidth' [style.margin.px]='imageMargin' alt="">
           </span>
-        <div *ngIf="topic === 'details'">
-          Останнє оновлення {{user?.updateDateTime | date:'dd/MM/yyyy HH:mm:ss'}}
-        </div>
-        <hr>
-        <br>
-        <div class="form-card">
-          <div class="row">
-            <mat-form-field class="form-field" appearance="outline">
-              <mat-label>Прізвище</mat-label>
-              <input matInput id="lastName" type="text" placeholder="Прізвище"
-                     formControlName="lastName"/>
-              <mat-error *ngIf="f.lastName.invalid">{{errorMsg(f.lastName, 'Прізвище')}}</mat-error>
-            </mat-form-field>
-            <mat-form-field class="form-field" appearance="outline">
-              <mat-label>Ім`я</mat-label>
-              <input matInput id="firstName" type="text" placeholder="Ім`я"
-                     formControlName="firstName"/>
-              <mat-error *ngIf="f.firstName.invalid">{{errorMsg(f.firstName, 'Ім`я')}}</mat-error>
-            </mat-form-field>
-            <mat-form-field class="form-field" appearance="outline">
-              <mat-label>По батькові</mat-label>
-              <input matInput id="middleName" type="text" placeholder="По батькові"/>
-            </mat-form-field>
-          </div>
-          <mat-form-field class="form-field" appearance="outline">
-            <mat-label>Email</mat-label>
-            <input matInput id="email" type="email" placeholder="Email " formControlName="email"/>
-            <mat-error *ngIf="f.email.invalid">{{errorMsg(f.email, 'Email')}}</mat-error>
-          </mat-form-field>
+                <div *ngIf="topic === 'details'">
+                    Останнє оновлення {{user?.updateDateTime | date:'dd/MM/yyyy HH:mm:ss'}}
+                </div>
+                <hr>
+                <br>
+                <div class="form-card">
+                    <div class="row">
+                        <mat-form-field class="form-field" appearance="outline">
+                            <mat-label>Прізвище</mat-label>
+                            <input matInput id="lastName" type="text" placeholder="Прізвище"
+                                   formControlName="lastName"/>
+                            <mat-error *ngIf="f.lastName.invalid">{{errorMsg(f.lastName, 'Прізвище')}}</mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="form-field" appearance="outline">
+                            <mat-label>Ім`я</mat-label>
+                            <input matInput id="firstName" type="text" placeholder="Ім`я"
+                                   formControlName="firstName"/>
+                            <mat-error *ngIf="f.firstName.invalid">{{errorMsg(f.firstName, 'Ім`я')}}</mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="form-field" appearance="outline">
+                            <mat-label>По батькові</mat-label>
+                            <input matInput id="middleName" type="text" placeholder="По батькові"/>
+                        </mat-form-field>
+                    </div>
+                    <mat-form-field class="form-field" appearance="outline">
+                        <mat-label>Email</mat-label>
+                        <input matInput id="email" type="email" placeholder="Email " formControlName="email"/>
+                        <mat-error *ngIf="f.email.invalid">{{errorMsg(f.email, 'Email')}}</mat-error>
+                    </mat-form-field>
 
-          <mat-form-field formGroupName="profile" class="form-field" appearance="outline">
-            <mat-label>Посада</mat-label>
-            <input matInput id="post" type="text" placeholder="Посада" formControlName="post"/>
-            <!--              <mat-error *ngIf="f.post.invalid">{{errorMsg(f.post, 'Посада')}}</mat-error>-->
-          </mat-form-field>
+                    <mat-form-field formGroupName="profile" class="form-field" appearance="outline">
+                        <mat-label>Посада</mat-label>
+                        <input matInput id="post" type="text" placeholder="Посада" formControlName="post"/>
+                        <!--              <mat-error *ngIf="f.post.invalid">{{errorMsg(f.post, 'Посада')}}</mat-error>-->
+                    </mat-form-field>
 
-          <!--          <mat-form-field *ngIf="isAddMode" class="form-field" appearance="outline">-->
-          <!--            <mat-label>Пароль</mat-label>-->
-          <!--            <input matInput id="password" type="text" placeholder="Пароль" formControlName="password"/>-->
-          <!--            <mat-error *ngIf="f.password.invalid">{{errorMsg(f.password, 'Пароль')}}</mat-error>-->
-          <!--          </mat-form-field>-->
-        </div>
-      </mat-card-content>
-    </mat-card>
-    <mat-card *ngIf="topic === 'edit' || topic === 'details'" class="mat-elevation-z6">
-      <mat-card-content>
-        <div class="row">
-          <mat-form-field class="form-field" appearance="outline">
-            <mat-label>Дата народження</mat-label>
-            <input matInput [matDatepicker]="picker">
-            <mat-datepicker-toggle matSuffix [for]="picker">
-              <i class="fa-solid fa-calendar-days"></i>
-            </mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-          </mat-form-field>
-          <mat-form-field class="form-field" appearance="outline">
-            <mat-label>Громадянство</mat-label>
-            <input matInput id="nationality" type="text" placeholder="Громадянство"/>
-          </mat-form-field>
-        </div>
-        <div class="row">
-          <mat-form-field class="form-field" appearance="outline">
-            <mat-label>Освіта</mat-label>
-            <input matInput id="education" type="text" placeholder="Освіта"/>
-          </mat-form-field>
-          <mat-form-field class="form-field" appearance="outline">
-            <mat-label>Назва освітнього закладу</mat-label>
-            <input matInput id="institutionTitle" type="text" placeholder="Назва освітнього закладу"/>
-          </mat-form-field>
-          <mat-form-field class="form-field" appearance="outline">
-            <mat-label>Диплом (серія, номер)</mat-label>
-            <input matInput id="diplomaNumber" type="text" placeholder="Диплом (серія, номер)"/>
-          </mat-form-field>
-        </div>
-      </mat-card-content>
-    </mat-card>
-  </form>
+                    <!--          <mat-form-field *ngIf="isAddMode" class="form-field" appearance="outline">-->
+                    <!--            <mat-label>Пароль</mat-label>-->
+                    <!--            <input matInput id="password" type="text" placeholder="Пароль" formControlName="password"/>-->
+                    <!--            <mat-error *ngIf="f.password.invalid">{{errorMsg(f.password, 'Пароль')}}</mat-error>-->
+                    <!--          </mat-form-field>-->
+                </div>
+            </mat-card-content>
+        </mat-card>
+        <mat-card *ngIf="topic === 'edit' || topic === 'details'" class="mat-elevation-z6">
+            <mat-card-content>
+                <div class="row">
+                    <mat-form-field class="form-field" appearance="outline">
+                        <mat-label>Дата народження</mat-label>
+                        <input matInput [matDatepicker]="picker">
+                        <mat-datepicker-toggle matSuffix [for]="picker">
+                            <i class="fa-solid fa-calendar-days"></i>
+                        </mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field class="form-field" appearance="outline">
+                        <mat-label>Громадянство</mat-label>
+                        <input matInput id="nationality" type="text" placeholder="Громадянство"/>
+                    </mat-form-field>
+                </div>
+                <div class="row">
+                    <mat-form-field class="form-field" appearance="outline">
+                        <mat-label>Освіта</mat-label>
+                        <input matInput id="education" type="text" placeholder="Освіта"/>
+                    </mat-form-field>
+                    <mat-form-field class="form-field" appearance="outline">
+                        <mat-label>Назва освітнього закладу</mat-label>
+                        <input matInput id="institutionTitle" type="text" placeholder="Назва освітнього закладу"/>
+                    </mat-form-field>
+                    <mat-form-field class="form-field" appearance="outline">
+                        <mat-label>Диплом (серія, номер)</mat-label>
+                        <input matInput id="diplomaNumber" type="text" placeholder="Диплом (серія, номер)"/>
+                    </mat-form-field>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </form>
 </div>
 
 <ng-template #detailsMenu>
-  <button mat-icon-button [matMenuTriggerFor]="menuDetails">
-    <i class="fa-solid fa-ellipsis-vertical"></i>
-  </button>
-  <mat-menu #menuDetails="matMenu" [overlapTrigger]="false">
-    <a class="menu-item" mat-menu-item href="dashboard/hr/user/edit/{{userId}}">
-      <i class="fa-solid fa-file-pen"></i><span class="menu-item-text">Редагувати</span>
-    </a>
-    <a class="menu-item" mat-menu-item (click)="openConfirmDialog(userId, user)">
-      <i class="fa-solid fa-trash"></i><span class="menu-item-text">Видалити</span>
-    </a>
-  </mat-menu>
+    <button mat-icon-button [matMenuTriggerFor]="menuDetails">
+        <i class="fa-solid fa-ellipsis-vertical"></i>
+    </button>
+    <mat-menu #menuDetails="matMenu" [overlapTrigger]="false">
+        <a class="menu-item" mat-menu-item href="dashboard/hr/user/edit/{{userId}}">
+            <i class="fa-solid fa-file-pen"></i><span class="menu-item-text">Редагувати</span>
+        </a>
+        <a class="menu-item" mat-menu-item (click)="openConfirmDialog(userId, user)">
+            <i class="fa-solid fa-trash"></i><span class="menu-item-text">Видалити</span>
+        </a>
+    </mat-menu>
 </ng-template>

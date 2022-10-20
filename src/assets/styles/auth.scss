@@ -1,0 +1,75 @@
+@import '../../assets/styles/_colors.scss';
+
+.auth-wrapper {
+  .auth-card {
+    margin: 2em auto;
+    padding: 25px;
+    max-width: 400px;
+    border-radius: 20px;
+    text-align: center;
+    background: transparent;
+    box-shadow: none;
+
+    p {
+      font-family: e-Ukraine-Regular, sans-serif;
+      margin: 0;
+    }
+
+    span {
+      font-family: e-Ukraine-Thin, sans-serif;
+    }
+
+    .form-title {
+      text-align: left;
+      margin-bottom: 16px;
+
+      h2 {
+        font-family: e-Ukraine-Medium, sans-serif;
+        font-size: 1.7rem;
+      }
+
+      span {
+        font-family: e-Ukraine-Thin, sans-serif;
+        color: $color-secondary;
+        margin: 0;
+      }
+
+      a {
+        color: $color-link;
+        text-decoration: none;
+
+        &:hover {
+          color: $color-link-hover;
+        }
+      }
+    }
+
+    mat-form-field {
+      font-family: e-Ukraine-Thin, sans-serif;
+      display: block;
+
+      i {
+        position: relative;
+        bottom: 6px;
+      }
+    }
+
+    .btn-next {
+      margin-top: 8px;
+      padding: 10px 0;
+      width: 100%;
+      background: $color-primary;
+      color: $color-black;
+
+      &:hover {
+        background-color: $color-primary-hover;
+      }
+
+      &:disabled,
+      &[disabled] {
+        background-color: $color-disabled;
+        color: $color-disabled-text;
+      }
+    }
+  }
+}

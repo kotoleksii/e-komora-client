@@ -1,32 +1,35 @@
-<div class="login-wrapper" *ngIf="!isLoggedIn">
-  <mat-card class="login-card">
-    <mat-card-content>
-      <form name="form"
-            (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
-        <div class="form-title">
-          <h2>Вхід</h2>
-          <span>У Вас немає облікового запису?</span><br>
-          <a [routerLink]="['','register']"><p>Створити акаунт</p></a>
-        </div>
-        <mat-form-field appearance="outline" color="accent">
-          <mat-label>E-mail</mat-label>
-          <input matInput placeholder="E-mail" [(ngModel)]="form.email" name="email" required
-                 #email="ngModel">
-          <mat-error *ngIf="email.errors && f.submitted">Email is required!</mat-error>
-        </mat-form-field>
-        <mat-form-field appearance="outline" color="accent">
-          <mat-label>Пароль</mat-label>
-          <input matInput [type]="hide ? 'password' : 'text'" placeholder="Пароль" [(ngModel)]="form.password" name="password" required
-                 minlength="6"
-                 #password="ngModel">
-          <i matSuffix (click)="hide = !hide" class="{{hide ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'}}"></i>
-          <mat-error *ngIf="password.errors && f.submitted">
-            <mat-error *ngIf="password.errors.required">Password is required</mat-error>
-            <mat-error *ngIf="password.errors.minlength">Password must be at least 6 characters</mat-error>
-          </mat-error>
-        </mat-form-field>
-        <button class="btn-next" mat-raised-button color="accent" [disabled]='f.form.invalid'><span>Продовжити</span></button>
-      </form>
-    </mat-card-content>
-  </mat-card>
+<div class="auth-wrapper" *ngIf="!isLoggedIn">
+    <mat-card class="auth-card">
+        <mat-card-content>
+            <form name="form"
+                  (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+                <div class="form-title">
+                    <h2>Вхід</h2>
+                    <span>У Вас немає облікового запису?</span><br>
+                    <a [routerLink]="['', 'auth' ,'register']"><p>Створити акаунт</p></a>
+                </div>
+                <mat-form-field appearance="outline" color="accent">
+                    <mat-label>E-mail</mat-label>
+                    <input matInput placeholder="E-mail" [(ngModel)]="form.email" name="email" required
+                           #email="ngModel">
+                    <mat-error *ngIf="email.errors && f.submitted">Email is required!</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" color="accent">
+                    <mat-label>Пароль</mat-label>
+                    <input matInput [type]="hide ? 'password' : 'text'" placeholder="Пароль" [(ngModel)]="form.password"
+                           name="password" required
+                           minlength="6"
+                           #password="ngModel">
+                    <i matSuffix (click)="hide = !hide"
+                       class="{{hide ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'}}"></i>
+                    <mat-error *ngIf="password.errors && f.submitted">
+                        <mat-error *ngIf="password.errors.required">Password is required</mat-error>
+                        <mat-error *ngIf="password.errors.minlength">Password must be at least 6 characters</mat-error>
+                    </mat-error>
+                </mat-form-field>
+                <button class="btn-next" mat-raised-button color="accent" [disabled]='f.form.invalid'>
+                    <span>Продовжити</span></button>
+            </form>
+        </mat-card-content>
+    </mat-card>
 </div>

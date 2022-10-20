@@ -8,7 +8,7 @@
     border-radius: 10px;
     padding: 12px 0;
     //margin-bottom: 20px;
-    background: #424242;
+    background: $color-card-background;
 
     mat-toolbar-row {
       display: flex;
@@ -65,6 +65,7 @@
     color: $color-secondary;
     margin-bottom: 8px;
   }
+
   .down-emoji {
     margin-bottom: 8px;
   }
@@ -74,7 +75,7 @@ a.mat-menu-item {
   margin: 5px;
 
   &.mat-menu-item:hover {
-    background-color: #101014;
+    background-color: $color-black-hover;
     color: $color-primary;
     border-radius: 0.25rem;
   }

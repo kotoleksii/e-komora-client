@@ -1,0 +1,77 @@
+@import '../../assets/styles/_colors.scss';
+
+.board-card-wrapper {
+  max-width: 800px;
+  margin: auto;
+
+  mat-card {
+    margin-top: 50px;
+    height: 100%;
+    border-radius: 20px;
+
+    .title {
+      font-family: e-UkraineHead-Medium, sans-serif;
+      margin: 1rem 0 0;
+    }
+  }
+
+  mat-toolbar {
+    border-radius: 10px;
+    padding: 0 0 12px;
+    background: $color-card-background;
+
+    .btn-add {
+      margin-right: 10px;
+      background-color: $color-primary;
+
+      &:hover {
+        background-color: $color-primary-hover;
+      }
+    }
+
+    .btn-qr {
+      margin-right: 10px;
+      background-color: $color-hint;
+    }
+  }
+
+  .title-spacer {
+    flex: 1 1 auto;
+  }
+
+  .select-employees {
+    font-family: e-Ukraine-Thin, sans-serif;
+    font-size: 15px;
+    margin-right: 5px;
+  }
+
+  .search-form-field {
+    font-family: e-Ukraine-Thin, sans-serif;
+    font-size: 15px;
+    margin-right: 20px;
+  }
+
+  .board-table-container {
+    overflow: auto;
+
+    table {
+      width: 100%;
+
+      th {
+        font-family: e-UkraineHead-UltraLight, sans-serif;
+      }
+
+      td {
+        font-family: e-Ukraine-UltraThin, sans-serif;
+      }
+
+      .element-details-link {
+        text-decoration: none;
+      }
+    }
+
+    mat-paginator {
+      font-family: e-Ukraine-UltraThin, sans-serif;
+    }
+  }
+}

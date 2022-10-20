@@ -16,7 +16,7 @@ routes = [
     },
     {
         path: 'user/:userId/material/:materialId/:type',
-        component: MaterialActionFormComponent,
+        component: MaterialActionFormComponent
     }
 ];
 
@@ -24,7 +24,7 @@ routes = [
     declarations: [],
     imports: [
         CommonModule,
-        RouterModule.forChild(routes),
+        RouterModule.forChild(routes)
     ]
 })
 export class BoardAccountantRoutingModule {
