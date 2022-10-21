@@ -5,6 +5,7 @@ import {AuthGuard} from './shared/_guards/auth.guard';
 const routes: Routes = [
     {
         path: 'home',
+        title: 'єРобота',
         loadChildren: () => import('./features/home/home.module')
             .then((m) => m.HomeModule)
     },
@@ -16,22 +17,25 @@ const routes: Routes = [
     },
     {
         path: 'auth/register',
+        title: 'Реєстрація',
         loadChildren: () => import('./features/register/register.module')
             .then((m) => m.RegisterModule)
     },
     {
         path: 'auth/login',
+        title: 'Вхід',
         loadChildren: () => import('./features/login/login.module')
             .then((m) => m.LoginModule)
     },
     {
         path: 'profile',
+        title: 'Мій профіль',
         loadChildren: () => import('./features/profile/profile.module')
             .then((m) => m.ProfileModule),
         canActivate: [AuthGuard]
     },
-    {path: '', redirectTo: 'auth/login', pathMatch: 'full'},
-    {path: '**', redirectTo: 'home'}
+    {path: '', redirectTo: 'home', pathMatch: 'full'},
+    {path: '**', redirectTo: 'auth/login'}
 ];
 
 @NgModule({

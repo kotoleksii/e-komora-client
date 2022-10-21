@@ -24,9 +24,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     public roles: string[] = [];
 
     public constructor(private authService: AuthService,
-                private tokenStorage: TokenStorageService,
-                private router: Router,
-                private notifierService: NotifierService) {
+                       private tokenStorage: TokenStorageService,
+                       private router: Router,
+                       private notifierService: NotifierService) {
     }
 
     public ngOnInit(): void {
@@ -54,7 +54,7 @@ export class LoginComponent implements OnInit, OnDestroy {
                     this.username = this.tokenStorage.getUser().firstName;
                     this.notifierService.notify('success', `👋 Привіт, ${this.username}!`);
                     // this.reloadByRole(this.roles[0]);
-                    this.router.navigate(['home']).then(() => {
+                    this.router.navigate(['dashboard', 'home']).then(() => {
                         this.reloadPage();
                     });
                 },

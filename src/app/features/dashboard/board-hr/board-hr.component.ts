@@ -21,7 +21,7 @@ export class BoardHrComponent implements OnInit, OnDestroy {
     private roles: string[] = [];
 
     public dataSource: MatTableDataSource<any> | any;
-    public displayedColumns: string[] = ['avatar', 'ID', 'fullName', 'post'];
+    public displayedColumns: string[] = ['avatar', 'id', 'fullName', 'post'];
     public users: any;
     public showHRBoard: boolean = false;
     public imageWidth: number = 30;

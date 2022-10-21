@@ -53,7 +53,7 @@ export class BoardAccountantComponent implements OnInit, OnDestroy {
         this.showAccountantBoard = this.roles.includes('ROLE_ACCOUNTANT');
 
         if (!this.showAccountantBoard) {
-            this.router.navigate(['home']).then();
+            this.router.navigate(['board-home']).then();
         }
 
         this.getEmployeeItems();

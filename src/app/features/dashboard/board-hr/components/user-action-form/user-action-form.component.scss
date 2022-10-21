@@ -8,13 +8,18 @@
     border-radius: 10px;
     padding: 12px 0;
     margin-bottom: 20px;
-    background: #424242;
+    background: $color-card-background;
 
     mat-toolbar-row {
       display: flex;
       flex-direction: row;
       flex-wrap: nowrap;
       justify-content: space-between;
+
+      .view-card-title {
+        font-family: e-Ukraine-Regular, sans-serif;
+        font-size: 18px;
+      }
     }
   }
 
@@ -26,9 +31,24 @@
       padding: 10px 0;
       text-align: center;
 
-      mat-form-field {
-        margin: 0 10px;
+      p {
+        font-family: e-Ukraine-UltraThin, sans-serif;
       }
+    }
+  }
+
+  mat-form-field {
+    font-family: e-Ukraine-Thin, sans-serif;
+    font-size: 13px;
+    width: 200px;
+    margin: 0 10px;
+
+    mat-label {
+      color: $color-secondary;
+    }
+
+    mat-select {
+      font-family: e-Ukraine-Thin, sans-serif;
     }
   }
 
@@ -62,10 +82,11 @@
 }
 
 a.mat-menu-item {
+  font-family: e-Ukraine-UltraThin, sans-serif;
   margin: 5px;
 
   &.mat-menu-item:hover {
-    background-color: #101014;
+    background-color: $color-black-hover;
     color: $color-primary;
     border-radius: 0.25rem;
   }
@@ -73,8 +94,4 @@ a.mat-menu-item {
 
 span.menu-item-text {
   margin-left: 15px;
-}
-
-mat-label {
-  color: $color-secondary;
 }

@@ -23,11 +23,6 @@
          </ng-container>
       </mat-menu>
       </span>
-        <!--       <a class="menu-item" mat-menu-item *ngIf="showNewsMakerBoard" routerLink="/dashboard/news-maker"-->
-        <!--          [matMenuTriggerFor]="newsMakerOptions">-->
-        <!--       <i class="fa-solid fa-newspaper"></i><span class="menu-item-text">Менеджер новин</span>-->
-        <!--      </a>-->
-
       <div class="show-element-mobile" *ngIf="isLoggedIn">
         <a routerLink="/profile" class="menu-item" mat-menu-item>
           <i class="fa-solid fa-user"></i><span class="menu-item-text">{{ username }}</span>
@@ -37,10 +32,10 @@
         </a>
        </div>
       <div class="show-element-mobile" *ngIf="!isLoggedIn">
-        <a class="menu-item" mat-menu-item routerLink="auth/register">
+        <a routerLink="auth/register" class="menu-item" mat-menu-item>
           <i class="fa-solid fa-id-card"></i><span class="menu-item-text">Реєстрація</span>
         </a>
-        <a class="menu-item" mat-menu-item routerLink="auth/login">
+        <a routerLink="auth/login" class="menu-item" mat-menu-item>
           <i class="fa-solid fa-lock-open"></i><span class="menu-item-text">Увійти</span>
         </a>
       </div>
@@ -77,16 +72,3 @@
         <i class="fa-solid fa-circle-plus"></i><span class="menu-item-text">Створити</span>
     </a>
 </ng-template>
-
-<!--      <a class="menu-item" mat-menu-item routerLink="/home">-->
-<!--        <i class="fa-solid fa-house"></i><span class="menu-item-text">Головна</span>-->
-<!--      </a>-->
-<!--      <a class="menu-item" mat-menu-item *ngIf="showEmployeeBoard" routerLink="/dashboard/employee">-->
-<!--        <i class="fa-solid fa-box-open"></i><span class="menu-item-text">Мій Інвентар</span>-->
-<!--      </a>-->
-<!--      <a class="menu-item" mat-menu-item *ngIf="showHRBoard" routerLink="/dashboard/hr">-->
-<!--        <i class="fa-solid fa-folder-open"></i><span class="menu-item-text">Особові справи</span>-->
-<!--      </a>-->
-<!--      <a class="menu-item" mat-menu-item *ngIf="showAccountantBoard" routerLink="/dashboard/accountant">-->
-<!--       <i class="fa-solid fa-hand-holding-dollar"></i><span class="menu-item-text">Матеріальні цінності</span>-->
-<!--      </a>-->

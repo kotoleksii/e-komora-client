@@ -18,8 +18,21 @@
 
 .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
   color: $color-primary;
+  caret-color: $color-primary !important;
 }
 
 .mat-input-element:disabled, .mat-select-disabled .mat-select-value {
   color: $color-white;
 }
+
+.mat-option.mat-selected {
+  color: $color-primary !important;
+}
+
+.mat-input-element {
+  caret-color: $color-primary-active!important;
+}
+
+//.mat-form-field-invalid .mat-input-element, .mat-warn .mat-input-element {
+//  caret-color: red!important;
+//}

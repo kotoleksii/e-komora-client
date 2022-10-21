@@ -12,6 +12,10 @@
     padding: 0 26px 0 16px;
   }
 
+  .menu {
+    margin-top: 2px;
+  }
+
   .header-spacer {
     flex: 1 1 auto;
   }
@@ -34,7 +38,7 @@ a.mat-menu-item {
   margin: 5px;
 
   &.mat-menu-item:hover {
-    background-color: #101014;
+    background-color: $color-black-hover;
     color: $color-primary;
     border-radius: 0.25rem;
   }
@@ -56,11 +60,15 @@ span.menu-item-text {
 
 a {
   font-family: e-Ukraine-UltraLight, sans-serif;
-  font-size: 14px;
   text-decoration: none;
   color: #ffffff;
   /*color: inherit;*/
   //padding: 0 8px;
+  &.mat-menu-item {
+    font-family: e-Ukraine-UltraThin, sans-serif;
+    font-size: 14px;
+  }
+
   .menu-icon:before {
     font-size: 16px;
   }

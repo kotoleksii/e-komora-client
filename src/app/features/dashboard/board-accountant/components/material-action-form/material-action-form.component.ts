@@ -207,7 +207,7 @@ export class MaterialActionFormComponent implements OnInit, OnDestroy {
     }
 
     private checkBadUrl(): void {
-        if (this.topic !== 'add' && this.topic !== 'edit' && this.topic !== 'details') {
+        if (this.topic !== 'add' && this.topic !== 'edit' && this.topic !== 'send' && this.topic !== 'details') {
             this.router.navigate(['dashboard', 'accountant']).then();
         }
     }

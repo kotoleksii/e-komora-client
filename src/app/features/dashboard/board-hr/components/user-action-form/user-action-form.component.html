@@ -37,7 +37,7 @@
                  [style.width.px]='imageWidth' [style.height.px]='imageWidth' [style.margin.px]='imageMargin' alt="">
           </span>
                 <div *ngIf="topic === 'details'">
-                    Останнє оновлення {{user?.updateDateTime | date:'dd/MM/yyyy HH:mm:ss'}}
+                    <p>Останнє оновлення {{user?.updateDateTime | date:'dd/MM/yyyy HH:mm:ss'}}</p>
                 </div>
                 <hr>
                 <br>

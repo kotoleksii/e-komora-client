@@ -15,6 +15,11 @@
       flex-direction: row;
       flex-wrap: nowrap;
       justify-content: space-between;
+
+      .view-card-title {
+        font-family: e-Ukraine-Regular, sans-serif;
+        font-size: 18px;
+      }
     }
   }
 
@@ -37,11 +42,21 @@
           border-radius: 8px;
         }
       }
+    }
+  }
 
-      mat-form-field {
-        width: 200px;
-        margin: 0 10px;
-      }
+  mat-form-field {
+    font-family: e-Ukraine-Thin, sans-serif;
+    font-size: 13px;
+    width: 200px;
+    margin: 0 10px;
+
+    mat-label {
+      color: $color-secondary;
+    }
+
+    mat-select {
+      font-family: e-Ukraine-Thin, sans-serif;
     }
   }
 
@@ -61,7 +76,7 @@
   }
 
   .subtitle {
-    font-weight: 500;
+    font-family: e-Ukraine-Light, sans-serif;
     color: $color-secondary;
     margin-bottom: 8px;
   }
@@ -72,6 +87,7 @@
 }
 
 a.mat-menu-item {
+  font-family: e-Ukraine-UltraThin, sans-serif;
   margin: 5px;
 
   &.mat-menu-item:hover {
@@ -83,8 +99,4 @@ a.mat-menu-item {
 
 span.menu-item-text {
   margin-left: 15px;
-}
-
-mat-label {
-  color: $color-secondary;
 }
