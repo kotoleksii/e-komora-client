@@ -5,19 +5,21 @@ import {HomeComponent} from './home.component';
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
 import {NgxPaginationModule} from 'ngx-pagination';
-import {ScrollToTopComponent} from './scroll-to-top/scroll-to-top.component';
-import {FooterComponent} from './footer/footer.component';
-import {TitleComponent} from './title/title.component';
+import {ScrollToTopComponent} from './components/scroll-to-top/scroll-to-top.component';
+import {FooterComponent} from './components/footer/footer.component';
+import {TitleComponent} from './components/title/title.component';
+import {AboutComponent} from './components/about/about.component';
+import {ContactComponent} from './components/contact/contact.component';
 
 
 @NgModule({
-    declarations: [HomeComponent, ScrollToTopComponent, FooterComponent, TitleComponent],
+    declarations: [HomeComponent, ScrollToTopComponent, FooterComponent, TitleComponent, AboutComponent, ContactComponent],
     imports: [
         CommonModule,
         HomeRoutingModule,
         MatCardModule,
         MatButtonModule,
-        NgxPaginationModule,
+        NgxPaginationModule
     ]
 })
 export class HomeModule {

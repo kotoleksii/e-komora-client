@@ -1,5 +1,5 @@
-@import 'src/assets/styles/_colors';
-@import 'src/assets/styles/mixins';
+@import '../../../../../assets/styles/colors';
+@import '../../../../../assets/styles/mixins';
 
 .footer-wrapper {
   .container {
@@ -39,6 +39,8 @@
             vertical-align: middle;
 
             a {
+              width: 100%;
+
               .technology-icon {
                 width: 166px;
                 height: 52px;

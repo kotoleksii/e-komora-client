@@ -1,0 +1,92 @@
+@import '../../../../../assets/styles/colors';
+@import '../../../../../assets/styles/mixins';
+
+.about-wrapper {
+  .container {
+    max-width: 100%;
+    padding: 0 15px;
+    margin: 0 30px;
+
+    hr {
+      margin: 6rem 0 0;
+    }
+
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+
+      .column {
+        flex: 50%;
+        margin: 30px 0;
+
+        h2 {
+          font-family: e-UkraineHead-Regular, sans-serif;
+          font-size: 1.7rem;
+          line-height: 1.5;
+          color: $color-white;
+          width: 50%;
+          margin: 1.2rem auto;
+        }
+
+        .topic {
+          font-family: e-Ukraine-Light, sans-serif;
+          font-size: 1.5rem;
+          margin-bottom: 2rem;
+          color: $color-white;
+        }
+
+        .description {
+          font-family: e-UkraineHead-UltraLight, sans-serif;
+          font-size: 1rem;
+          line-height: 1.5;
+          color: $color-disabled;
+        }
+
+
+      }
+    }
+
+    .centered {
+      text-align: center;
+    }
+
+    .img-fluid {
+      max-width: 100%;
+      height: auto;
+    }
+  }
+
+  .review {
+    text-align: center;
+    position: relative;
+    width: 50%;
+    margin: 0 auto;
+
+    .quote {
+      font-family: e-UkraineHead-UltraThin, sans-serif;
+      margin: 0 0 16px;
+      font-size: 1.1rem;
+      font-style: italic;
+      color: $color-secondary;
+    }
+
+    .img-review {
+      max-width: 50px;
+      margin: 0 8px 0 0;
+      filter: grayscale(1);
+      vertical-align: middle;
+      border-style: none;
+      border-radius: 50%;
+
+      &:hover {
+        filter: grayscale(0);
+      }
+    }
+
+    span {
+      color: $color-gray-text;
+    }
+  }
+}
+
+
