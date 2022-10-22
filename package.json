@@ -28,6 +28,7 @@
     "@fortawesome/free-brands-svg-icons": "^6.2.0",
     "@fortawesome/free-regular-svg-icons": "^6.2.0",
     "@fortawesome/free-solid-svg-icons": "^6.2.0",
+    "@ngneat/until-destroy": "^9.2.2",
     "@zxing/browser": "^0.1.1",
     "@zxing/library": "^0.19.1",
     "@zxing/ngx-scanner": "^3.6.2",

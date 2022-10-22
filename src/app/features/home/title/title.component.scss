@@ -1,0 +1,41 @@
+@import '../../../../assets/styles/_colors';
+@import '../../../../assets/styles/mixins';
+
+.title-wrapper {
+  .container {
+    @include media-property(H, margin, 10px auto, 35px auto);
+    max-width: 640px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .home-content {
+      text-align: center;
+
+      .app-icon {
+        width: 76px;
+        margin-bottom: 8px;
+      }
+
+      h1 {
+        @include media-property(H, font-size, 1.5rem, 2.1rem);
+        font-family: e-UkraineHead-LOGO, sans-serif;
+        line-height: 1.3;
+        color: $color-white;
+      }
+
+      p {
+        @include media-property(H, font-size, 0.6, 1.2rem);
+        @include media-property(H, margin, 1rem 0.2rem 2.2rem, 1.5rem 0 2.8rem);
+        font-family: e-Ukraine-Thin, sans-serif;
+        line-height: 1.3;
+        color: $color-white;
+      }
+
+      .img-fluid {
+        max-width: 100%;
+        height: auto;
+      }
+    }
+  }
+}

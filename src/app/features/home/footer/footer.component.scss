@@ -1,0 +1,53 @@
+@import 'src/assets/styles/_colors';
+@import 'src/assets/styles/mixins';
+
+.footer-wrapper {
+  .container {
+    max-width: 100%;
+    padding: 0 64px;
+    background: $color-black-toolbar;
+
+    .row {
+      display: flex;
+
+      .column {
+        flex: 50%;
+        margin: 50px 0;
+
+        .dev-company-icon {
+          vertical-align: middle;
+          width: 48px;
+        }
+
+        span {
+          vertical-align: middle;
+          display: inline-block;
+          font-family: e-Ukraine-Regular, sans-serif;
+          font-size: 12px;
+          color: $color-hint;
+
+          p {
+            margin: 0 0 0 10px;
+          }
+        }
+
+        .dev-technology {
+          vertical-align: middle;
+          float: right;
+
+          span {
+            vertical-align: middle;
+
+            a {
+              .technology-icon {
+                width: 166px;
+                height: 52px;
+                margin: 0 0 0 10px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

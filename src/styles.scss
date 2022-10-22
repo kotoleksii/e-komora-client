@@ -3,6 +3,7 @@
 @import 'assets/styles/fonts';
 @import 'assets/styles/material';
 @import 'assets/styles/pagination';
+@import 'assets/styles/scrollbar';
 
 html, body {
   height: 100%;
@@ -17,3 +18,5 @@ body {
 a {
   color: $color-link;
 }
+
+
