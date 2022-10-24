@@ -10,6 +10,9 @@ import {FooterComponent} from './components/footer/footer.component';
 import {TitleComponent} from './components/title/title.component';
 import {AboutComponent} from './components/about/about.component';
 import {ContactComponent} from './components/contact/contact.component';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 
 @NgModule({
@@ -19,7 +22,11 @@ import {ContactComponent} from './components/contact/contact.component';
         HomeRoutingModule,
         MatCardModule,
         MatButtonModule,
-        NgxPaginationModule
+        NgxPaginationModule,
+        MatFormFieldModule,
+        MatInputModule,
+        FormsModule,
+        ReactiveFormsModule
     ]
 })
 export class HomeModule {

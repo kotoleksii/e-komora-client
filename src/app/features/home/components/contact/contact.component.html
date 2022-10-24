@@ -1,1 +1,47 @@
-<p>contact works!</p>
+<div class="contact-wrapper">
+    <div class="container">
+        <hr/>
+        <div class="row">
+            <div class="column centered">
+                <h2>Хочете працювати з нами?</h2>
+                <p>Напишіть, а ми допоможемо втілити Вашу ідею в життя!</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="column">
+                <form class="centered" [formGroup]="form" (ngSubmit)="onSubmit()">
+                    <div class="row">
+                        <div class="column">
+                            <mat-form-field class="input" appearance="outline">
+                                <mat-label>Ім'я</mat-label>
+                                <input type="text" name="name" matInput placeholder="Ім'я" formControlName="name"
+                                       required
+                                >
+                            </mat-form-field>
+                        </div>
+                        <div class="column">
+                            <mat-form-field class="input" appearance="outline">
+                                <mat-label>E-mail</mat-label>
+                                <input type="email" name="email" matInput placeholder="E-mail" formControlName="email"
+                                       required>
+                            </mat-form-field>
+                        </div>
+                        <div class="column">
+                            <mat-form-field class="text-area" appearance="outline">
+                                <mat-label>Повідомлення</mat-label>
+                                <textarea type="text" name="message" rows="5" matInput placeholder="Повідомлення"
+                                          formControlName="message"
+                                          required></textarea>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="centered">
+                        <button class="btn-next" mat-raised-button
+                                [disabled]="form.invalid">
+                            <span>Відправити</span></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

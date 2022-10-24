@@ -3,18 +3,20 @@
 
 .footer-wrapper {
   .container {
+    @include media-property(H, padding, 0 32px 25px, 0 64px);
+    @include media-property(H, text-align, center, inherit);
     max-width: 100%;
-    padding: 0 64px;
     background: $color-black-toolbar;
 
     .row {
-      display: flex;
+      @include media-property(H, display, inline-block, flex);
 
       .column {
+        @include media-property(H, margin, 25px 0, 50px 0);
         flex: 50%;
-        margin: 50px 0;
 
         .dev-company-icon {
+          @include media-property(H, margin, 1rem 0, 0);
           vertical-align: middle;
           width: 48px;
         }

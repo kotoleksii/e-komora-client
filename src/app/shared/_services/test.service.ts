@@ -5,26 +5,30 @@ import {HttpClient} from '@angular/common/http';
 const API_URL = 'http://localhost:8080/api/test/';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class TestService {
 
-  constructor(private http: HttpClient) {
-  }
+    public constructor(private http: HttpClient) {
+    }
 
-  getPublicContent(): Observable<any> {
-    return this.http.get(API_URL + 'all', {responseType: 'text'});
-  }
+    public getPublicContent(): Observable<any> {
+        return this.http.get(API_URL + 'all', {responseType: 'text'});
+    }
 
-  getEmployeeBoard(): Observable<any> {
-    return this.http.get(API_URL + 'dashboard/employee', {responseType: 'text'});
-  }
+    public getEmployeeBoard(): Observable<any> {
+        return this.http.get(API_URL + 'dashboard/employee', {responseType: 'text'});
+    }
 
-  getHRBoard(): Observable<any> {
-    return this.http.get(API_URL + 'dashboard/hr', {responseType: 'text'});
-  }
+    public getHRBoard(): Observable<any> {
+        return this.http.get(API_URL + 'dashboard/hr', {responseType: 'text'});
+    }
 
-  getAccountantBoard(): Observable<any> {
-    return this.http.get(API_URL + 'dashboard/accountant', {responseType: 'text'});
-  }
+    public getAccountantBoard(): Observable<any> {
+        return this.http.get(API_URL + 'dashboard/accountant', {responseType: 'text'});
+    }
+
+    public sendContactFormMessage(data: any): Observable<any> {
+        return this.http.post(API_URL + 'contactForm', data);
+    }
 }

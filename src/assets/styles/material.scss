@@ -21,6 +21,13 @@
   caret-color: $color-primary !important;
 }
 
+//.mat-form-field-label {
+//  color: $color-primary;
+//  .mat-form-field-required-marker {
+//    color: $color-danger;
+//  }
+//}
+
 .mat-input-element:disabled, .mat-select-disabled .mat-select-value {
   color: $color-white;
 }

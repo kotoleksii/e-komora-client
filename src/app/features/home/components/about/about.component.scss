@@ -3,12 +3,12 @@
 
 .about-wrapper {
   .container {
+    @include media-property(H, margin, 0 0.5rem, 0 30px);
+    @include media-property(H, padding, 0, 0 15px);
     max-width: 100%;
-    padding: 0 15px;
-    margin: 0 30px;
 
     hr {
-      margin: 6rem 0 0;
+      @include media-property(H, margin, 3rem 0.5rem 0, 6rem 0 0);
     }
 
     .row {
@@ -16,33 +16,31 @@
       flex-wrap: wrap;
 
       .column {
-        flex: 50%;
-        margin: 30px 0;
+        @include media-property(H, flex, 100%, 50%);
+        @include media-property(H, margin, 15px 0, 30px 0);
 
         h2 {
+          @include media-property(H, font-size, 1.3rem, 1.7rem);
           font-family: e-UkraineHead-Regular, sans-serif;
-          font-size: 1.7rem;
           line-height: 1.5;
           color: $color-white;
-          width: 50%;
+          //width: 50%;
           margin: 1.2rem auto;
         }
 
         .topic {
+          @include media-property(H, margin-bottom, 1rem, 2rem);
+          @include media-property(H, font-size, 1.2rem, 1.5rem);
           font-family: e-Ukraine-Light, sans-serif;
-          font-size: 1.5rem;
-          margin-bottom: 2rem;
           color: $color-white;
         }
 
         .description {
+          @include media-property(H, font-size, 0.8rem, 1.1rem);
           font-family: e-UkraineHead-UltraLight, sans-serif;
-          font-size: 1rem;
           line-height: 1.5;
           color: $color-disabled;
         }
-
-
       }
     }
 
@@ -57,15 +55,15 @@
   }
 
   .review {
+    @include media-property(H, width, 100%, 50%);
     text-align: center;
     position: relative;
-    width: 50%;
     margin: 0 auto;
 
     .quote {
+      @include media-property(H, font-size, 0.8rem, 1.1rem);
       font-family: e-UkraineHead-UltraThin, sans-serif;
-      margin: 0 0 16px;
-      font-size: 1.1rem;
+      margin: 0 0 1rem;
       font-style: italic;
       color: $color-secondary;
     }
@@ -84,6 +82,7 @@
     }
 
     span {
+      @include media-property(H, font-size, 0.7rem, 0.9rem);
       color: $color-gray-text;
     }
   }
