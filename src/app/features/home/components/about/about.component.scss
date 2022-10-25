@@ -83,6 +83,7 @@
 
     span {
       @include media-property(H, font-size, 0.7rem, 0.9rem);
+      @include media-property(H, display, block, inline-block);
       color: $color-gray-text;
     }
   }
