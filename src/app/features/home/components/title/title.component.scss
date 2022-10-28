@@ -4,7 +4,7 @@
 .title-wrapper {
   .container {
     @include media-property(H, margin, 10px auto, 35px auto);
-    max-width: 100%;
+    max-width: 90%;
     display: flex;
     justify-content: center;
     align-items: center;

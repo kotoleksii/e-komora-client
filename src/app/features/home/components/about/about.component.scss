@@ -2,9 +2,10 @@
 @import '../../../../../assets/styles/mixins';
 
 .about-wrapper {
+  @include media-property(H, margin, 0 0.5rem, 0 30px);
   .container {
-    @include media-property(H, margin, 0 0.5rem, 0 30px);
-    @include media-property(H, padding, 0, 0 15px);
+    @include media-property(H, margin, 10px auto 2.5rem, 35px auto 5rem);
+    @include media-property(H, padding, 0 10px, 0 15px);
     max-width: 100%;
 
     hr {
