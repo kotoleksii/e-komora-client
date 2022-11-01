@@ -15,10 +15,11 @@ import {NotifierModule} from 'angular-notifier';
 import {MatDialogModule} from '@angular/material/dialog';
 import {NgxPaginationModule} from 'ngx-pagination';
 
+
 @NgModule({
     declarations: [
         AppComponent,
-        HeaderComponent,
+        HeaderComponent
     ],
     imports: [
         BrowserModule,

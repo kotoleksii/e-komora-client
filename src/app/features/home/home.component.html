@@ -1,16 +1,17 @@
-<ng-container *ngIf="showScroll$ | async">
-    <app-scroll-to-top (scrollToTop)="onScrollToTop()"></app-scroll-to-top>
-</ng-container>
-<section id="title">
-    <app-title></app-title>
-</section>
-<section id="about">
-    <app-about></app-about>
-</section>
-<section id="contact">
-    <app-contact></app-contact>
-</section>
-<section id="footer">
-    <app-footer></app-footer>
-</section>
-
+<div #home_wrapper class="home-wrapper">
+    <ng-container *ngIf="showScroll$ | async">
+        <app-scroll-to-top (scrollToTop)="onScrollToTop()"></app-scroll-to-top>
+    </ng-container>
+    <section id="title" class="anim-section">
+        <app-title></app-title>
+    </section>
+    <section id="about" class="anim-section">
+        <app-about></app-about>
+    </section>
+    <section id="contact">
+        <app-contact></app-contact>
+    </section>
+    <section id="footer">
+        <app-footer></app-footer>
+    </section>
+</div>

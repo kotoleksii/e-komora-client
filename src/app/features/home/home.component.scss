@@ -1,44 +1,63 @@
-#title {
-  opacity: 0;
-  animation: titleAnimation 2.5s forwards;
-}
-
-#about {
-  transform: translateX(-150%);
-  animation: aboutAnimation 3s forwards;
-}
-
-#contact {
-  opacity: 0;
-  transform: translateY(-150%);
-  animation: contactAnimation 1s forwards;
-}
-
-@keyframes titleAnimation {
-  0% {
+.home-wrapper {
+  #title {
     opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
+    transform: translate(0, 0);
 
-@keyframes aboutAnimation {
-  0% {
-    transform: translateX(-150%);
+    &.active {
+      opacity: 1;
+      animation: titleAnimation 2s forwards;
+    }
   }
-  100% {
-    transform: translateY(0);
-  }
-}
 
-@keyframes contactAnimation {
-  0% {
+  #about {
     opacity: 0;
-    transform: translateY(150%);
+    transform: translate(0, 0);
+
+    &.active {
+      opacity: 1;
+      animation: titleAnimation 1.5s forwards;
+      //transform: translate(-120%, 0);
+      //animation: aboutAnimation 2.5s forwards;
+    }
   }
-  100% {
+
+  #contact {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate(-120%, 0);
+    animation: contactAnimation 2s forwards;
+
+    &.active {
+      opacity: 0;
+      animation: titleAnimation 2.5s forwards;
+
+    }
+  }
+
+  @keyframes titleAnimation {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes aboutAnimation {
+    0% {
+      transform: translateX(-120%);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes contactAnimation {
+    0% {
+      transform: translateX(120%);
+    }
+    100% {
+      transform: translateY(0);
+    }
   }
 }
+
