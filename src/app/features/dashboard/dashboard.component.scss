@@ -1,1 +1,196 @@
-///
+@import '../../../assets/styles/_colors';
+@import '../../../assets/styles/mixins';
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+a {
+  text-decoration: none;
+}
+
+.workspace_wrapper {
+  font-family: e-Ukraine-Light, sans-serif;
+
+  header {
+    width: 100%;
+    min-height: calc(100px + 2vw);
+    //background: $color-primary;
+    background: url('../../../assets/images/bg.jpg') no-repeat 50% 20% / cover;
+  }
+
+  .cols_container {
+    @include media-property(H, max-width, 100%, 1200px, 100%);
+    @include media-property(H, margin, auto, 0 auto);
+    @include media-property(H, width, 90%);
+    @include media-property(H, justify-content, normal, space-between);
+    @include media-property(H, display, block, grid);
+    @include media-property(H, grid-template-columns, none, 1fr 2fr);
+    @include media-property(H, gap, 0, 50px);
+
+    .left_col {
+      @include media-property(H, padding, 25px 20px, 25px 0px);
+      //@include media-property(H, margin, 0, 0 auto, 0);
+      text-align: center;
+      max-width: 330px;
+      position: relative;
+
+      .img_container {
+        position: absolute;
+        top: -60px;
+        left: 50%;
+        transform: translatex(-50%);
+
+        img {
+          width: 120px;
+          height: 120px;
+          padding: 8px;
+          object-fit: cover;
+          border-radius: 50%;
+          display: block;
+          background: linear-gradient(130deg, #74b9ff, #e66767);
+          background-size: 200% 200%;
+          animation: animated-gradient 2s linear infinite;
+        }
+      }
+
+      h2 {
+        margin-top: 60px;
+        font-weight: 600;
+        font-size: 22px;
+        margin-bottom: 5px;
+        color: $color-white;
+      }
+
+      p {
+        font-size: 0.9rem;
+        color: $color-secondary;
+        margin: 0;
+      }
+
+      .about {
+        justify-content: space-between;
+        position: relative;
+        margin: 35px 0;
+
+        li {
+          font-family: e-Ukraine-Thin, sans-serif;
+          display: flex;
+          flex-direction: column;
+          color: $color-secondary;
+          font-size: 0.9rem;
+
+          span {
+            color: $color-white;
+            font-weight: 600;
+          }
+        }
+
+        &:after {
+          position: absolute;
+          content: "";
+          bottom: -16px;
+          display: block;
+          background: $color-hint;
+          height: 1px;
+          width: 100%;
+        }
+      }
+
+    }
+
+    .content {
+      p {
+        font-size: 1rem;
+        color: $color-white;
+        line-height: 1.8em;
+      }
+
+      ul.roles_list {
+        display: flex;
+        flex-direction: column;
+        margin-top: 5px;
+        //align-items: flex-start;
+
+        li {
+          font-family: e-Ukraine-Thin, sans-serif;
+          color: $color-secondary;
+        }
+      }
+
+      ul.social_list {
+        gap: 30px;
+        justify-content: center;
+        align-items: center;
+        margin-top: 25px;
+        color: $color-white;
+
+        li {
+          display: flex;
+        }
+
+        i {
+          font-size: 1.3rem;
+        }
+      }
+    }
+
+    .right_col {
+      nav {
+        @include media-property(H, flex-direction, column, row);
+        display: flex;
+        align-items: center;
+        padding: 30px 0;
+        justify-content: space-between;
+
+        ul {
+          @include media-property(H, flex-direction, column, row);
+          @include media-property(H, gap, 20px, 30px);
+          display: flex;
+          margin: 0 auto;
+          text-align: center;
+
+          li {
+            a {
+              text-transform: uppercase;
+              color: $color-secondary;
+            }
+
+            &:nth-child(1) a {
+              color: $color-white;
+              font-weight: 600;
+            }
+          }
+        }
+      }
+
+      .content {
+        height: 100vw;
+        overflow: auto;
+      }
+    }
+  }
+}
+
+.nav_underline {
+  @include media-property(H, border-bottom, none, 5px solid $color-link);
+}
+
+@keyframes animated-gradient {
+  25% {
+    background-position: left bottom;
+  }
+  50% {
+    background-position: right bottom;
+  }
+  75% {
+    background-position: right top;
+  }
+  100% {
+    background-position: left top;
+  }
+}

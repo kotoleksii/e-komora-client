@@ -35,7 +35,8 @@ export class LoginComponent implements OnInit, OnDestroy {
             this.roles = this.tokenStorage.getUser().roles;
             this.username = this.tokenStorage.getUser().firstName;
             this.notifierService.notify('success', `👋 Вітаємо Вас знову, ${this.username}!`);
-            this.reloadByRole(this.roles[0]);
+            // this.reloadByRole(this.roles[0]);
+            this.router.navigate(['dashboard']).then();
         }
     }
 

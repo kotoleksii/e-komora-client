@@ -6,7 +6,7 @@ import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 
 @UntilDestroy()
 @Component({
-    selector: 'app-board-home',
+    selector: 'app-board-news',
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.scss']
 })

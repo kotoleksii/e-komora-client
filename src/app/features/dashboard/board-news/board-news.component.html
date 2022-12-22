@@ -1,13 +1,15 @@
 <div class="home-wrapper">
-    <mat-card *ngFor="let post of posts | paginate: { itemsPerPage: 3, currentPage: p }; let i = index">
+    <mat-card *ngFor="let post of posts | paginate: { itemsPerPage: 3, currentPage: currentPage }; let i = index">
         <mat-card-title class="post-title">{{post.title}}</mat-card-title>
         <mat-card-subtitle class="post-description" [innerHTML]="post.description"></mat-card-subtitle>
         <mat-card-actions class="post-actions" align="end">
             <span class="post-date">{{post.createDateTime | date:'dd/MM/yyyy HH:mm:ss'}}</span>
             <span class="card-spacer"></span>
-            <button mat-icon-button><i class="fa-solid fa-heart"></i></button>
+            <button mat-icon-button>
+                <i class="fa-solid fa-heart" [style.color]="this.btnLikeColor" (click)="toggleLikeButton()"></i>
+            </button>
             <button mat-icon-button class="btn-views" disabled><i class="fa-solid fa-eye"></i></button>
         </mat-card-actions>
     </mat-card>
-    <pagination-controls (pageChange)="p = $event" previousLabel="Вперед" nextLabel="Назад"></pagination-controls>
+    <pagination-controls (pageChange)="currentPage = $event" previousLabel="Вперед" nextLabel="Назад"></pagination-controls>
 </div>

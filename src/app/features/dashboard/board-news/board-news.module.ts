@@ -1,21 +1,21 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {BoardHomeComponent} from './board-home.component';
-import {BoardHomeRoutingModule} from './board-home-routing.module';
+import {BoardNewsComponent} from './board-news.component';
+import {BoardNewsRoutingModule} from './board-news-routing.module';
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
 import {NgxPaginationModule} from 'ngx-pagination';
 
 
 @NgModule({
-    declarations: [BoardHomeComponent],
+    declarations: [BoardNewsComponent],
     imports: [
         CommonModule,
-        BoardHomeRoutingModule,
+        BoardNewsRoutingModule,
         MatCardModule,
         MatButtonModule,
         NgxPaginationModule
     ]
 })
-export class BoardHomeModule {
+export class BoardNewsModule {
 }

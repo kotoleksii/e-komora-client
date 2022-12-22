@@ -1,1 +1,61 @@
-<router-outlet></router-outlet>
+<!--<router-outlet></router-outlet>-->
+
+<div class="workspace_wrapper">
+    <header></header>
+    <div class="cols_container">
+        <div class="left_col">
+            <div class="img_container">
+                <img [src]="
+                currentUser.avatar !== null
+                ? currentUser.avatar
+                : './assets/images/profile-img.png'" alt="avatar">
+            </div>
+            <h2>{{username | titlecase}}</h2>
+            <p>{{currentUser.post !== null ? currentUser.post : 'не вказано'}}</p>
+            <p>{{currentUser.email}}</p>
+
+            <ul class="about">
+                <li><span>{{amountMaterials|async}}</span>Матеріалів</li>
+                <li><span>0</span>Відзнак</li>
+                <li><span>0</span>Коментарів</li>
+            </ul>
+
+            <div class="content">
+                <p>Права доступу:</p>
+                <ul class="roles_list">
+                    <li *ngFor="let role of currentUser.roles">
+                        {{ role.substring(5).replace('_', ' ') | lowercase }}
+                    </li>
+                </ul>
+
+                <ul class="social_list">
+                    <li><i class="fab fa-twitter"></i></li>
+                    <i class="fab fa-facebook"></i>
+                    <i class="fab fa-at"></i>
+                    <i class="fab fa-instagram"></i>
+                </ul>
+            </div>
+        </div>
+        <div class="right_col">
+            <nav>
+                <ul *ngFor="let link of navItems" routerLinkActive="active" #rla="routerLinkActive"
+                    [ngStyle]="{'display': link.access === false ? 'none': 'block'}">
+                    <li>
+                        <a *ngIf="link.access" [routerLink]="link.link"
+                           [ngStyle]="{
+                           'color': rla.isActive ? '#FFFFFFFF' : '#A6A6B0FF',
+                           'padding': rla.isActive ? '15px' : '0'
+                           }"
+                           [ngClass]="rla.isActive ? 'nav_underline' : ''"
+                        >
+                            {{link.title}}
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="content">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+</div>

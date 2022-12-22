@@ -12,14 +12,14 @@ const routes: Routes = [
             [
                 {
                     path: '',
-                    redirectTo: 'home',
+                    redirectTo: 'news',
                     pathMatch: 'full'
                 },
                 {
-                    path: 'home',
-                    title: 'Головна',
-                    loadChildren: () => import('./board-home/board-home.module')
-                        .then((m) => m.BoardHomeModule),
+                    path: 'news',
+                    title: 'Новини',
+                    loadChildren: () => import('./board-news/board-news.module')
+                        .then((m) => m.BoardNewsModule),
                     canActivate: [AuthGuard]
                 },
                 {
@@ -50,7 +50,7 @@ const routes: Routes = [
                         .then((m) => m.BoardNewsMakerModule),
                     canActivate: [AuthGuard]
                 },
-                {path: '**', redirectTo: 'home'}
+                {path: '**', redirectTo: 'news'}
             ]
     }
 ];

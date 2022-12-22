@@ -25,6 +25,10 @@ export class MaterialService {
         return this.http.get<any>(`${API_URL}users/material/${id}`);
     }
 
+    public getAmountMaterialsByUserId(id: number): Observable<any> {
+        return this.http.get<any>(`${API_URL}users/materials/${id}/amount`);
+    }
+
     public create(userId: any, data: any): Observable<any> {
         return this.http.post(`${API_URL}users/${userId}/materials/`, data);
     }
