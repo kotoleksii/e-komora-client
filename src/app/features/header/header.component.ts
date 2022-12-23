@@ -10,8 +10,9 @@ export class HeaderComponent implements OnInit {
     private roles: string[] = [];
     public logo: string = 'єРобота';
     public flagUA: string = './assets/images/flag-ukraine.png';
-
-    public isLoggedIn: boolean = false;
+    public user: any;
+    public loginLocker: boolean = false;
+    // public isLoggedIn: boolean = false;
     public showHome: boolean = true;
     public showAccountantBoard: boolean = false;
     public showHRBoard: boolean = false;
@@ -24,19 +25,7 @@ export class HeaderComponent implements OnInit {
     }
 
     public ngOnInit(): void {
-        this.isLoggedIn = !!this.tokenStorageService.getToken();
-
-        if (this.isLoggedIn) {
-            const user = this.tokenStorageService.getUser();
-            this.roles = user.roles;
-
-            this.showAccountantBoard = this.roles.includes('ROLE_ACCOUNTANT');
-            this.showHRBoard = this.roles.includes('ROLE_HR');
-            this.showEmployeeBoard = this.roles.includes('ROLE_EMPLOYEE');
-            this.showNewsMakerBoard = this.roles.includes('ROLE_NEWS_MAKER');
-
-            this.username = `${user.firstName} ${user.lastName?.slice(0, 1)}.`;
-        }
+        // this.isLoggedIn = !!this.tokenStorageService.getToken();
 
         this.menuItems = this.initMenuItems();
     }
@@ -89,5 +78,26 @@ export class HeaderComponent implements OnInit {
                 dropMenuType: 'newsMaker'
             }
         ];
+    }
+
+    public get isLoggedIn(): boolean {
+        const isLoggedIn = !!this.tokenStorageService.getToken();
+
+        if (isLoggedIn && !this.loginLocker) {
+            this.loginLocker = true;
+            const user = this.tokenStorageService.getUser();
+            this.roles = user.roles;
+
+            this.showAccountantBoard = this.roles.includes('ROLE_ACCOUNTANT');
+            this.showHRBoard = this.roles.includes('ROLE_HR');
+            this.showEmployeeBoard = this.roles.includes('ROLE_EMPLOYEE');
+            this.showNewsMakerBoard = this.roles.includes('ROLE_NEWS_MAKER');
+
+            this.username = `${user.firstName} ${user.lastName.slice(0, 1)}.`;
+
+            this.menuItems = this.initMenuItems();
+        }
+
+        return isLoggedIn;
     }
 }
