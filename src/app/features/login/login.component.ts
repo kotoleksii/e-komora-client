@@ -55,14 +55,15 @@ export class LoginComponent implements OnInit, OnDestroy {
                     this.username = this.tokenStorage.getUser().firstName;
                     this.notifierService.notify('success', `👋 Привіт, ${this.username}!`);
                     // this.reloadByRole(this.roles[0]);
-                    this.router.navigate(['dashboard', 'home']).then(() => {
-                        this.reloadPage();
-                    });
+                    // this.router.navigate(['dashboard', 'home']).then(() => {
+                    //     this.reloadPage();
+                    // }); TODO
+                    this.router.navigate(['dashboard']).then();
                 },
                 (err: Error) => {
                     this.isLoginFailed = true;
                     this.errorMessage = err?.message;
-                    this.notifierService.notify('error', 'Login failed!');
+                    this.notifierService.notify('error', '🤷‍♀️ Щось пішло не так, спробуйте ще раз!');
                     // this.reloadByRole(this.roles[0]);
                 }
             ));

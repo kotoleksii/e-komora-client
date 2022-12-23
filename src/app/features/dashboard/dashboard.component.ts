@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {SubSink} from 'subsink';
 import {MaterialService} from '../../shared/_services/material.service';
 import {BehaviorSubject} from 'rxjs';
+import {TestService} from '../../shared/_services/test.service';
 
 @Component({
     selector: 'app-dashboard',
@@ -29,6 +30,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     public constructor(private router: Router,
                        private tokenStorageService: TokenStorageService,
+                       private testService: TestService,
                        private materialService: MaterialService) {
     }
 
@@ -64,7 +66,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
                     this.amountMaterials.next(data);
                 }));
     }
-
 
     public ngOnDestroy(): void {
         this.subs.unsubscribe();

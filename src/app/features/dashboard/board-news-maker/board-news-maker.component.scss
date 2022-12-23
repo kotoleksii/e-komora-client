@@ -5,14 +5,23 @@
   max-width: 750px;
   margin: 50px auto;
 
-  h1 {
-    color: $color-white;
-  }
+  .header {
+    display: flex;
+    justify-content: space-between;
 
-  .btn-add {
-    background-color: $color-primary;
-    color: $color-black;
-    margin-bottom: 20px;
+    h1 {
+      color: $color-white;
+    }
+
+    .btn-add {
+      background-color: $color-primary;
+      color: $color-black;
+      margin-bottom: 20px;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
   }
 
   mat-expansion-panel {

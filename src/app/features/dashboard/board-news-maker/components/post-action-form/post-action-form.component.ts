@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {PostService} from '../../../../../shared/_services/post.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {first} from 'rxjs/operators';
-import {UntypedFormBuilder, UntypedFormControl, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, UntypedFormBuilder, UntypedFormControl, Validators} from '@angular/forms';
 import {NotifierService} from 'angular-notifier';
 import {SubSink} from 'subsink';
 
@@ -13,44 +13,40 @@ import {SubSink} from 'subsink';
 })
 export class PostActionFormComponent implements OnInit, OnDestroy {
     private subs: SubSink = new SubSink();
-    postForm: any;
-    isAddMode = true;
-    postId = 0;
-    pageTitle = '';
-    postDescription = '';
+    public postForm: any;
+    public isAddMode = true;
+    public postId = 0;
+    public pageTitle = '';
+    public postDescription = '';
 
-    constructor(private postService: PostService,
-                private formBuilder: UntypedFormBuilder,
-                private notifierService: NotifierService,
-                private router: Router,
-                private route: ActivatedRoute) {
+    public constructor(private postService: PostService,
+                       private formBuilder: FormBuilder,
+                       private notifierService: NotifierService,
+                       private router: Router,
+                       private route: ActivatedRoute) {
     }
 
-    ngOnInit(): void {
+    public ngOnInit(): void {
         this.postId = this.route.snapshot.params.id;
         this.isAddMode = !this.postId;
 
-        this.pageTitle = 'Нова новина';
+        this.pageTitle = 'Додати новину';
 
         this.postForm = this.formBuilder.group({
             title: ['', Validators.required],
             description: ['', Validators.required],
-            published: false,
+            published: false
         });
 
         if (!this.isAddMode) {
             this.pageTitle = 'Редагування новини';
             this.subs.add(this.postService.get(this.postId)
                 .pipe(first())
-                .subscribe(x => this.postForm.patchValue(x)));
+                .subscribe((x) => this.postForm.patchValue(x)));
         }
     }
 
-    get f(): UntypedFormControl {
-        return this.postForm.controls;
-    }
-
-    onSubmit(): void {
+    public onSubmit(): void {
         if (this.postForm.invalid) {
             return;
         }
@@ -60,6 +56,10 @@ export class PostActionFormComponent implements OnInit, OnDestroy {
         } else {
             this.updatePost();
         }
+    }
+
+    public ngOnDestroy(): void {
+        this.subs.unsubscribe();
     }
 
     private createPost(): void {
@@ -72,10 +72,10 @@ export class PostActionFormComponent implements OnInit, OnDestroy {
             .pipe(first())
             .subscribe({
                 next: () => {
-                    this.notifierService.notify('success', `💪 Новину створено!`);
+                    this.notifierService.notify('success', '💪 Новину створено!');
                     this.router.navigate(['dashboard', 'news-maker']).then();
                 },
-                error: error => {
+                error: (error: Error) => {
                     this.notifierService.notify('error', error.message);
                 }
             }));
@@ -86,16 +86,16 @@ export class PostActionFormComponent implements OnInit, OnDestroy {
             .pipe(first())
             .subscribe({
                 next: () => {
-                    this.notifierService.notify('success', `💪 Новину редаговано!`);
+                    this.notifierService.notify('success', '💪 Новину редаговано!');
                     this.router.navigate(['dashboard', 'news-maker']).then();
                 },
-                error: error => {
+                error: (error: Error) => {
                     this.notifierService.notify('error', error.message);
                 }
             }));
     }
 
-    ngOnDestroy(): void {
-        this.subs.unsubscribe();
+    public get f(): UntypedFormControl {
+        return this.postForm.controls;
     }
 }

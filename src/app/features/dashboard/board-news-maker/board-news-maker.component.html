@@ -1,8 +1,10 @@
 <div class="board-news-maker-wrapper" *ngIf="showNewsMakerBoard">
+    <div class="header">
     <h1>{{pageTitle}}</h1>
-    <!--  <a class="btn-add" mat-raised-button [routerLink]="['posts', 'add']">-->
-    <!--    Додати-->
-    <!--  </a>-->
+      <a class="btn-add" mat-raised-button [routerLink]="['posts', 'add']">
+        Додати
+      </a>
+    </div>
     <mat-accordion *ngFor="let post of posts; let i = index">
         <mat-expansion-panel>
             <mat-expansion-panel-header class="{{post.published ? 'background-green' : 'background-red'}}">

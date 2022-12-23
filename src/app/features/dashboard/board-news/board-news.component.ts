@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {SubSink} from 'subsink';
 import {UserService} from '../../../shared/_services/user.service';
 import {PostService} from '../../../shared/_services/post.service';
