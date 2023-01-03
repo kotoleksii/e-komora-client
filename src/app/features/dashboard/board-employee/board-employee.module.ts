@@ -9,21 +9,25 @@ import {MatInputModule} from '@angular/material/input';
 import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatButtonModule} from '@angular/material/button';
 
 
 @NgModule({
   declarations: [BoardEmployeeComponent],
-  imports: [
-    CommonModule,
-    BoardEmployeeRoutingModule,
-    MatCardModule,
-    MatToolbarModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatTableModule,
-    MatSortModule,
-    MatPaginatorModule
-  ]
+    imports: [
+        CommonModule,
+        BoardEmployeeRoutingModule,
+        MatCardModule,
+        MatToolbarModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatTableModule,
+        MatSortModule,
+        MatPaginatorModule,
+        MatMenuModule,
+        MatButtonModule
+    ]
 })
 
 export class BoardEmployeeModule {

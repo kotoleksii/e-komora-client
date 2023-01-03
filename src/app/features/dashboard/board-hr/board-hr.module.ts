@@ -21,28 +21,28 @@ import {ConfirmDialogModalModule} from 'src/app/shared/modals/confirm-dialog-mod
 import {MatMenuModule} from '@angular/material/menu';
 
 @NgModule({
-  declarations: [BoardHrComponent, UserActionFormComponent],
-  imports: [
-    CommonModule,
-    BoardHrRoutingModule,
-    MatFormFieldModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatInputModule,
-    MatSortModule,
-    MatButtonModule,
-    RouterModule,
-    ReactiveFormsModule,
-    MatListModule,
-    MatToolbarModule,
-    FormsModule,
-    MatGridListModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    ConfirmDialogModalModule,
-    MatCardModule,
-    MatMenuModule
-  ]
+    declarations: [BoardHrComponent, UserActionFormComponent],
+    imports: [
+        CommonModule,
+        BoardHrRoutingModule,
+        MatFormFieldModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatInputModule,
+        MatSortModule,
+        MatButtonModule,
+        RouterModule,
+        ReactiveFormsModule,
+        MatListModule,
+        MatToolbarModule,
+        FormsModule,
+        MatGridListModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        ConfirmDialogModalModule,
+        MatCardModule,
+        MatMenuModule
+    ]
 })
 export class BoardHrModule {
 }

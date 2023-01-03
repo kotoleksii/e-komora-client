@@ -6,4 +6,7 @@ export interface IUser {
     post?: string;
     avatar?: string;
     roles?: string[];
+    profile?: {
+        post?: string
+    };
 }

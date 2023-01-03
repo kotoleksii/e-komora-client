@@ -16,10 +16,23 @@
                     <input matInput placeholder="Пошук" (keyup)="applyFilter($event)">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </mat-form-field>
+                <button mat-icon-button [matMenuTriggerFor]="menu">
+                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                </button>
+                <mat-menu #menu="matMenu" xPosition="before">
+                    <button mat-menu-item (click)="exportAsExcel()">
+                        <i class="fa-solid fa-file-excel" style="margin-right: 5px"></i>
+                        <span>Експорт в Excel</span>
+                    </button>
+                    <button mat-menu-item (click)="exportAsCsv()">
+                        <i class="fa-solid fa-file-csv" style="margin-right: 5px"></i>
+                        <span>Експорт в Csv</span>
+                    </button>
+                </mat-menu>
             </mat-toolbar-row>
         </mat-toolbar>
 
-        <div class="board-table-container">
+        <div class="board-table-container" #TABLE>
             <table mat-table [dataSource]="dataSource" matSort matSortActive="id" matSortDirection="desc">
                 <ng-container matColumnDef="avatar">
                     <th mat-header-cell *matHeaderCellDef></th>
