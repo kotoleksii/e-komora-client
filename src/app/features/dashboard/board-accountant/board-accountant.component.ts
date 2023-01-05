@@ -14,6 +14,7 @@ import {forkJoin} from 'rxjs';
 import {IMaterial} from '../../../shared/interfaces/material';
 import {MatDialog} from '@angular/material/dialog';
 import {QrReaderModalComponent} from '../../../shared/modals/qr-reader-modal/qr-reader-modal.component';
+import {TableService} from '../../../shared/_services/table.service';
 
 @Component({
     selector: 'app-board-accountant',
@@ -33,7 +34,7 @@ export class BoardAccountantComponent implements OnInit, OnDestroy {
     public materials: IMaterial | any;
     public users: IUser | any;
     public userId: number = 0;
-    public content?: string;
+    public content: string = '';
     public showAccountantBoard: boolean = false;
     public qrReadData: any;
 
@@ -41,6 +42,7 @@ export class BoardAccountantComponent implements OnInit, OnDestroy {
                        private testService: TestService,
                        private materialService: MaterialService,
                        private token: TokenStorageService,
+                       private tableService: TableService,
                        public dialog: MatDialog,
                        private router: Router) {
     }
@@ -120,6 +122,30 @@ export class BoardAccountantComponent implements OnInit, OnDestroy {
 
     public ngOnDestroy(): void {
         this.subs.unsubscribe();
+    }
+
+    public exportAsExcel(): void {
+        this.tableService.exportAsExcel(this.tableDataToExport(), this.content);
+    }
+
+    public exportAsCsv(): void {
+        this.tableService.exportAsCsv(this.tableDataToExport(), this.content);
+    }
+
+    private tableDataToExport(): any {
+        let tableData = this.dataSource.data;
+
+        tableData = tableData.map((element: any) => ({
+            ID: element.id,
+            Найменування: element.title,
+            Інвентарний: element.inventoryNumber,
+            Дата: element.dateStart,
+            Тип: element.type,
+            Кількість: element.amount,
+            Ціна: element.price,
+            ВідпОсоба: element.lastName
+        }));
+        return tableData;
     }
 
     private getAndSetMaterialsWithUsers(): void {

@@ -22,7 +22,7 @@ export class BoardEmployeeComponent implements OnInit, OnDestroy {
     private subs: SubSink = new SubSink();
 
     public dataSource: MatTableDataSource<any> | any;
-    public displayedColumns = ['ID', 'title', 'inventoryNumber', 'dateStart', 'type'];
+    public displayedColumns = ['ID', 'title', 'inventoryNumber', 'dateStart', 'type', 'amount'];
     public currentUserId: any;
     public content: string = '';
     public materials?: any;
@@ -65,6 +65,11 @@ export class BoardEmployeeComponent implements OnInit, OnDestroy {
         if (this.dataSource.paginator) {
             this.dataSource.paginator.firstPage();
         }
+    }
+
+    public exportAsPdf(): void {
+        // TODO
+        this.tableService.exportAsPdf('table', this.content);
     }
 
     public exportAsExcel(): void {
