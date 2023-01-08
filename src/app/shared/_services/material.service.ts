@@ -44,4 +44,8 @@ export class MaterialService {
     public delete(userId: any, materialId: any): Observable<any> {
         return this.http.delete(`${API_URL}users/${userId}/materials/${materialId}`);
     }
+
+    public calculateTotal(item: IMaterial): number {
+        return item.price * item.amount;
+    }
 }

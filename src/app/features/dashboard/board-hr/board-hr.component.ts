@@ -30,7 +30,7 @@ export class BoardHrComponent implements OnInit, OnDestroy, AfterViewInit {
     public imageMargin: number = 2;
     public showImage: boolean = false;
     public content: string = '';
-    public noData: string = '';
+    public noDataMsg: string = '';
 
     public constructor(private userService: UserService,
                        private testService: TestService,
@@ -45,17 +45,19 @@ export class BoardHrComponent implements OnInit, OnDestroy, AfterViewInit {
         this.showHRBoard = this.roles.includes('ROLE_HR');
 
         this.content = 'Картки';
-        this.noData = 'Немає даних';
+        this.noDataMsg = 'Немає даних';
         this.getAndSetUserItems();
+    }
+
+    public ngAfterViewInit(): void {
+        if (this.dataSource?.data.length > 0) {
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+        }
     }
 
     public ngOnDestroy(): void {
         this.subs.unsubscribe();
-    }
-
-    public ngAfterViewInit(): void {
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
     }
 
     public exportAsExcel(): void {
@@ -78,9 +80,9 @@ export class BoardHrComponent implements OnInit, OnDestroy, AfterViewInit {
     public getAndSetUserItems(): void {
         this.subs.add(
             this.userService.getAll().subscribe((data: any) => {
-                    this.dataSource = new MatTableDataSource<any>(data);
-                    this.dataSource.paginator = this.paginator;
-                    this.dataSource.sort = this.sort;
+                this.dataSource = new MatTableDataSource<any>(data);
+                this.dataSource.paginator = this.paginator;
+                this.dataSource.sort = this.sort;
                 // this.notifierService.notify('success', `💪 Дані оновлено!`);
             }, () => {
                 this.content = '🤷‍♀️ Щось пішло не так, спробуйте пізніше!';
@@ -99,15 +101,15 @@ export class BoardHrComponent implements OnInit, OnDestroy, AfterViewInit {
         return tableData;
     }
 
-    private getHRServerText(): void {
-        this.subs.add(
-            this.testService.getHRBoard().subscribe(
-                (data) => {
-                    this.content = data;
-                },
-                (err: Error) => {
-                    this.content = err?.message;
-                }
-            ));
-    }
+    // private getHRServerText(): void {
+    //     this.subs.add(
+    //         this.testService.getHRBoard().subscribe(
+    //             (data) => {
+    //                 this.content = data;
+    //             },
+    //             (err: Error) => {
+    //                 this.content = err?.message;
+    //             }
+    //         ));
+    // }
 }

@@ -25,6 +25,7 @@ export class BoardEmployeeComponent implements OnInit, OnDestroy, AfterViewInit 
     public displayedColumns = ['id', 'title', 'inventoryNumber', 'dateStart', 'type', 'amount'];
     public currentUserId: any;
     public content: string = '';
+    public noDataMsg: string = '';
     public materials?: any;
     public showEmployeeBoard = false;
 
@@ -37,6 +38,7 @@ export class BoardEmployeeComponent implements OnInit, OnDestroy, AfterViewInit 
 
     public ngOnInit(): void {
         this.content = 'Мої матеріали';
+        this.noDataMsg = 'Немає даних';
         const user = this.token.getUser();
         this.roles = user.roles;
         this.showEmployeeBoard = this.roles.includes('ROLE_EMPLOYEE');
@@ -45,24 +47,26 @@ export class BoardEmployeeComponent implements OnInit, OnDestroy, AfterViewInit 
         this.getAndSetMaterialItems();
     }
 
-    public ngOnDestroy(): void {
-        this.subs.unsubscribe();
-    }
-
     public getAndSetMaterialItems(): void {
         this.subs.add(
             this.materialService.getByUserId(this.currentUserId).subscribe((data: any) => {
                 this.dataSource = new MatTableDataSource<any>(data);
                 this.dataSource.paginator = this.paginator;
                 this.dataSource.sort = this.sort;
-            }, () => {
+            }, (err: Error) => {
                 this.content = '🤷‍♀️ Щось пішло не так, спробуйте пізніше!';
             }));
     }
 
     public ngAfterViewInit(): void {
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
+        if (this.dataSource?.data.length > 0) {
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+        }
+    }
+
+    public ngOnDestroy(): void {
+        this.subs.unsubscribe();
     }
 
     public applyFilter(event: Event): void {
@@ -101,15 +105,15 @@ export class BoardEmployeeComponent implements OnInit, OnDestroy, AfterViewInit 
         return tableData;
     }
 
-    private getEmployeeServerText(): void {
-        this.subs.add(
-            this.testService.getEmployeeBoard().subscribe(
-                (data) => {
-                    this.content = data;
-                },
-                (err: Error) => {
-                    this.content = err?.message;
-                }
-            ));
-    }
+    // private getEmployeeServerText(): void {
+    //     this.subs.add(
+    //         this.testService.getEmployeeBoard().subscribe(
+    //             (data) => {
+    //                 this.content = data;
+    //             },
+    //             (err: Error) => {
+    //                 this.content = err?.message;
+    //             }
+    //         ));
+    // }
 }

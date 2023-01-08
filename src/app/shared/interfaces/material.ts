@@ -4,8 +4,8 @@ export interface IMaterial {
   inventoryNumber?: string;
   dateStart?: string;
   type?: string;
-  amount?: number;
-  price?: number;
+  amount: number;
+  price: number;
   total?: number;
   userId?: number;
 }

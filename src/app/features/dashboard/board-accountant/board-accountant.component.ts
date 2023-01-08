@@ -35,6 +35,7 @@ export class BoardAccountantComponent implements OnInit, OnDestroy, AfterViewIni
     public users: IUser | any;
     public userId: number = 0;
     public content: string = '';
+    public noDataMsg: string = '';
     public showAccountantBoard: boolean = false;
     public qrReadData: any;
 
@@ -49,6 +50,7 @@ export class BoardAccountantComponent implements OnInit, OnDestroy, AfterViewIni
 
     public ngOnInit(): void {
         this.content = 'Матеріальні цінності';
+        this.noDataMsg = 'Немає даних';
         const user = this.token.getUser();
         // console.log(user);
         this.roles = user.roles;
@@ -107,13 +109,15 @@ export class BoardAccountantComponent implements OnInit, OnDestroy, AfterViewIni
         }
     }
 
-    public ngOnDestroy(): void {
-        this.subs.unsubscribe();
+    public ngAfterViewInit(): void {
+        if (this.dataSource?.data.length > 0) {
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+        }
     }
 
-    public ngAfterViewInit(): void {
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
+    public ngOnDestroy(): void {
+        this.subs.unsubscribe();
     }
 
     public exportAsExcel(): void {
@@ -137,27 +141,11 @@ export class BoardAccountantComponent implements OnInit, OnDestroy, AfterViewIni
             ));
     }
 
-    private tableDataToExport(): any {
-        let tableData = this.dataSource.data;
-
-        tableData = tableData.map((element: any) => ({
-            ID: element.id,
-            Найменування: element.title,
-            Інвентарний: element.inventoryNumber,
-            Дата: element.dateStart,
-            Тип: element.type,
-            Кількість: element.amount,
-            Ціна: element.price,
-            ВідпОсоба: element.lastName
-        }));
-        return tableData;
-    }
-
     private getAndSetMaterialsWithUsers(): void {
         this.subs.add(forkJoin([
             this.materialService.getAll(),
             this.userService.getAll()
-        ]).pipe(map(([materials, users]) => materials.map((material) => {
+        ]).pipe(map(([materials, users]) => materials.map((material: any) => {
                 return {
                     id: material.id,
                     title: material.title,
@@ -172,7 +160,7 @@ export class BoardAccountantComponent implements OnInit, OnDestroy, AfterViewIni
             })
         )).subscribe((data: IMaterial[]) => {
             this.initDataTable(data);
-        }, () => {
+        }, (err: Error) => {
             this.content = '🤷‍♀️ Щось пішло не так, спробуйте пізніше!';
         }));
     }
@@ -182,6 +170,23 @@ export class BoardAccountantComponent implements OnInit, OnDestroy, AfterViewIni
         this.dataSource = new MatTableDataSource<IMaterial>(this.materials);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+    }
+
+    private tableDataToExport(): any {
+        let tableData = this.dataSource.data;
+
+        tableData = tableData.map((item: any) => ({
+            ID: item.id,
+            Найменування: item.title,
+            Інвентарний: item.inventoryNumber,
+            Дата: item.dateStart,
+            Тип: item.type,
+            Кількість: item.amount,
+            Ціна: item.price,
+            Всього: this.materialService.calculateTotal(item),
+            ВідпОсоба: item.lastName
+        }));
+        return tableData;
     }
 
     private getEmployeeItems(): void {

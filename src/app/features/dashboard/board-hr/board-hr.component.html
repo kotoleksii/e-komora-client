@@ -5,7 +5,7 @@
                 <h1 class="title">{{content}}</h1>
             </mat-card-title>
         </mat-card-header>
-        <div *ngIf="dataSource.data.length !== 0; else noData">
+        <div *ngIf="dataSource?.data.length !== 0; else noData">
             <mat-toolbar>
                 <mat-toolbar-row>
                     <button mat-mini-fab class="btn-add" [routerLink]="['user', 'add']">
@@ -73,7 +73,7 @@
             </div>
         </div>
         <ng-template #noData>
-            <div class="center">{{noData}}</div>
+            <div class="center">{{noDataMsg}}</div>
         </ng-template>
     </mat-card>
 </div>

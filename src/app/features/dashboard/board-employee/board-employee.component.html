@@ -5,7 +5,7 @@
                 <h1 class="title">{{content}}</h1>
             </mat-card-title>
         </mat-card-header>
-        <div *ngIf="dataSource.data.length !== 0; else noData">
+        <div *ngIf="dataSource?.data.length !== 0; else noData">
             <mat-toolbar>
                 <mat-toolbar-row>
                     <span class="title-spacer"></span>
@@ -15,7 +15,7 @@
                             <input matInput placeholder="Пошук" (keyup)="applyFilter($event)">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </mat-form-field>
-                        <button mat-icon-button [matMenuTriggerFor]="menu" [disabled]="dataSource.data.length === 0">
+                        <button mat-icon-button [matMenuTriggerFor]="menu">
                             <i class="fa-solid fa-ellipsis-vertical"></i>
                         </button>
                         <mat-menu #menu="matMenu" xPosition="before">
@@ -84,7 +84,7 @@
             </div>
         </div>
         <ng-template #noData>
-            <div class="center">Немає даних</div>
+            <div class="center">{{noDataMsg}}</div>
         </ng-template>
     </mat-card>
 </div>
