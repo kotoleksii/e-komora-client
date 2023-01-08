@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {UserService} from '../../../shared/_services/user.service';
 import {SubSink} from 'subsink';
 import {TokenStorageService} from '../../../shared/_services/token-storage.service';
@@ -21,7 +21,7 @@ import {TableService} from '../../../shared/_services/table.service';
     templateUrl: './board-accountant.component.html',
     styleUrls: ['./board-accountant.component.scss']
 })
-export class BoardAccountantComponent implements OnInit, OnDestroy {
+export class BoardAccountantComponent implements OnInit, OnDestroy, AfterViewInit {
     @ViewChild('filter') private filterField: ElementRef<HTMLInputElement> = {} as ElementRef<HTMLInputElement>;
     @ViewChild(MatPaginator) private paginator: MatPaginator | any;
     @ViewChild(MatSort) private sort: MatSort | undefined;
@@ -107,6 +107,23 @@ export class BoardAccountantComponent implements OnInit, OnDestroy {
         }
     }
 
+    public ngOnDestroy(): void {
+        this.subs.unsubscribe();
+    }
+
+    public ngAfterViewInit(): void {
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+    }
+
+    public exportAsExcel(): void {
+        this.tableService.exportAsExcel(this.tableDataToExport(), this.content);
+    }
+
+    public exportAsCsv(): void {
+        this.tableService.exportAsCsv(this.tableDataToExport(), this.content);
+    }
+
     public getAccountantServerText(): void {
         this.subs.add(
             this.testService.getAccountantBoard().subscribe(
@@ -118,18 +135,6 @@ export class BoardAccountantComponent implements OnInit, OnDestroy {
                     this.content = err?.message;
                 }
             ));
-    }
-
-    public ngOnDestroy(): void {
-        this.subs.unsubscribe();
-    }
-
-    public exportAsExcel(): void {
-        this.tableService.exportAsExcel(this.tableDataToExport(), this.content);
-    }
-
-    public exportAsCsv(): void {
-        this.tableService.exportAsCsv(this.tableDataToExport(), this.content);
     }
 
     private tableDataToExport(): any {
@@ -167,6 +172,8 @@ export class BoardAccountantComponent implements OnInit, OnDestroy {
             })
         )).subscribe((data: IMaterial[]) => {
             this.initDataTable(data);
+        }, () => {
+            this.content = '🤷‍♀️ Щось пішло не так, спробуйте пізніше!';
         }));
     }
 

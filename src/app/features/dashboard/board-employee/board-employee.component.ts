@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {UserService} from '../../../shared/_services/user.service';
 import {SubSink} from 'subsink';
 import {MaterialService} from '../../../shared/_services/material.service';
@@ -15,14 +15,14 @@ import {IMaterial} from '../../../shared/interfaces/material';
     templateUrl: './board-employee.component.html',
     styleUrls: ['./board-employee.component.scss']
 })
-export class BoardEmployeeComponent implements OnInit, OnDestroy {
+export class BoardEmployeeComponent implements OnInit, OnDestroy, AfterViewInit {
     @ViewChild(MatPaginator) private paginator: MatPaginator | any;
     @ViewChild(MatSort) private sort: MatSort | undefined;
     private roles: string[] = [];
     private subs: SubSink = new SubSink();
 
     public dataSource: MatTableDataSource<any> | any;
-    public displayedColumns = ['ID', 'title', 'inventoryNumber', 'dateStart', 'type', 'amount'];
+    public displayedColumns = ['id', 'title', 'inventoryNumber', 'dateStart', 'type', 'amount'];
     public currentUserId: any;
     public content: string = '';
     public materials?: any;
@@ -55,7 +55,14 @@ export class BoardEmployeeComponent implements OnInit, OnDestroy {
                 this.dataSource = new MatTableDataSource<any>(data);
                 this.dataSource.paginator = this.paginator;
                 this.dataSource.sort = this.sort;
+            }, () => {
+                this.content = '🤷‍♀️ Щось пішло не так, спробуйте пізніше!';
             }));
+    }
+
+    public ngAfterViewInit(): void {
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
     }
 
     public applyFilter(event: Event): void {

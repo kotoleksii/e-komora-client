@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {UserService} from '../../../shared/_services/user.service';
 import {SubSink} from 'subsink';
 import {MatTableDataSource} from '@angular/material/table';
@@ -15,7 +15,7 @@ import {IUser} from '../../../shared/interfaces/user';
     templateUrl: './board-hr.component.html',
     styleUrls: ['./board-hr.component.scss']
 })
-export class BoardHrComponent implements OnInit, OnDestroy {
+export class BoardHrComponent implements OnInit, OnDestroy, AfterViewInit {
     @ViewChild(MatPaginator) private paginator: MatPaginator | any;
     @ViewChild(MatSort) private sort: MatSort | undefined;
 
@@ -30,6 +30,7 @@ export class BoardHrComponent implements OnInit, OnDestroy {
     public imageMargin: number = 2;
     public showImage: boolean = false;
     public content: string = '';
+    public noData: string = '';
 
     public constructor(private userService: UserService,
                        private testService: TestService,
@@ -44,11 +45,17 @@ export class BoardHrComponent implements OnInit, OnDestroy {
         this.showHRBoard = this.roles.includes('ROLE_HR');
 
         this.content = 'Картки';
+        this.noData = 'Немає даних';
         this.getAndSetUserItems();
     }
 
     public ngOnDestroy(): void {
         this.subs.unsubscribe();
+    }
+
+    public ngAfterViewInit(): void {
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
     }
 
     public exportAsExcel(): void {
@@ -71,11 +78,14 @@ export class BoardHrComponent implements OnInit, OnDestroy {
     public getAndSetUserItems(): void {
         this.subs.add(
             this.userService.getAll().subscribe((data: any) => {
-                this.dataSource = new MatTableDataSource<any>(data);
-                this.dataSource.paginator = this.paginator;
-                this.dataSource.sort = this.sort;
+                    this.dataSource = new MatTableDataSource<any>(data);
+                    this.dataSource.paginator = this.paginator;
+                    this.dataSource.sort = this.sort;
                 // this.notifierService.notify('success', `💪 Дані оновлено!`);
-            }));
+            }, () => {
+                this.content = '🤷‍♀️ Щось пішло не так, спробуйте пізніше!';
+            })
+        );
     }
 
     private tableDataToExport(): any {

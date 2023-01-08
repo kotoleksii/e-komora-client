@@ -5,80 +5,86 @@
                 <h1 class="title">{{content}}</h1>
             </mat-card-title>
         </mat-card-header>
-        <mat-toolbar>
-            <mat-toolbar-row>
-                <span class="title-spacer"></span>
-                <div style="font-size: 16px">
-                    <mat-form-field class="search-form-field">
-                        <mat-label> Пошук</mat-label>
-                        <input matInput placeholder="Пошук" (keyup)="applyFilter($event)">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                    </mat-form-field>
-                    <button mat-icon-button [matMenuTriggerFor]="menu">
-                        <i class="fa-solid fa-ellipsis-vertical"></i>
-                    </button>
-                    <mat-menu #menu="matMenu" xPosition="before">
-<!--                        [disabled]="dataSource.data.length === 0"-->
-                        <button mat-menu-item (click)="exportAsExcel()">
-                            <i class="fa-solid fa-file-excel" style="margin-right: 5px"></i>
-                            <span>Експорт в Excel</span>
+        <div *ngIf="dataSource.data.length !== 0; else noData">
+            <mat-toolbar>
+                <mat-toolbar-row>
+                    <span class="title-spacer"></span>
+                    <div style="font-size: 16px">
+                        <mat-form-field class="search-form-field">
+                            <mat-label> Пошук</mat-label>
+                            <input matInput placeholder="Пошук" (keyup)="applyFilter($event)">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </mat-form-field>
+                        <button mat-icon-button [matMenuTriggerFor]="menu" [disabled]="dataSource.data.length === 0">
+                            <i class="fa-solid fa-ellipsis-vertical"></i>
                         </button>
-                        <button mat-menu-item (click)="exportAsCsv()">
-                            <i class="fa-solid fa-file-csv" style="margin-right: 5px"></i>
-                            <span>Експорт в Csv</span>
-                        </button>
-<!--                        <button mat-menu-item (click)="exportAsPdf()">-->
-<!--                            <i class="fa-solid fa-file-csv" style="margin-right: 5px"></i>-->
-<!--                            <span>Експорт в Pdf</span>-->
-<!--                        </button>-->
-                    </mat-menu>
-                </div>
-            </mat-toolbar-row>
-        </mat-toolbar>
+                        <mat-menu #menu="matMenu" xPosition="before">
+                            <!--                        [disabled]="dataSource.data.length === 0"-->
+                            <button mat-menu-item (click)="exportAsExcel()">
+                                <i class="fa-solid fa-file-excel" style="margin-right: 5px"></i>
+                                <span>Експорт в Excel</span>
+                            </button>
+                            <button mat-menu-item (click)="exportAsCsv()">
+                                <i class="fa-solid fa-file-csv" style="margin-right: 5px"></i>
+                                <span>Експорт в Csv</span>
+                            </button>
+                            <!--                        <button mat-menu-item (click)="exportAsPdf()">-->
+                            <!--                            <i class="fa-solid fa-file-csv" style="margin-right: 5px"></i>-->
+                            <!--                            <span>Експорт в Pdf</span>-->
+                            <!--                        </button>-->
+                        </mat-menu>
+                    </div>
+                </mat-toolbar-row>
+            </mat-toolbar>
 
-        <div class="board-table-container">
-            <table mat-table [dataSource]="dataSource" matSort matSortActive="id" matSortDirection="desc" id="table">
+            <div class="board-table-container">
+                <table mat-table [dataSource]="dataSource" matSort matSortActive="id" matSortDirection="desc"
+                       id="table">
 
-                <ng-container matColumnDef="ID">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> ID</th>
-                    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-                </ng-container>
+                    <ng-container matColumnDef="id">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> ID</th>
+                        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+                    </ng-container>
 
-                <ng-container matColumnDef="title">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Найменування</th>
-                    <td mat-cell *matCellDef="let element"> {{element.title}} </td>
-                </ng-container>
+                    <ng-container matColumnDef="title">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Найменування</th>
+                        <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+                    </ng-container>
 
-                <ng-container matColumnDef="inventoryNumber">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Інвентарний №</th>
-                    <td mat-cell *matCellDef="let element"> {{element.inventoryNumber}} </td>
-                </ng-container>
+                    <ng-container matColumnDef="inventoryNumber">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Інвентарний №</th>
+                        <td mat-cell *matCellDef="let element"> {{element.inventoryNumber}} </td>
+                    </ng-container>
 
-                <ng-container matColumnDef="dateStart">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Дата</th>
-                    <td mat-cell *matCellDef="let element"> {{element.dateStart}} </td>
-                </ng-container>
+                    <ng-container matColumnDef="dateStart">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Дата</th>
+                        <td mat-cell *matCellDef="let element"> {{element.dateStart}} </td>
+                    </ng-container>
 
-                <ng-container matColumnDef="type">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Тип</th>
-                    <td mat-cell *matCellDef="let element"> {{element.type}} </td>
-                </ng-container>
+                    <ng-container matColumnDef="type">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Тип</th>
+                        <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+                    </ng-container>
 
-                <ng-container matColumnDef="amount">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> К-сть</th>
-                    <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
-                </ng-container>
+                    <ng-container matColumnDef="amount">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> К-сть</th>
+                        <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
+                    </ng-container>
 
-                <!--                <ng-container matColumnDef="userId">-->
-                <!--                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Власник</th>-->
-                <!--                    <td mat-cell *matCellDef="let element"> {{element.userId}} </td>-->
-                <!--                </ng-container>-->
+                    <!--                <ng-container matColumnDef="userId">-->
+                    <!--                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Власник</th>-->
+                    <!--                    <td mat-cell *matCellDef="let element"> {{element.userId}} </td>-->
+                    <!--                </ng-container>-->
 
-                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            </table>
-
-            <mat-paginator [length]="200" [pageSizeOptions]="[3, 5, 20]" aria-label="Select page"></mat-paginator>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+                <mat-paginator [length]="200" [pageSizeOptions]="[3, 5, 20]"
+                               aria-label="Select page"></mat-paginator>
+            </div>
         </div>
+        <ng-template #noData>
+            <div class="center">Немає даних</div>
+        </ng-template>
     </mat-card>
 </div>
