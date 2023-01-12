@@ -5,6 +5,7 @@ import {BoardNewsRoutingModule} from './board-news-routing.module';
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
 import {NgxPaginationModule} from 'ngx-pagination';
+import {FormsModule} from '@angular/forms';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import {NgxPaginationModule} from 'ngx-pagination';
         BoardNewsRoutingModule,
         MatCardModule,
         MatButtonModule,
-        NgxPaginationModule
+        NgxPaginationModule,
+        FormsModule
     ]
 })
 export class BoardNewsModule {

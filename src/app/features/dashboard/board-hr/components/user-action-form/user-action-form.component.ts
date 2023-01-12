@@ -10,7 +10,7 @@ import {
     ConfirmDialogModalComponent
 } from '../../../../../shared/modals/confirm-dialog-modal/confirm-dialog-modal.component';
 import {MatDialog} from '@angular/material/dialog';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
     selector: 'app-user-action-form',

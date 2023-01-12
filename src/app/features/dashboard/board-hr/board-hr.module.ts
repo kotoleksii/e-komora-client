@@ -19,6 +19,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
 import {ConfirmDialogModalModule} from 'src/app/shared/modals/confirm-dialog-modal/confirm-dialog-modal.module';
 import {MatMenuModule} from '@angular/material/menu';
+import {MatChipsModule} from '@angular/material/chips';
 
 @NgModule({
     declarations: [BoardHrComponent, UserActionFormComponent],
@@ -41,7 +42,8 @@ import {MatMenuModule} from '@angular/material/menu';
         MatNativeDateModule,
         ConfirmDialogModalModule,
         MatCardModule,
-        MatMenuModule
+        MatMenuModule,
+        MatChipsModule
     ]
 })
 export class BoardHrModule {

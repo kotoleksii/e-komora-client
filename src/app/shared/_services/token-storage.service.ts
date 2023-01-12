@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {IUser} from '../interfaces/user';
+import * as CryptoJS from 'crypto-js';
 
 const TOKEN_KEY = 'auth-token';
 const USER_KEY = 'auth-user';
@@ -26,13 +27,17 @@ export class TokenStorageService {
 
     public saveUser(user: any): void {
         window.sessionStorage.removeItem(USER_KEY);
-        window.sessionStorage.setItem(USER_KEY, JSON.stringify(user));
+        const ciphertext = CryptoJS.AES.encrypt(JSON.stringify(user), 'eWorkSecretKey').toString();
+        window.sessionStorage.setItem(USER_KEY, ciphertext);
+        // window.sessionStorage.setItem(USER_KEY, JSON.stringify(user));
     }
 
     public getUser(): IUser | any {
         const user = window.sessionStorage.getItem(USER_KEY);
         if (user) {
-            return JSON.parse(user);
+            let bytes = CryptoJS.AES.decrypt(user, 'eWorkSecretKey');
+            return JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+            // return JSON.parse(user);
         }
 
         return {};
