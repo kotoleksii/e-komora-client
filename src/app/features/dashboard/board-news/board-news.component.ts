@@ -1,10 +1,13 @@
-import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewChildren} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, QueryList, Renderer2, ViewChildren} from '@angular/core';
 import {SubSink} from 'subsink';
 import {UserService} from '../../../shared/_services/user.service';
 import {PostService} from '../../../shared/_services/post.service';
 import {TestService} from '../../../shared/_services/test.service';
 import {TokenStorageService} from '../../../shared/_services/token-storage.service';
 import {BehaviorSubject} from 'rxjs';
+import {IPost} from '../../../shared/interfaces/post';
+import {IUserPostLikes} from '../../../shared/interfaces/user-post-like';
+import {debounceTime} from 'rxjs/operators';
 
 @Component({
     selector: 'app-board-news',
@@ -12,24 +15,27 @@ import {BehaviorSubject} from 'rxjs';
     styleUrls: ['./board-news.component.scss']
 })
 export class BoardNewsComponent implements OnInit, OnDestroy {
-    @ViewChildren('iconRef') private iconRefs: any;
+    @ViewChildren('like_icon') private iconRefs: QueryList<ElementRef> | any;
     private subs: SubSink = new SubSink();
     public posts: any;
     public currentPage: number = 1;
     public content?: string;
-    public btnLikeColor: string = '#9b9bab';
-    // public isLiked: boolean = false;
     public isLiked: BehaviorSubject<any> = new BehaviorSubject<any>('');
-    public likeStatus: boolean = false;
+    public likes: any[] = [];
+    public userId: number = 0;
 
     public constructor(private userService: UserService,
                        private postService: PostService,
                        private testService: TestService,
-                       private token: TokenStorageService) {
+                       private token: TokenStorageService,
+                       private renderer: Renderer2) {
     }
 
     public ngOnInit(): void {
+        const user = this.token.getUser();
+        this.userId = user.id;
         this.getAllPosts();
+        this.getLikesByUserId(this.userId);
     }
 
     public ngOnDestroy(): void {
@@ -41,55 +47,80 @@ export class BoardNewsComponent implements OnInit, OnDestroy {
     }
 
     public onLikeChange(post: any): void {
-        const user = this.token.getUser();
         const postId = post.id;
-        const userId = user.id;
+        // TODO: change to @ViewChildren
+        const icon = document.querySelector(`#icon_${postId}`);
 
         this.subs.add(
-            this.postService.getLikeStatus(postId, userId).subscribe((likeStatus) => {
-                    this.isLiked = likeStatus;
-                    console.log(likeStatus, this.isLiked);
-                    if (likeStatus) {
-                        this.subs.add(
-                            this.postService.dislikePost(postId, userId).subscribe(() => {
-                                console.log('dislike');
-                                this.btnLikeColor = '#9b9bab';
-                                this.postService.decrementLikes(post);
-                            }));
-                    } else {
-                        this.subs.add(
-                            this.postService.likePost(postId, userId).subscribe(() => {
-                                console.log('like');
-                                this.btnLikeColor = '#ffffff';
-                                this.postService.incrementLikes(post);
-                            }));
+            this.postService.getLikeStatus(postId, this.userId)
+                .subscribe((likeStatus) => {
+                        this.isLiked = likeStatus;
+                        // console.log(likeStatus, this.isLiked);
+                        if (likeStatus) {
+                            this.subs.add(
+                                this.postService.dislikePost(postId, this.userId)
+                                    .pipe(debounceTime(3000))
+                                    .subscribe(() => {
+                                            post.likes--;
+                                            this.renderer.removeClass(icon, 'like-active');
+                                            this.renderer.addClass(icon, 'like-inactive');
+                                            // console.log('dislike');
+                                        },
+                                        (error) => {
+                                            // console.log(error);
+                                        },
+                                        () => {
+                                            this.subs.unsubscribe();
+                                        }));
+                        } else {
+                            this.subs.add(
+                                this.postService.likePost(postId, this.userId)
+                                    .pipe(debounceTime(3000))
+                                    .subscribe(() => {
+                                            post.likes++;
+                                            this.renderer.removeClass(icon, 'like-inactive');
+                                            this.renderer.addClass(icon, 'like-active');
+                                            // console.log('like');
+                                        },
+                                        (error) => {
+                                            // console.log(error);
+                                        },
+                                        () => {
+                                            this.subs.unsubscribe();
+                                        }));
+                        }
                     }
-                }
-            )
+                )
         );
     }
 
-    // public getBestPlayerNickname(): any {
-    //   this.subs.add(
-    //     this.userService.getUserIdWithMaxRate().pipe(
-    //       switchMap((id) => {
-    //         return this.userService.getUserById(id);
-    //       })).subscribe((data) => {
-    //       this.bestPlayer.next(data.nickname);
-    //     }));
-    // }
-
+    public isPostLiked(post: IPost): any {
+        let like = this.likes.find((like: IUserPostLikes) => like.postId === post.id);
+        return like ? 'like-active' : 'like-inactive';
+    }
 
     private getAllPosts(): void {
-        this.subs.add(this.postService.getAllPublishedDesc()
-            .subscribe({
-                next: (data) => {
+        this.subs.add(
+            this.postService.getAllPublishedDesc().subscribe(
+                (data) => {
                     this.posts = data;
                 },
-                error: (e) => {
+                (error) => {
                     // console.error(e);
                 }
-            }));
+            ));
+    }
+
+    private getLikesByUserId(userId: number): void {
+        this.subs.add(
+            this.postService.getLikesByUserId(userId).subscribe(
+                (likes) => {
+                    this.likes = likes;
+                    // console.log(this.likes);
+                },
+                (error) => {
+                    // console.error(e);
+                }));
     }
 
     private getHomeServerContent(): void {

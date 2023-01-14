@@ -7,7 +7,9 @@
             <span class="post-date">{{post.createDateTime | date:'dd/MM/yyyy HH:mm:ss'}}</span>
             <span class="card-spacer"></span>
             <button mat-icon-button (click)="onLikeChange(post)">
-                <i class="fa-solid fa-heart" [style.color]="btnLikeColor"></i>
+                <i #like_icon class="fa-solid fa-heart" [id]="'icon_'+post.id"
+                   [ngClass]="isPostLiked(post)">
+                </i>
                 <span>{{ post?.likes }}</span>
             </button>
             <button mat-icon-button class="btn-views" disabled>
