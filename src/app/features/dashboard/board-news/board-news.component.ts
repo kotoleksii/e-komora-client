@@ -17,11 +17,11 @@ import {debounceTime} from 'rxjs/operators';
 export class BoardNewsComponent implements OnInit, OnDestroy {
     @ViewChildren('like_icon') private iconRefs: QueryList<ElementRef> | any;
     private subs: SubSink = new SubSink();
-    public posts: any;
+    public posts: IPost[] = [];
+    public likes: IUserPostLikes[] = [];
     public currentPage: number = 1;
     public content?: string;
     public isLiked: BehaviorSubject<any> = new BehaviorSubject<any>('');
-    public likes: any[] = [];
     public userId: number = 0;
 
     public constructor(private userService: UserService,

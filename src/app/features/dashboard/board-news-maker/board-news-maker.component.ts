@@ -35,27 +35,27 @@ export class BoardNewsMakerComponent implements OnInit {
         this.getAllPosts();
     }
 
-    public getPostById(id: number): any {
+    public getPostById(id: number): IPost | undefined {
         return this.posts?.find((el: IPost) => el.id === id);
     }
 
     public updatePublished(id: number, status: boolean): void {
         const data = {
-            title: this.getPostById(id).title,
-            description: this.getPostById(id).description,
+            title: this.getPostById(id)?.title,
+            description: this.getPostById(id)?.description,
             published: status
         };
 
         this.subs.add(this.postService.update(id, data)
             .pipe(first())
             .subscribe({
-                next: (res) => {
+                next: () => {
                     // console.log(res);
                     this.currentPost.published = status;
                     this.notifierService.notify('success', 'Статус новини оновлено успішно!');
                     BoardNewsMakerComponent.refreshPage();
                 },
-                error: (e) => {
+                error: () => {
                     // console.error(e)
                 }
             }));
@@ -68,7 +68,7 @@ export class BoardNewsMakerComponent implements OnInit {
                     next: () => {
                         BoardNewsMakerComponent.refreshPage();
                     },
-                    error: (e) => {
+                    error: () => {
                         // console.error(e)
                     }
                 }));
@@ -87,24 +87,24 @@ export class BoardNewsMakerComponent implements OnInit {
                     this.posts = data;
                     // console.log(data);
                 },
-                error: (e) => {
+                error: () => {
                     // console.error(e)
                 }
             });
     }
 
-    private getPost(id: number): void {
-        this.postService.get(id)
-            .subscribe({
-                next: (data) => {
-                    this.currentPost = data;
-                    // console.log(data);
-                },
-                error: (e) => {
-                    // console.error(e);
-                }
-            });
-    }
+    // private getPost(id: number): void {
+    //     this.postService.get(id)
+    //         .subscribe({
+    //             next: (data) => {
+    //                 this.currentPost = data;
+    //                 // console.log(data);
+    //             },
+    //             error: () => {
+    //                 // console.error(e);
+    //             }
+    //         });
+    // }
 
     private static refreshPage(): void {
         window.location.reload();

@@ -38,14 +38,24 @@
       i {
         margin-right: 5px;
 
-        &.like-active {
+        &.fa-heart.like-active {
           color: $color-like;
         }
 
-        &.like-inactive {
+        &.fa-heart.like-inactive {
           color: $color-hint;
+        }
+
+        &.fa-heart:hover {
+          animation: pulse 1s infinite;
         }
       }
     }
+  }
+}
+
+@keyframes pulse {
+  10% {
+    transform: scale(1.2);
   }
 }
