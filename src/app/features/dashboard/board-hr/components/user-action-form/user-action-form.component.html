@@ -60,17 +60,17 @@
                             <input matInput id="middleName" type="text" placeholder="По батькові"/>
                         </mat-form-field>
                     </div>
-                    <mat-form-field class="form-field" appearance="outline">
-                        <mat-label>Email</mat-label>
-                        <input matInput id="email" type="email" placeholder="Email " formControlName="email"/>
-                        <mat-error *ngIf="f.email.invalid">{{errorMsg(f.email, 'Email')}}</mat-error>
-                    </mat-form-field>
-
-                    <mat-form-field formGroupName="profile" class="form-field" appearance="outline">
-                        <mat-label>Посада</mat-label>
-                        <input matInput id="post" type="text" placeholder="Посада" formControlName="post"/>
-                        <!--              <mat-error *ngIf="f.post.invalid">{{errorMsg(f.post, 'Посада')}}</mat-error>-->
-                    </mat-form-field>
+                    <div class="row">
+                        <mat-form-field class="form-field" appearance="outline">
+                            <mat-label>Email</mat-label>
+                            <input matInput id="email" type="email" placeholder="Email " formControlName="email"/>
+                            <mat-error *ngIf="f.email.invalid">{{errorMsg(f.email, 'Email')}}</mat-error>
+                        </mat-form-field>
+                        <mat-form-field formGroupName="profile" class="form-field" appearance="outline">
+                            <mat-label>Посада</mat-label>
+                            <input matInput id="post" type="text" placeholder="Post" formControlName="post"/>
+                        </mat-form-field>
+                    </div>
 
                     <!--          <mat-form-field *ngIf="isAddMode" class="form-field" appearance="outline">-->
                     <!--            <mat-label>Пароль</mat-label>-->

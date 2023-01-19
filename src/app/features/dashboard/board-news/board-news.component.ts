@@ -4,7 +4,6 @@ import {UserService} from '../../../shared/_services/user.service';
 import {PostService} from '../../../shared/_services/post.service';
 import {TestService} from '../../../shared/_services/test.service';
 import {TokenStorageService} from '../../../shared/_services/token-storage.service';
-import {BehaviorSubject} from 'rxjs';
 import {IPost} from '../../../shared/interfaces/post';
 import {IUserPostLikes} from '../../../shared/interfaces/user-post-like';
 import {debounceTime} from 'rxjs/operators';
@@ -21,7 +20,7 @@ export class BoardNewsComponent implements OnInit, OnDestroy {
     public likes: IUserPostLikes[] = [];
     public currentPage: number = 1;
     public content?: string;
-    public isLiked: BehaviorSubject<any> = new BehaviorSubject<any>('');
+    // public isLiked: BehaviorSubject<any> = new BehaviorSubject<any>('');
     public userId: number = 0;
 
     public constructor(private userService: UserService,
@@ -54,7 +53,7 @@ export class BoardNewsComponent implements OnInit, OnDestroy {
         this.subs.add(
             this.postService.getLikeStatus(postId, this.userId)
                 .subscribe((likeStatus) => {
-                        this.isLiked = likeStatus;
+                        // this.isLiked = likeStatus;
                         // console.log(likeStatus, this.isLiked);
                         if (likeStatus) {
                             this.subs.add(
@@ -66,7 +65,7 @@ export class BoardNewsComponent implements OnInit, OnDestroy {
                                             this.renderer.addClass(icon, 'like-inactive');
                                             // console.log('dislike');
                                         },
-                                        (error) => {
+                                        () => {
                                             // console.log(error);
                                         },
                                         () => {
@@ -82,7 +81,7 @@ export class BoardNewsComponent implements OnInit, OnDestroy {
                                             this.renderer.addClass(icon, 'like-active');
                                             // console.log('like');
                                         },
-                                        (error) => {
+                                        () => {
                                             // console.log(error);
                                         },
                                         () => {
@@ -105,7 +104,7 @@ export class BoardNewsComponent implements OnInit, OnDestroy {
                 (data) => {
                     this.posts = data;
                 },
-                (error) => {
+                () => {
                     // console.error(e);
                 }
             ));
@@ -118,20 +117,20 @@ export class BoardNewsComponent implements OnInit, OnDestroy {
                     this.likes = likes;
                     // console.log(this.likes);
                 },
-                (error) => {
+                () => {
                     // console.error(e);
                 }));
     }
 
-    private getHomeServerContent(): void {
-        this.subs.add(
-            this.testService.getPublicContent().subscribe(
-                (data) => {
-                    this.content = data;
-                },
-                (error) => {
-                    // this.content = JSON.parse(error.error).message;
-                }
-            ));
-    }
+    // private getHomeServerContent(): void {
+    //     this.subs.add(
+    //         this.testService.getPublicContent().subscribe(
+    //             (data) => {
+    //                 this.content = data;
+    //             },
+    //             () => {
+    //                 // this.content = JSON.parse(error.error).message;
+    //             }
+    //         ));
+    // }
 }

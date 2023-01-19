@@ -5,10 +5,14 @@
     <div class="cols_container">
         <div class="left_col">
             <div class="img_container">
-                <img [src]="
-                currentUser.avatar !== null
-                ? currentUser.avatar
-                : './assets/images/profile-img.png'" alt="avatar">
+<!--                <img [src]="-->
+<!--                currentUser.avatar !== null-->
+<!--                ? currentUser.avatar-->
+<!--                : './assets/images/profile-img.png'" alt="avatar">-->
+                <ngx-letters-avatar
+                        [avatarName]="currentUser.firstName + ' ' + currentUser.lastName"
+                        [width]="120"
+                        [circular]="true"></ngx-letters-avatar>
             </div>
             <h2>{{username | titlecase}}</h2>
             <p>{{currentUser.post !== null ? currentUser.post : 'не вказано'}}</p>

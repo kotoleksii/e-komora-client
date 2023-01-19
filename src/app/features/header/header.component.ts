@@ -18,6 +18,7 @@ export class HeaderComponent implements OnInit {
     public showHRBoard: boolean = false;
     public showEmployeeBoard: boolean = false;
     public showNewsMakerBoard: boolean = false;
+    public showAdminBoard: boolean = false;
     public username?: string;
     public menuItems: Array<any> = [];
 
@@ -76,6 +77,14 @@ export class HeaderComponent implements OnInit {
                 link: '/dashboard/news-maker',
                 dropMenu: true,
                 dropMenuType: 'newsMaker'
+            },
+            {
+                icon: 'fa-solid fa-lock-open',
+                title: 'Менеджер прав',
+                access: this.showAdminBoard,
+                link: '/dashboard/admin',
+                dropMenu: false,
+                dropMenuType: ''
             }
         ];
     }
@@ -92,6 +101,7 @@ export class HeaderComponent implements OnInit {
             this.showHRBoard = this.roles.includes('ROLE_HR');
             this.showEmployeeBoard = this.roles.includes('ROLE_EMPLOYEE');
             this.showNewsMakerBoard = this.roles.includes('ROLE_NEWS_MAKER');
+            this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
 
             this.username = `${user.firstName} ${user.lastName.slice(0, 1)}.`;
 

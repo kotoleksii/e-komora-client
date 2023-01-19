@@ -50,6 +50,13 @@ const routes: Routes = [
                         .then((m) => m.BoardNewsMakerModule),
                     canActivate: [AuthGuard]
                 },
+                {
+                    path: 'admin',
+                    title: 'Менеджер прав',
+                    loadChildren: () => import('./board-admin/board-admin.module')
+                        .then((m) => m.BoardAdminModule),
+                    canActivate: [AuthGuard]
+                },
                 {path: '**', redirectTo: 'news'}
             ]
     }

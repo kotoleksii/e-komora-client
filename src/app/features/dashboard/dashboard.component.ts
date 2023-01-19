@@ -26,6 +26,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     public showHRBoard: boolean = false;
     public showEmployeeBoard: boolean = false;
     public showNewsMakerBoard: boolean = false;
+    public showAdminBoard: boolean = false;
     public navItems: Array<any> = [];
 
     public constructor(private router: Router,
@@ -47,6 +48,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
             this.showHRBoard = this.roles.includes('ROLE_HR');
             this.showEmployeeBoard = this.roles.includes('ROLE_EMPLOYEE');
             this.showNewsMakerBoard = this.roles.includes('ROLE_NEWS_MAKER');
+            this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
         }
 
         this.subs.add(
@@ -77,7 +79,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
             {index: 1, access: this.showEmployeeBoard, link: './employee', title: 'Мій інвентар'},
             {index: 2, access: this.showHRBoard, link: './hr', title: 'Кадри'},
             {index: 3, access: this.showAccountantBoard, link: './accountant', title: 'Бухгалтерія'},
-            {index: 4, access: this.showNewsMakerBoard, link: './news-maker', title: 'Пресслужба'}
+            {index: 4, access: this.showNewsMakerBoard, link: './news-maker', title: 'Пресслужба'},
+            {index: 5, access: this.showAdminBoard, link: './admin', title: 'Менеджер прав'}
         ];
     }
 }
