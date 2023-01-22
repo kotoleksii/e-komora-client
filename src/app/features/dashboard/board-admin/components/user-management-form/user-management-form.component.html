@@ -1,0 +1,29 @@
+<div class="spinner-container">
+    <mat-spinner *ngIf="isLoading" [diameter]="60"></mat-spinner>
+</div>
+<div class="admin-manager-wrapper" *ngIf="showAdminBoard">
+    <mat-card class="manage-card" *ngIf="!isLoading">
+        <mat-card-header>
+            <mat-card-title
+                class="title">{{ user.firstName | titlecase }} {{ user.lastName | titlecase }}
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <form [formGroup]="userForm">
+                <div *ngFor="let role of availableRoles">
+                    <input type="checkbox" [formControl]="addRoleControl(role.id)"
+                           (change)="onRoleChange(role, $event)"> {{role.name}}
+                </div>
+                <div class="btn-actions">
+                    <button type="submit" class="btn-confirm" mat-raised-button (click)="onSubmit()"
+                            [disabled]="!isDataChanged">
+                        Зберегти
+                    </button>
+                    <div class="btn-back">
+                        <a routerLink="/dashboard/admin"><span>Назад</span></a>
+                    </div>
+                </div>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>

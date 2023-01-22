@@ -1,0 +1,65 @@
+@import 'src/assets/styles/_colors';
+@import 'src/assets/styles/templates';
+
+.spinner-container {
+  @extend .centered;
+}
+
+.admin-manager-wrapper {
+  margin-top: 50px;
+
+  .manage-card {
+    margin: 2em auto;
+    padding: 25px;
+    max-width: 400px;
+    border-radius: 20px;
+
+    mat-card-header {
+      @extend .centered;
+    }
+
+    .title {
+      font-family: e-Ukraine-Regular, sans-serif;
+    }
+
+    mat-card-content {
+      .btn-actions {
+        margin-top: 10px;
+        text-align: center;
+
+        .btn-confirm {
+          padding: 10px 0;
+          //margin-bottom: 16px;
+          width: 100%;
+          font-weight: 400;
+          background: $color-primary;
+          color: $color-black;
+
+          &:hover {
+            background-color: $color-primary-hover;
+          }
+
+          &:disabled,
+          &[disabled] {
+            background-color: $color-disabled;
+            color: $color-disabled-text;
+          }
+        }
+      }
+
+      .btn-back {
+        text-align: center;
+        margin-top: 8px;
+
+        a {
+          color: $color-secondary;
+          text-decoration: none;
+
+          &:hover {
+            color: $color-white;
+          }
+        }
+      }
+    }
+  }
+}

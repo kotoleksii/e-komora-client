@@ -10,7 +10,8 @@ import {
     ConfirmDialogModalComponent
 } from '../../../../../shared/modals/confirm-dialog-modal/confirm-dialog-modal.component';
 import {MatDialog} from '@angular/material/dialog';
-import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {TokenStorageService} from '../../../../../shared/_services/token-storage.service';
 
 @Component({
     selector: 'app-user-action-form',
@@ -28,10 +29,14 @@ export class UserActionFormComponent implements OnInit, OnDestroy {
     public pageTitle: string = '';
     public userId: number = 0;
     public topics = ['add', 'edit', 'details'];
+    public roles: string[] = [];
     public topic: string = '';
+    public showHRBoard: boolean = false;
+    public isLoading: boolean = true;
 
     public constructor(private userService: UserService,
                        private authService: AuthService,
+                       private token: TokenStorageService,
                        private notifierService: NotifierService,
                        public dialog: MatDialog,
                        private fb: FormBuilder,
@@ -42,6 +47,14 @@ export class UserActionFormComponent implements OnInit, OnDestroy {
     public ngOnInit(): void {
         this.topic = this.route.snapshot.params.type;
         this.userId = this.route.snapshot.params.id;
+        const user = this.token.getUser();
+        this.roles = user.roles;
+        this.showHRBoard = this.roles.includes('ROLE_HR');
+
+        if (!this.showHRBoard) {
+            this.router.navigate(['board-news']).then();
+        }
+
         this.userForm = this.initUserForm();
 
         this.pageTitle = 'Нова картка';
@@ -54,8 +67,20 @@ export class UserActionFormComponent implements OnInit, OnDestroy {
             if (this.topic === 'details') {
                 this.userForm.disable();
             }
+            this.getUserById(this.userId);
+        }
 
-            this.userService.getById(this.userId)
+        // this.topics.forEach(topic => {
+        //   if (param.includes(topic)) {
+        //     this.topic = topic;
+        //   }
+        // });
+    }
+
+    public getUserById(id: number): void {
+        this.isLoading = true;
+        this.subs.add(
+            this.userService.getById(id)
                 .pipe(first())
                 .subscribe((res) => {
                     this.user = res;
@@ -64,14 +89,10 @@ export class UserActionFormComponent implements OnInit, OnDestroy {
                         this.user.avatar = './assets/images/profile-img.png';
                     }
                     this.userForm.patchValue(res);
-                });
-        }
-
-        // this.topics.forEach(topic => {
-        //   if (param.includes(topic)) {
-        //     this.topic = topic;
-        //   }
-        // });
+                    this.isLoading = false;
+                }, () => {
+                    this.isLoading = false;
+                }));
     }
 
     public ngOnDestroy(): void {
@@ -143,9 +164,10 @@ export class UserActionFormComponent implements OnInit, OnDestroy {
                 AuthValidators.emailRegex()
             ]),
             password: new FormControl(null),
-            profile: this.fb.group({
+            profile: new FormGroup({
                 post: new FormControl('')
             })
+            // roles: new FormArray([])
         });
     }
 

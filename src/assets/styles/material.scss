@@ -43,3 +43,7 @@
 //.mat-form-field-invalid .mat-input-element, .mat-warn .mat-input-element {
 //  caret-color: red!important;
 //}
+
+.mat-progress-spinner circle, .mat-spinner circle {
+  stroke: $color-primary-hover!important;
+}

@@ -20,6 +20,7 @@ export class BoardNewsComponent implements OnInit, OnDestroy {
     public likes: IUserPostLikes[] = [];
     public currentPage: number = 1;
     public content?: string;
+    public isLoading: boolean = true;
     // public isLiked: BehaviorSubject<any> = new BehaviorSubject<any>('');
     public userId: number = 0;
 
@@ -99,12 +100,15 @@ export class BoardNewsComponent implements OnInit, OnDestroy {
     }
 
     private getAllPosts(): void {
+        this.isLoading = true;
         this.subs.add(
             this.postService.getAllPublishedDesc().subscribe(
                 (data) => {
                     this.posts = data;
+                    this.isLoading = false;
                 },
                 () => {
+                    this.isLoading = false;
                     // console.error(e);
                 }
             ));

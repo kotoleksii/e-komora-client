@@ -1,4 +1,7 @@
-<div class="home-wrapper">
+<div class="spinner-container">
+    <mat-spinner *ngIf="isLoading" [diameter]="60"></mat-spinner>
+</div>
+<div class="home-wrapper" *ngIf="!isLoading">
     <mat-card *ngFor="let post of posts | paginate: { itemsPerPage: 3, currentPage: currentPage }; let i = index"
               (click)="incrementViews(post)">
         <mat-card-title class="post-title">{{post.title}}</mat-card-title>

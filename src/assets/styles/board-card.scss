@@ -1,4 +1,9 @@
 @import '../../assets/styles/_colors.scss';
+@import '../../assets/styles/templates';
+
+.spinner-container {
+  @extend .centered;
+}
 
 .board-card-wrapper {
   max-width: 800px;

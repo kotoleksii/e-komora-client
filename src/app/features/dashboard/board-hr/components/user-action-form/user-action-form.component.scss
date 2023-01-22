@@ -1,4 +1,9 @@
 @import 'src/assets/styles/_colors';
+@import 'src/assets/styles/templates';
+
+.spinner-container {
+  @extend .centered;
+}
 
 .user-action-form-wrapper {
   max-width: 800px;

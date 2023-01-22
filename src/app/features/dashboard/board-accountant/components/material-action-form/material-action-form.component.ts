@@ -29,6 +29,7 @@ export class MaterialActionFormComponent implements OnInit, OnDestroy {
     public pageTitle: string = '';
     public materialToSendInfo: BehaviorSubject<string> = new BehaviorSubject<string>('');
     public qrCodeData: BehaviorSubject<string> = new BehaviorSubject<string>('');
+    public isLoading: boolean = true;
 
     public constructor(private materialService: MaterialService,
                        private userService: UserService,
@@ -80,9 +81,13 @@ export class MaterialActionFormComponent implements OnInit, OnDestroy {
     }
 
     public getEmployeeItems(): void {
+        this.isLoading = true;
         this.subs.add(
             this.userService.getAll().subscribe((res: IUser[]) => {
                 this.users = res;
+                this.isLoading = false;
+            }, () => {
+                this.isLoading = false;
             }));
     }
 

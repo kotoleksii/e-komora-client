@@ -6,6 +6,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {FormsModule} from '@angular/forms';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import {FormsModule} from '@angular/forms';
         MatCardModule,
         MatButtonModule,
         NgxPaginationModule,
-        FormsModule
+        FormsModule,
+        MatProgressSpinnerModule
     ]
 })
 export class BoardNewsModule {

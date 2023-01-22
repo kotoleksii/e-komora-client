@@ -37,6 +37,7 @@ export class BoardAccountantComponent implements OnInit, OnDestroy, AfterViewIni
     public content: string = '';
     public noDataMsg: string = '';
     public showAccountantBoard: boolean = false;
+    public isLoading: boolean = true;
     public qrReadData: any;
 
     public constructor(private userService: UserService,
@@ -57,7 +58,7 @@ export class BoardAccountantComponent implements OnInit, OnDestroy, AfterViewIni
         this.showAccountantBoard = this.roles.includes('ROLE_ACCOUNTANT');
 
         if (!this.showAccountantBoard) {
-            this.router.navigate(['board-news']).then();
+            this.router.navigate(['home']).then();
         }
 
         this.getEmployeeItems();
@@ -110,10 +111,16 @@ export class BoardAccountantComponent implements OnInit, OnDestroy, AfterViewIni
     }
 
     public ngAfterViewInit(): void {
-        if (this.dataSource?.data.length > 0) {
+        setTimeout(() => {
+            this.dataSource = new MatTableDataSource<any>();
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
-        }
+            this.getAndSetMaterialsWithUsers();
+        })
+        // if (this.dataSource?.data.length > 0) {
+        //     this.dataSource.paginator = this.paginator;
+        //     this.dataSource.sort = this.sort;
+        // }
     }
 
     public ngOnDestroy(): void {
@@ -141,11 +148,21 @@ export class BoardAccountantComponent implements OnInit, OnDestroy, AfterViewIni
             ));
     }
 
+    private getEmployeeItems(): void {
+        this.isLoading = true;
+        this.subs.add(
+            this.userService.getAll().subscribe((res: IUser[]) => {
+                this.users = res;
+                this.isLoading = false;
+            }));
+    }
+
     private getAndSetMaterialsWithUsers(): void {
+        this.isLoading = true;
         this.subs.add(forkJoin([
             this.materialService.getAll(),
             this.userService.getAll()
-        ]).pipe(map(([materials, users]) => materials.map((material: any) => {
+        ]).pipe(map(([materials, users]) => materials.map((material: IMaterial) => {
                 return {
                     id: material.id,
                     title: material.title,
@@ -160,8 +177,10 @@ export class BoardAccountantComponent implements OnInit, OnDestroy, AfterViewIni
             })
         )).subscribe((data: IMaterial[]) => {
             this.initDataTable(data);
+            this.isLoading = false;
         }, (err: Error) => {
             this.content = '🤷‍♀️ Щось пішло не так, спробуйте пізніше!';
+            this.isLoading = false;
         }));
     }
 
@@ -187,12 +206,5 @@ export class BoardAccountantComponent implements OnInit, OnDestroy, AfterViewIni
             ВідпОсоба: item.lastName
         }));
         return tableData;
-    }
-
-    private getEmployeeItems(): void {
-        this.subs.add(
-            this.userService.getAll().subscribe((res: IUser[]) => {
-                this.users = res;
-            }));
     }
 }

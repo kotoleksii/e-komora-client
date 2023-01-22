@@ -1,5 +1,11 @@
 @import 'src/assets/styles/_colors';
 
+.spinner-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .home-wrapper {
   max-width: 700px;
   text-align: left;

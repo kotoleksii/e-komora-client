@@ -23,6 +23,7 @@ export class BoardAdminComponent implements OnInit, OnDestroy, AfterViewInit {
     public dataSource: MatTableDataSource<any> | any;
     public displayedColumns: string[] = ['id', 'fullName', 'roles'];
     public showAdminBoard: boolean = false;
+    public isLoading: boolean = true;
     public content: string = '';
     public noDataMsg: string = '';
 
@@ -32,12 +33,14 @@ export class BoardAdminComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     public ngOnInit(): void {
+        // this.isLoading = true;
         const user = this.token.getUser();
         this.roles = user.roles;
+
         this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
 
         if (!this.showAdminBoard) {
-            this.router.navigate(['board-news']).then();
+            this.router.navigate(['home']).then();
         }
 
         this.content = 'Користувачі';
@@ -59,23 +62,30 @@ export class BoardAdminComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     public ngAfterViewInit(): void {
-        if (this.dataSource?.data.length > 0) {
+        setTimeout(() => {
+            this.dataSource = new MatTableDataSource<any>();
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
-        }
+            this.getAndSetUserItems();
+        })
+        // if (this.dataSource?.data.length > 0) {
+        //     this.dataSource.paginator = this.paginator;
+        //     this.dataSource.sort = this.sort;
+        // }
     }
 
     public getAndSetUserItems(): void {
+        this.isLoading = true;
         this.subs.add(
             this.userService.getAll().subscribe((data: any) => {
                 this.dataSource = new MatTableDataSource<any>(data);
                 this.dataSource.paginator = this.paginator;
                 this.dataSource.sort = this.sort;
-                // this.notifierService.notify('success', `💪 Дані оновлено!`);
+                this.isLoading = false;
             }, () => {
                 this.content = '🤷‍♀️ Щось пішло не так, спробуйте пізніше!';
+                this.isLoading = false;
             })
         );
     }
-
 }

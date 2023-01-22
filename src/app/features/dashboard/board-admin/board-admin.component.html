@@ -1,5 +1,8 @@
+<div class="spinner-container">
+    <mat-spinner *ngIf="isLoading" [diameter]="60"></mat-spinner>
+</div>
 <div class="board-card-wrapper" *ngIf="showAdminBoard">
-    <mat-card class="mat-elevation-z6">
+    <mat-card class="mat-elevation-z6" *ngIf="!isLoading">
         <mat-card-header>
             <mat-card-title class="view-card-title">
                 <h1 class="title">{{content}}</h1>
@@ -29,7 +32,7 @@
                         <th mat-header-cell *matHeaderCellDef> ПІБ</th>
                         <td mat-cell *matCellDef="let element">
                             <a class="element-details-link"
-                               [routerLink]="['/dashboard/admin/user/', 'details', element.id]">
+                               [routerLink]="['/dashboard/admin/user/', 'edit', element.id]">
                                 {{element.lastName}} {{element.firstName}}
                             </a>
                         </td>
@@ -38,7 +41,7 @@
                     <ng-container matColumnDef="roles">
                         <th mat-header-cell *matHeaderCellDef> Права</th>
                         <td mat-cell *matCellDef="let element">
-                            <div *ngFor="let role of element.roles">{{role.name}}</div>
+                            <div *ngFor="let role of element.roles">{{role.name | trimRole}}</div>
                         </td>
                     </ng-container>
 

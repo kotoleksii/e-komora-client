@@ -25,6 +25,10 @@ export class UserService {
     return this.http.put(`${API_URL}users/${id}`, data);
   }
 
+  public updateRoles(id: any, data: any): Observable<any> {
+    return this.http.put(`${API_URL}users/${id}/roles`, data);
+  }
+
   public changePassword(id: any, data: any): Observable<any> {
     return this.http.put(`${API_URL}users/${id}/changePassword`, data);
   }

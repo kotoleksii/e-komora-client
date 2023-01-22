@@ -21,6 +21,7 @@ import {MatMenuModule} from '@angular/material/menu';
 import {QrCodeModule} from 'ng-qrcode';
 import {ZXingScannerModule} from '@zxing/ngx-scanner';
 import {QrReaderModalModule} from '../../../shared/modals/qr-reader-modal/qr-reader-modal.module';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
     declarations: [BoardAccountantComponent, MaterialActionFormComponent],
@@ -44,7 +45,8 @@ import {QrReaderModalModule} from '../../../shared/modals/qr-reader-modal/qr-rea
         MatMenuModule,
         QrCodeModule,
         ZXingScannerModule,
-        QrReaderModalModule
+        QrReaderModalModule,
+        MatProgressSpinnerModule
     ]
 })
 export class BoardAccountantModule {

@@ -11,6 +11,7 @@ import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import {MatButtonModule} from '@angular/material/button';
         MatSortModule,
         MatPaginatorModule,
         MatMenuModule,
-        MatButtonModule
+        MatButtonModule,
+        MatProgressSpinnerModule
     ]
 })
 

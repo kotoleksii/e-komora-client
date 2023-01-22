@@ -1,6 +1,9 @@
-<div class="user-action-form-wrapper">
+<div class="spinner-container">
+    <mat-spinner *ngIf="isLoading" [diameter]="60"></mat-spinner>
+</div>
+<div class="user-action-form-wrapper" *ngIf="showHRBoard">
     <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-        <mat-card class="mat-elevation-z6">
+        <mat-card class="mat-elevation-z6" *ngIf="!isLoading">
             <mat-toolbar>
                 <mat-toolbar-row>
                     <div>
@@ -80,38 +83,40 @@
                 </div>
             </mat-card-content>
         </mat-card>
-        <mat-card *ngIf="topic === 'edit' || topic === 'details'" class="mat-elevation-z6">
-            <mat-card-content>
-                <div class="row">
-                    <mat-form-field class="form-field" appearance="outline">
-                        <mat-label>Дата народження</mat-label>
-                        <input matInput [matDatepicker]="picker">
-                        <mat-datepicker-toggle matSuffix [for]="picker">
-                            <i class="fa-solid fa-calendar-days"></i>
-                        </mat-datepicker-toggle>
-                        <mat-datepicker #picker></mat-datepicker>
-                    </mat-form-field>
-                    <mat-form-field class="form-field" appearance="outline">
-                        <mat-label>Громадянство</mat-label>
-                        <input matInput id="nationality" type="text" placeholder="Громадянство"/>
-                    </mat-form-field>
-                </div>
-                <div class="row">
-                    <mat-form-field class="form-field" appearance="outline">
-                        <mat-label>Освіта</mat-label>
-                        <input matInput id="education" type="text" placeholder="Освіта"/>
-                    </mat-form-field>
-                    <mat-form-field class="form-field" appearance="outline">
-                        <mat-label>Назва освітнього закладу</mat-label>
-                        <input matInput id="institutionTitle" type="text" placeholder="Назва освітнього закладу"/>
-                    </mat-form-field>
-                    <mat-form-field class="form-field" appearance="outline">
-                        <mat-label>Диплом (серія, номер)</mat-label>
-                        <input matInput id="diplomaNumber" type="text" placeholder="Диплом (серія, номер)"/>
-                    </mat-form-field>
-                </div>
-            </mat-card-content>
-        </mat-card>
+        <div *ngIf="!isLoading">
+            <mat-card *ngIf="topic === 'edit' || topic === 'details'" class="mat-elevation-z6">
+                <mat-card-content>
+                    <div class="row">
+                        <mat-form-field class="form-field" appearance="outline">
+                            <mat-label>Дата народження</mat-label>
+                            <input matInput [matDatepicker]="picker">
+                            <mat-datepicker-toggle matSuffix [for]="picker">
+                                <i class="fa-solid fa-calendar-days"></i>
+                            </mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                        <mat-form-field class="form-field" appearance="outline">
+                            <mat-label>Громадянство</mat-label>
+                            <input matInput id="nationality" type="text" placeholder="Громадянство"/>
+                        </mat-form-field>
+                    </div>
+                    <div class="row">
+                        <mat-form-field class="form-field" appearance="outline">
+                            <mat-label>Освіта</mat-label>
+                            <input matInput id="education" type="text" placeholder="Освіта"/>
+                        </mat-form-field>
+                        <mat-form-field class="form-field" appearance="outline">
+                            <mat-label>Назва освітнього закладу</mat-label>
+                            <input matInput id="institutionTitle" type="text" placeholder="Назва освітнього закладу"/>
+                        </mat-form-field>
+                        <mat-form-field class="form-field" appearance="outline">
+                            <mat-label>Диплом (серія, номер)</mat-label>
+                            <input matInput id="diplomaNumber" type="text" placeholder="Диплом (серія, номер)"/>
+                        </mat-form-field>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
     </form>
 </div>
 

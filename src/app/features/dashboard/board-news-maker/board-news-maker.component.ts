@@ -16,6 +16,7 @@ export class BoardNewsMakerComponent implements OnInit {
     private subs: SubSink = new SubSink();
     private roles: string[] = [];
     public showNewsMakerBoard: boolean = false;
+    public isLoading: boolean = true;
     public posts?: IPost[];
     public currentPost: IPost = {};
     public pageTitle: string = 'Менеджер новин';
@@ -81,16 +82,20 @@ export class BoardNewsMakerComponent implements OnInit {
     }
 
     private getAllPosts(): void {
-        this.postService.getAllDesc()
-            .subscribe({
-                next: (data) => {
-                    this.posts = data;
-                    // console.log(data);
-                },
-                error: () => {
-                    // console.error(e)
-                }
-            });
+        this.isLoading = true;
+        this.subs.add(
+            this.postService.getAllDesc()
+                .subscribe({
+                    next: (data) => {
+                        this.posts = data;
+                        this.isLoading = false;
+                        // console.log(data);
+                    },
+                    error: () => {
+                        this.isLoading = false;
+                        // console.error(e)
+                    }
+                }));
     }
 
     // private getPost(id: number): void {

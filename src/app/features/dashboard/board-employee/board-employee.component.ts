@@ -28,6 +28,7 @@ export class BoardEmployeeComponent implements OnInit, OnDestroy, AfterViewInit 
     public noDataMsg: string = '';
     public materials?: any;
     public showEmployeeBoard = false;
+    public isLoading: boolean = true;
 
     public constructor(private token: TokenStorageService,
                        private userService: UserService,
@@ -48,21 +49,26 @@ export class BoardEmployeeComponent implements OnInit, OnDestroy, AfterViewInit 
     }
 
     public getAndSetMaterialItems(): void {
+        this.isLoading = true;
         this.subs.add(
             this.materialService.getByUserId(this.currentUserId).subscribe((data: any) => {
                 this.dataSource = new MatTableDataSource<any>(data);
                 this.dataSource.paginator = this.paginator;
                 this.dataSource.sort = this.sort;
+                this.isLoading = false;
             }, (err: Error) => {
                 this.content = '🤷‍♀️ Щось пішло не так, спробуйте пізніше!';
+                this.isLoading = false;
             }));
     }
 
     public ngAfterViewInit(): void {
-        if (this.dataSource?.data.length > 0) {
+        setTimeout(() => {
+            this.dataSource = new MatTableDataSource<any>();
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
-        }
+            this.getAndSetMaterialItems();
+        });
     }
 
     public ngOnDestroy(): void {

@@ -21,6 +21,7 @@ import {ConfirmDialogModalModule} from 'src/app/shared/modals/confirm-dialog-mod
 import {MatMenuModule} from '@angular/material/menu';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
     declarations: [BoardHrComponent, UserActionFormComponent],
@@ -45,7 +46,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
         MatCardModule,
         MatMenuModule,
         MatChipsModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        MatProgressSpinnerModule
     ]
 })
 export class BoardHrModule {

@@ -1,3 +1,7 @@
+import {IMaterial} from './material';
+import {IRole} from './role';
+import {IProfile} from './profile';
+
 export interface IUser {
     id?: number;
     firstName?: string;
@@ -5,8 +9,10 @@ export interface IUser {
     email?: string;
     post?: string;
     avatar?: string;
-    roles?: string[];
-    profile?: {
-        post?: string
-    };
+    password: string;
+    createDateTime: Date;
+    updateDateTime: Date;
+    roles: IRole[];
+    profile: IProfile;
+    materials: IMaterial[];
 }

@@ -9,6 +9,7 @@ import {TokenStorageService} from '../../../shared/_services/token-storage.servi
 import {TestService} from '../../../shared/_services/test.service';
 import {TableService} from '../../../shared/_services/table.service';
 import {IUser} from '../../../shared/interfaces/user';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-board-hr',
@@ -26,6 +27,7 @@ export class BoardHrComponent implements OnInit, OnDestroy, AfterViewInit {
     public displayedColumns: string[] = ['avatar', 'id', 'fullName', 'post'];
     public users: any;
     public showHRBoard: boolean = false;
+    public isLoading: boolean = true;
     public imageWidth: number = 30;
     public imageMargin: number = 2;
     public showImage: boolean = false;
@@ -36,7 +38,8 @@ export class BoardHrComponent implements OnInit, OnDestroy, AfterViewInit {
                        private testService: TestService,
                        private tableService: TableService,
                        private notifierService: NotifierService,
-                       private token: TokenStorageService) {
+                       private token: TokenStorageService,
+                       private router: Router) {
     }
 
     public ngOnInit(): void {
@@ -44,20 +47,41 @@ export class BoardHrComponent implements OnInit, OnDestroy, AfterViewInit {
         this.roles = user.roles;
         this.showHRBoard = this.roles.includes('ROLE_HR');
 
+        if (!this.showHRBoard) {
+            this.router.navigate(['board-news']).then();
+        }
+
         this.content = 'Картки';
         this.noDataMsg = 'Немає даних';
         this.getAndSetUserItems();
     }
 
     public ngAfterViewInit(): void {
-        if (this.dataSource?.data.length > 0) {
+        setTimeout(() => {
+            this.dataSource = new MatTableDataSource<any>();
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
-        }
+            this.getAndSetUserItems();
+        })
     }
 
     public ngOnDestroy(): void {
         this.subs.unsubscribe();
+    }
+
+    public getAndSetUserItems(): void {
+        this.isLoading = true;
+        this.subs.add(
+            this.userService.getAll().subscribe((data: any) => {
+                this.dataSource = new MatTableDataSource<any>(data);
+                this.dataSource.paginator = this.paginator;
+                this.dataSource.sort = this.sort;
+                this.isLoading = false;
+            }, () => {
+                this.content = '🤷‍♀️ Щось пішло не так, спробуйте пізніше!';
+                this.isLoading = false;
+            })
+        );
     }
 
     public exportAsExcel(): void {
@@ -75,19 +99,6 @@ export class BoardHrComponent implements OnInit, OnDestroy, AfterViewInit {
         if (this.dataSource.paginator) {
             this.dataSource.paginator.firstPage();
         }
-    }
-
-    public getAndSetUserItems(): void {
-        this.subs.add(
-            this.userService.getAll().subscribe((data: any) => {
-                this.dataSource = new MatTableDataSource<any>(data);
-                this.dataSource.paginator = this.paginator;
-                this.dataSource.sort = this.sort;
-                // this.notifierService.notify('success', `💪 Дані оновлено!`);
-            }, () => {
-                this.content = '🤷‍♀️ Щось пішло не так, спробуйте пізніше!';
-            })
-        );
     }
 
     private tableDataToExport(): any {
